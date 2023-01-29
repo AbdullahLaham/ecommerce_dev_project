@@ -1,0 +1,44 @@
+.products-sec {
+    margin: 3rem;
+  }
+  
+  .bottom-sec {
+    width: 20%;
+    margin: auto;
+  }
+  
+  .bottom-sec button {
+    padding: 0.5rem 4rem;
+    border: 1px solid #d5d5d5;
+    font-weight: bold;
+  }
+  .bottom-sec button:hover {
+    background-color: #f3efef;
+  }
+  
+  .swiper-pagination-horizontal > span {
+    background: transparent linear-gradient(180deg, #fa7400 0%, #7d3a00 100%) 0%
+      0% no-repeat padding-box;
+  }
+  .products-sec .swiper-initialized .swiper-initialized .swiper-pagination {
+    top: 0;
+    background-color: black;
+  }
+  
+  .swiper-horizontal > .swiper-pagination-bullets,
+  .swiper-pagination-bullets.swiper-pagination-horizontal,
+  .swiper-pagination-custom,
+  .swiper-pagination-fraction {
+    z-index: 1;
+  }
+  .slider {
+    height: 25rem;
+    max-width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .swiper-pagination {
+    text-align: center !important;
+    margin-top: 5rem;
+  }
