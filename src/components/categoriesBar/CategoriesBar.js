@@ -13,32 +13,31 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
-import { Typography, useMediaQuery } from '@mui/material';
-const CategoriesBar = () => {
+import { Box, Typography, useMediaQuery } from '@mui/material';
+const CategoriesBar = ({categories}) => {
   // fetching featured products
-  const products = [0,0,0,0,0,0,0,0,0,0];
-  const isMediumScreen = useMediaQuery("min-width: ");
-  
+  const isNonMobile = useMediaQuery("(min-width: 800px)");
+  const isDisktop = useMediaQuery("(min-width: 1000px)");
   return (
-    <div>
-      <Typography sx={{fontSize: '1.5rem', textAlign:'start', ml:'5rem', textDecoration: 'underline', textDecorationColor: 'red',}}>Our Categories : </Typography>
+    <Box sx={{ backgroundColor: 'white', borderRadius: '3px', width: '90%', marginX: 'auto', marginTop: '1.5rem', }}>
+      <Typography sx={{fontSize: '1.5rem', textAlign:'start', ml:'5rem'}}>Our Categories : </Typography>
       <div className='flex flex-col justify-between p-[1rem]  m-auto'>
         <Swiper className="slider slider-products items-center flex h-[25rem]"
           // install Swiper modules
           modules={[Navigation, Pagination, Scrollbar, A11y]}
           spaceBetween={50}
-          slidesPerView={3}
+          slidesPerView={isDisktop ? 3 : isNonMobile ? 2 : 1}
           navigation
           pagination={{ clickable: true }}
           onSwiper={(swiper) => console.log(swiper)}
         >
         <div className='products-list mx-auto' >
         {
-            products?.map((product) => {
+            categories?.map((category) => {
                     
               return (
                 <SwiperSlide>
-                  <CategoryComponent />
+                  <CategoryComponent category={category}  />
                 </SwiperSlide>
                 
               )
@@ -47,7 +46,7 @@ const CategoriesBar = () => {
         </div>
       </Swiper>
       </div>
-    </div>
+    </Box>
   )
 }
 

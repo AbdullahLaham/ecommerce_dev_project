@@ -1,19 +1,23 @@
-import { Box, InputLabel, MenuItem, Select, Typography, StyledMenu, Button, Menu, TextField, InputBase, IconButton } from '@mui/material';
+import { Box, InputLabel, MenuItem, Select, Typography, StyledMenu, Button, Menu, TextField, InputBase, IconButton, useMediaQuery } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { styled, alpha } from '@mui/material/styles';
 import SearchIcon from '@mui/icons-material/Search';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
 const Header = () => {
-    const [language, setLanguage] = useState();
+    const [language, setLanguage] = useState('Arabic');
     const [currency, setCurrency] = useState();
     const [selected, setSelected] = useState('home') 
     const [anchorEl, setAnchorEl] = useState(null);
-
+    const dispatch = useDispatch();
+    // useEffect(() => {
+    //     dispatch(changeLanguage());
+    // }, [language]);
 
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
@@ -23,6 +27,7 @@ const Header = () => {
         setAnchorEl(null);
     };
 
+    const isMobile = useMediaQuery("(min-width: 800px)");
     const StyledMenu = styled((props) => (
         <Menu
           elevation={0}
@@ -69,7 +74,7 @@ const Header = () => {
         },
       }));
   return (
-    <Box  sx={{ maxWidth: '100%',}}>
+    isMobile ? <Box  sx={{ maxWidth: '100%',}}>
         {/* First header line  */}
         <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid #DED8D7'}} mx='5rem'>
             <Box sx={{display: 'flex', width: '10%',}}>
@@ -83,7 +88,7 @@ const Header = () => {
                     onChange={(e) => setLanguage(e.target.value)}
                     
                 >   
-                    <MenuItem sx={{display: 'flex', }} display='flex' value={10}><img src='https://applabb.account-collection.com/frondendAll/assetsSomePage/img/flags/en.png' />Amirican</MenuItem>
+                    <MenuItem value={10}><div className='flex items-center w-[5rem]'><img className='mr-1' src='https://applabb.account-collection.com/frondendAll/assetsSomePage/img/flags/en.png' />Amirican</div></MenuItem>
                 </Select>
                 <InputLabel id="demo-simple-select-autowidth-label">Age</InputLabel>
                 <Select
@@ -102,13 +107,13 @@ const Header = () => {
             </Box>
             
             <Box sx={{display: 'flex', color: '#B4AEAD',}}>
-                <Typography sx={{ borderRight: '1px solid #B4AEAD', paddingX: '.5rem'}} >
+                <Typography sx={{ borderRight: '1px solid #B4AEAD', paddingX: '.5rem', height: '100%'}} >
                     059....
                 </Typography>
-                <Typography sx={{borderRight: '1px solid #B4AEAD', paddingX: '.5rem' }} >
+                <Typography sx={{borderRight: '1px solid #B4AEAD', paddingX: '.5rem', height: '100%' }} >
                     Login
                 </Typography>
-                <Typography sx={{ paddingX: '.5rem' }} >
+                <Typography sx={{ paddingX: '.5rem' , height: '100%'}} >
                     Register
                 </Typography>
             </Box>
@@ -144,7 +149,7 @@ const Header = () => {
                 
             </StyledMenu>
             <InputBase
-                sx={{ ml: '2rem', width: '50%', }}
+                sx={{ ml: '2rem', width: '50%', border: '1px solid #DDDADA', borderRadius: '2px', paddingX: '.7rem'}}
                 px='1rem'
                 placeholder="I am shopping for..."
                 inputProps={{ 'aria-label': 'search google maps' }}
@@ -177,6 +182,75 @@ const Header = () => {
                 </Typography> 
              </Box>
         </Box>    
+        </Box>
+        <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'center'}} mt='.5rem' >
+            <Typography onClick={() => setSelected('home')} sx={{marginRight: '1rem', fontWeight: `${selected == 'home' ? 'bold' : 'normal'}`}}><Link to='/'  marginRight='1rem'>Home</Link></Typography>
+            <Link onClick={() => setSelected('shop')} to='/shop' sx={{fontWeight: `${selected == 'shop' ? 'bold' : 'normal'}`, fontWeight: 'bold'}}>Shop</Link>
+        </Box>
+    </Box> : 
+    // is Mobile screen
+
+
+
+
+    <Box  sx={{ maxWidth: '100%', paddinTop: '1rem'}}>
+        {/* First header line  */}
+        <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid #DED8D7'}} mx='3rem'>
+                <Select
+                    sx={{border: 0, outline: 0, height: '2.5rem', boxShadow: 'none', '.MuiOutlinedInput-notchedOutline': { border: 0 }}} 
+                    labelId="hhh"
+                    id="hr"
+                    value={10}
+                    label="Age"
+                    onChange={(e) => setLanguage(e.target.value)}
+                    
+                >   
+                    <MenuItem sx={{display: 'flex', }} display='flex' value={10}><img src='https://applabb.account-collection.com/frondendAll/assetsSomePage/img/flags/en.png' />Amirican</MenuItem>
+                </Select>
+                <Select
+                    labelId="demo-select-small"
+                    id="demo-select-small"
+                    value={10}
+                    label="Age"
+                    onChange={() => setLanguage()}
+                    sx={{height: '2.5rem', boxShadow: 'none', '.MuiOutlinedInput-notchedOutline': { border: 0 }}}
+                    border= '0px' outline= '0px'
+                >
+                    <MenuItem value={10}>Currency</MenuItem>
+                    <MenuItem value={20}>Twenty</MenuItem>
+                    <MenuItem value={30}>Thirty</MenuItem>
+                </Select>
+        </Box>
+        <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid #DED8D7', }} py='.3rem' width='100%' pl='3rem'>
+            <Typography>Laraver Ecommerce</Typography>       
+            <Box sx={{display: 'flex', paddingRight: '3rem'}}>
+                <Button
+                    id="demo-customized-button"
+                    aria-controls={open ? 'demo-customized-menu' : undefined}
+                    aria-haspopup="true"
+                    aria-expanded={open ? 'true' : undefined}
+                    variant="outlined"
+                    disableElevation
+                    onClick={handleClick}
+                    endIcon={<KeyboardArrowDownIcon />}
+                >
+                    <MenuIcon /> 
+                </Button>
+                <StyledMenu
+                    id="demo-customized-menu"
+                    MenuListProps={{
+                    'aria-labelledby': 'demo-customized-button',
+                    }}
+                    anchorEl={anchorEl}
+                    open={open}
+                    onClose={handleClose}
+                >
+                    <MenuItem onClick={handleClose} disableRipple>
+
+                    </MenuItem>
+                    
+                </StyledMenu>
+            </Box>    
         </Box>
         <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'center'}} mt='.5rem' >
             <Typography onClick={() => setSelected('home')} sx={{marginRight: '1rem', fontWeight: `${selected == 'home' ? 'bold' : 'normal'}`}}><Link to='/'  marginRight='1rem'>Home</Link></Typography>
