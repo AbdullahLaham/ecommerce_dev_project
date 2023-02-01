@@ -4,11 +4,13 @@ import mobile from '../../images/mobile.png';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProductDetails } from '../../actions/general';
+import { useNavigate } from 'react-router-dom';
 const ProductComponent = ({ourProduct}) => {
   const {name, original_price, selling_price, slug, product_image} = ourProduct;
   const current_product_image = product_image[0];
   const {image} = current_product_image;
-
+  // navigate
+  const navigate = useNavigate();
   const [productImage, setProductImage] = useState(null);
   // dispatch
   const dispatch = useDispatch();
@@ -26,7 +28,7 @@ const ProductComponent = ({ourProduct}) => {
             <Rating sx={{display: 'flex', justifyContent: 'start'}}  value={5} readonly  />
             <ShoppingCartOutlinedIcon sx={{fontSize: '2rem'}} />
         </Box>
-        <Button variant='contained' sx={{width: '100%', backgroundColor: 'orange'}} >Details</Button>
+        <Button variant='contained' sx={{width: '100%', backgroundColor: 'orange'}} onClick={() => navigate(`/product/${slug}`)}>Details</Button>
     </Paper>
   )
 }

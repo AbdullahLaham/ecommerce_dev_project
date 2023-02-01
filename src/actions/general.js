@@ -1,7 +1,7 @@
 
 import { Language } from '@mui/icons-material';
 import * as api from '../api'
-import {CATEGORY_PRODUCTS, CATEGORIES, LATEST_PRODUCTS, CURRENT_PRODUCT, LANGUAGE} from '../constants'
+import {CATEGORY_PRODUCTS, CATEGORIES, LATEST_PRODUCTS, CURRENT_PRODUCT, LANGUAGE, ADD_TO_CART, ALL_PRODUCTS, GET_BRANDS} from '../constants'
 
 export const fetchLatestProducts = () => async (dispatch) => {
     const {data: {data}} = await api.getLatestProducts();
@@ -13,6 +13,29 @@ export const getCategories = () => async (dispatch) => {
     console.log('fff', data)
     dispatch({type: CATEGORIES, payload: data});
 
+}
+// shop page functions
+export const getShopPageProducts = (text) => async (dispatch) =>  {
+    const {data: {data}} = await api.getShopPageProducts(text);
+    console.log('products', data);
+    dispatch({type: ALL_PRODUCTS, payload: data});
+}
+
+export const getShopPageBrand = () => async (dispatch) =>  {
+    const {data: {filter_brand}} = await api.getShopPageProducts();
+    console.log('filter', filter_brand);
+    dispatch({type: GET_BRANDS, payload: filter_brand});
+}
+
+
+
+export const getFilteredProducts = () => async (dispatch) =>  {
+
+}
+
+
+export const addToCart = (product) => async (dispatch) => {
+    dispatch({type: CATEGORIES, payload: product});
 }
 
 // export const getCategories = () => async (dispatch) => {
@@ -33,10 +56,12 @@ export const getProductsByCategory = (category) =>  async (dispatch) => {
 
 // fetch Product Details using its ID
 export const fetchProductDetails = (slug) => async (dispatch) => {
-    console.log('hello')
-    const {data} = await api.fetchProductDetails(slug);
+    console.log('dddddddddddd')
+    const {data: {data}} = await api.fetchProductDetails(slug);
+    console.log('hello', data);
     dispatch({type: CURRENT_PRODUCT, payload: data[0]});
 }
+
 export const createTransaction = (orderData) => async (dispatch) => {
     const {data} = await api.createTransaction(orderData);
 }

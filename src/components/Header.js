@@ -74,7 +74,7 @@ const Header = () => {
         },
       }));
   return (
-    isMobile ? <Box  sx={{ maxWidth: '100%',}}>
+    isMobile ? <div className='max-w-[100%]  top-0 left-0 right-0' >
         {/* First header line  */}
         <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid #DED8D7'}} mx='5rem'>
             <Box sx={{display: 'flex', width: '10%',}}>
@@ -187,7 +187,7 @@ const Header = () => {
             <Typography onClick={() => setSelected('home')} sx={{marginRight: '1rem', fontWeight: `${selected == 'home' ? 'bold' : 'normal'}`}}><Link to='/'  marginRight='1rem'>Home</Link></Typography>
             <Link onClick={() => setSelected('shop')} to='/shop' sx={{fontWeight: `${selected == 'shop' ? 'bold' : 'normal'}`, fontWeight: 'bold'}}>Shop</Link>
         </Box>
-    </Box> : 
+    </div> : 
     // is Mobile screen
 
 

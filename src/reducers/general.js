@@ -1,12 +1,14 @@
-import {  ADD_TO_CART, DELETE_FROM_CART, UPDATE_CART_ITEM, TRANSACTION, LATEST_PRODUCTS, CATEGORY_PRODUCTS, CURRENT_PRODUCT, CATEGORIES } from "../constants";
+import {  ADD_TO_CART, DELETE_FROM_CART, UPDATE_CART_ITEM, TRANSACTION, LATEST_PRODUCTS, CATEGORY_PRODUCTS, CURRENT_PRODUCT, CATEGORIES, ALL_PRODUCTS, GET_BRANDS } from "../constants";
 const reducer = (state = { 
         cart: localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')) : [],
         // transaction: null,
         products: localStorage.getItem('products') ? JSON.parse(localStorage.getItem('products')) : [],
+        filteredProducts: localStorage.getItem('filteredProducts') ? JSON.parse(localStorage.getItem('filteredProducts')) : [],
         categories: [],
         categoryProducts: [],
-        product: {},
+        product: localStorage.getItem('product') ? JSON.parse(localStorage.getItem('product')) : {},
         language: 'Arabic',
+        brands: localStorage.getItem('brands') ? JSON.parse(localStorage.getItem('brands')) : [] ,
     },
     action
     ) => {
@@ -53,6 +55,7 @@ const reducer = (state = {
             return {...state, categoryProducts: action?.payload}
         }
         case CURRENT_PRODUCT: {
+            localStorage.setItem('product', JSON.stringify(action?.payload))
             return {...state, product: action.payload}
         }
         case CATEGORIES: {
@@ -61,6 +64,13 @@ const reducer = (state = {
         // case LANGUAGE: {
         //     return {...state, language: action?.payload}
         // }
+        case ALL_PRODUCTS: {
+            return {...state, filteredProducts: action?.payload?.data}
+        }
+        case GET_BRANDS: {
+            localStorage.setItem('brands', JSON.stringify(action?.payload));
+            return {...state, brands: action?.payload}
+        }
         default: {
             return state;
         }

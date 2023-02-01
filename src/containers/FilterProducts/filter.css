@@ -349,7 +349,9 @@ button {
 button:focus:not(:focus-visible) {
     outline: 0
 }
-
+.product-grids.section {
+    padding-top: 1rem;
+}
 button,
 input,
 optgroup,
@@ -19750,9 +19752,11 @@ blockquote span {
 /* Product Grids */
 .product-grids {
   background-color: #f9f9f9;
+  position: relative;
 }
 
-.product-grids .product-grid-topbar {
+
+ .product-grid-topbar {
   padding: 15px 20px;
   background-color: #fff;
   border-radius: 4px;
@@ -19762,7 +19766,6 @@ blockquote span {
 
 @media only screen and (min-width: 768px) and (max-width: 991px), (max-width: 767px) {
   .product-grids .product-grid-topbar {
-    margin-top: 30px;
   }
 }
 

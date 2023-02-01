@@ -22,6 +22,15 @@ export const getLatestProducts = async () => {
     const res = await API.get('/products');
     return res;
 }
+export const getShopPageProducts = async (text) => {
+    const res = await API.get(`${text}`);
+    return res;
+}
+
+export const getFilteredProducts = async () => {
+
+}
+
 
 export const getCategories = async () => {
     const res = await API.get('/categories');
@@ -32,7 +41,9 @@ export const getProductsByCategories = async (category) => {
     return res;
 }
 export const fetchProductDetails = async (slug) => {
+    console.log('dddddddddddddddddddd')
     const res = await API.get(`/product-details/${slug}`);
+    console.log('dddddddddddddddddddd')
     return res;
 }
 

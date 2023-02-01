@@ -20,12 +20,10 @@ const HomePage = () => {
   console.log('prod', categories);
   return (
     <Box sx={{maxWidth: '100%',}}>
-      <Header />
       <Box sx={{backgroundColor: '#F5F5F5', paddingTop: '1rem', position: 'relative'}}>
         <CategoriesBar categories={categories} />
         <LatestProducts products={products} />
         <BottomNav />
-        <Footer />
         <BottomMenue />
       </Box>
       
