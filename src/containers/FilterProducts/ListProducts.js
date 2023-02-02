@@ -37,8 +37,6 @@ const ListProducts = () => {
         }
     }
     const updateFilterCategory = (id) => {
-        console.log(filterCategory?.includes(id))
-
         if (!filterCategory?.includes(id)) {
             
             setFilterCategory([...filterCategory, id]);
@@ -74,7 +72,7 @@ const ListProducts = () => {
     useEffect(() => {
         console.log('filterText', `${filterText}?sortPrice=${filterPrice}${filterBrandText}${filterCategoryText}`)
         dispatch(getShopPageProducts(`${filterText}?sortPrice=${filterPrice}${filterBrandText}${filterCategoryText}&page=${currentPage}`));
-    }, [filterPrice, filterBrandText, currentPage, filterCategoryText]);
+    }, [filterBrandText,filterCategoryText]);
 
     // useEffect(() => {
     //     dispatch(getShopPageBrand(`/filter-product`));
