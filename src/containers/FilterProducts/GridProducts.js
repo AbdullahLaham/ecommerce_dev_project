@@ -12,43 +12,76 @@ import { useNavigate } from 'react-router-dom';
 import './filter.css';
 import ShopSidebar from '../../components/ShopSidebar';
 const GridProducts = () => {
-    const {filteredProducts, brands, numberOfPages} = useSelector((state) => state?.generalReducer);
-    console.log(numberOfPages, 'ffffffffffffffff')
+    const {filteredProducts, brands, categories ,numberOfPages} = useSelector((state) => state?.generalReducer);
+    
+    console.log(brands, 'ffffffffffffffff')
     // console.log('ggggg', brands);
-    const [selected, setSelected] = useState('grid');
+    const [selected, setSelected] = useState('list');
     const [showSidebar, setShowSidebar] = useState(false);
     const [filterPrice, setFilterPrice] = useState('low');
     const [filterBrandText, setFilterBrandText] = useState('');
+    const [filterCategoryText, setFilterCategoryText] = useState('');
     const [filterText, setFilterText] = useState(`/filter-product`);
     const [currentPage, setCurrentPage] = useState(1);
-    
     const [filterBrand, setFilterBrand] = useState([]);
+    const [filterCategory, setFilterCategory] = useState([]);
+
     const updateFilterBrand = (id) => {
-        setFilterBrand([...filterBrand, id]);
+        if (!filterBrand?.includes(id)) {
+            setFilterBrand([...filterBrand, id]);
+        }
+        else {
+            let newBrand = filterBrand.filter((brand) => brand != id);
+            console.log(filterCategory, newBrand)
+            setFilterBrand(newBrand)
+        }
+    }
+    const updateFilterCategory = (id) => {
+        if (!filterCategory?.includes(id)) {
+            
+            setFilterCategory([...filterCategory, id]);
+        }
+        else {  
+            let newCategory = filterCategory.filter((categ) => categ != id);
+            console.log(filterCategory, newCategory)
+            setFilterCategory(newCategory);
+        }
+    }
+
+    const updateFilterPrice = (id) => {
+
     }
     // navigate
     const navigate = useNavigate();
     // dispatch
     const dispatch = useDispatch();
+
     useEffect(() => {
-        let uniqueBrands = [...new Set(filterBrand)];
-        uniqueBrands?.map((brand, i) => {
-            setFilterBrandText(`${filterBrandText}&brandInputs[${i}]=${brand}`);
-            console.log('filterText', `${filterText}?sortPrice=${filterPrice}${filterBrandText}`)
-        });
-    }, [filterBrand]);
-    useEffect(() => {
-        dispatch(getShopPageProducts(`${filterText}?sortPrice=${filterPrice}${filterBrandText}&page=${currentPage}`));
+        // let uniqueBrands = [...new Set(filterBrand)];
         
-    }, [filterPrice, filterBrandText, currentPage]);
+        filterBrand?.map((brand, i) => {
+            setFilterBrandText(`${filterBrandText}&brandInputs[${i}]=${brand}`);
+        });
+
+        filterCategory?.map((category, i) => {
+            setFilterCategoryText(`${filterCategoryText}&categoryInputs[${i}]=${category}`);
+        });
+        
+    }, [filterBrand, filterCategory]);
+
     useEffect(() => {
-        dispatch(getShopPageBrand(`/filter-product`));
-    }, []);
+        console.log('filterText', `${filterText}?sortPrice=${filterPrice}${filterBrandText}${filterCategoryText}`)
+        dispatch(getShopPageProducts(`${filterText}?sortPrice=${filterPrice}${filterBrandText}${filterCategoryText}&page=${currentPage}`));
+    }, [filterBrandText,filterCategoryText]);
+
+    // useEffect(() => {
+    //     dispatch(getShopPageBrand(`/filter-product`));
+    // }, []);
     const isNonMobile = useMediaQuery("(min-width: 980px)");
   return (
     <>  
     <section class="product-grids section">
-        <ShopSidebar showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
+    <ShopSidebar showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
     <div class="container">
         <div class="row">
             {isNonMobile && <div class="col-lg-3 col-12">
@@ -66,29 +99,16 @@ const GridProducts = () => {
                     <!-- Start Single Widget --> */}
                     <div class="single-widget">
                         <h3>All Categories</h3>
-                        <ul class="list">
-                            <li>
-                                <a href="product-grids.html">Computers & Accessories </a><span>(1138)</span>
-                            </li>
-                            <li>
-                                <a href="product-grids.html">Smartphones & Tablets</a><span>(2356)</span>
-                            </li>
-                            <li>
-                                <a href="product-grids.html">TV, Video & Audio</a><span>(420)</span>
-                            </li>
-                            <li>
-                                <a href="product-grids.html">Cameras, Photo & Video</a><span>(874)</span>
-                            </li>
-                            <li>
-                                <a href="product-grids.html">Headphones</a><span>(1239)</span>
-                            </li>
-                            <li>
-                                <a href="product-grids.html">Wearable Electronics</a><span>(340)</span>
-                            </li>
-                            <li>
-                                <a href="product-grids.html">Printers & Ink</a><span>(512)</span>
-                            </li>
-                        </ul>
+                        {categories?.map((b, i) => {
+                            return (
+                                <div class="form-check">
+                                    <input class="form-check-input" id={`input${i}`} type="checkbox" value={b?.id} name="brandInput[]"  onChange={(e) => updateFilterCategory(e.target.value)} />
+                                    <label class="form-check-label" for={`input${i}`}>
+                                        {b?.name} ({b?.id})
+                                    </label>
+                                </div>
+                            )
+                        })}
                     </div>
                     {/* <!-- End Single Widget -->
                     <!-- Start Single Widget --> */}

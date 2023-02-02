@@ -80,7 +80,7 @@ const ListProducts = () => {
     const isNonMobile = useMediaQuery("(min-width: 980px)");
   return (
     <section class="product-grids section" >
-            <ShopSidebar showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
+        <ShopSidebar showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
         <div class="container">
             <div class="row">
                 {isNonMobile && <div class="col-lg-3 col-12">
