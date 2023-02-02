@@ -6,7 +6,7 @@ const ShopSidebar = ({setShowSidebar, showSidebar}) => {
 
   return (
     
-    <div className='absolute right-0 top-0 w-[80%] max-w-[80%] bg-white h-[100vh] z-10 border-2 ' >
+    <div className={`absolute ${showSidebar ? 'right-0' : '-right-[100%]'} transition-all ease-in-out delay-150  top-0 w-[80%] max-w-[80%] bg-white h-[100vh] z-10 border-2 `} >
      <p className='absolute right-0 m-[1rem] text-2xl mb-[1rem]' onClick={() => setShowSidebar(false)}><CloseIcon sx={{fontSize: '3rem'}} /> </p>  
     <div className='mt-[1.5rem]'>
         {/* <!-- Start Product Sidebar --> */}

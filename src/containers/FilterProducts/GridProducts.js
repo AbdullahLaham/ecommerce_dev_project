@@ -1,7 +1,7 @@
 import { Button, Rating, useMediaQuery } from '@mui/material';
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { getShopPageProducts } from '../../actions/general';
+import { getShopPageBrand, getShopPageProducts } from '../../actions/general';
 import GridProductsComp from '../../components/GridProductsComp';
 import GridViewIcon from '@mui/icons-material/GridView';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
@@ -12,21 +12,43 @@ import { useNavigate } from 'react-router-dom';
 import './filter.css';
 import ShopSidebar from '../../components/ShopSidebar';
 const GridProducts = () => {
-    const {filteredProducts} = useSelector((state) => state?.generalReducer);
+    const {filteredProducts, brands, numberOfPages} = useSelector((state) => state?.generalReducer);
+    console.log(numberOfPages, 'ffffffffffffffff')
+    // console.log('ggggg', brands);
     const [selected, setSelected] = useState('grid');
     const [showSidebar, setShowSidebar] = useState(false);
+    const [filterPrice, setFilterPrice] = useState('low');
+    const [filterBrandText, setFilterBrandText] = useState('');
+    const [filterText, setFilterText] = useState(`/filter-product`);
+    const [currentPage, setCurrentPage] = useState(1);
+    
+    const [filterBrand, setFilterBrand] = useState([]);
+    const updateFilterBrand = (id) => {
+        setFilterBrand([...filterBrand, id]);
+    }
     // navigate
     const navigate = useNavigate();
     // dispatch
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(getShopPageProducts());
+        let uniqueBrands = [...new Set(filterBrand)];
+        uniqueBrands?.map((brand, i) => {
+            setFilterBrandText(`${filterBrandText}&brandInputs[${i}]=${brand}`);
+            console.log('filterText', `${filterText}?sortPrice=${filterPrice}${filterBrandText}`)
+        });
+    }, [filterBrand]);
+    useEffect(() => {
+        dispatch(getShopPageProducts(`${filterText}?sortPrice=${filterPrice}${filterBrandText}&page=${currentPage}`));
+        
+    }, [filterPrice, filterBrandText, currentPage]);
+    useEffect(() => {
+        dispatch(getShopPageBrand(`/filter-product`));
     }, []);
     const isNonMobile = useMediaQuery("(min-width: 980px)");
   return (
     <>  
     <section class="product-grids section">
-        {!isNonMobile && showSidebar && <ShopSidebar showSidebar={showSidebar} setShowSidebar={setShowSidebar} />}
+        <ShopSidebar showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
     <div class="container">
         <div class="row">
             {isNonMobile && <div class="col-lg-3 col-12">
@@ -112,54 +134,16 @@ const GridProducts = () => {
                     <!-- Start Single Widget --> */}
                     <div class="single-widget condition">
                         <h3>Filter by Brand</h3>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault11" />
-                            <label class="form-check-label" for="flexCheckDefault11">
-                                Apple (254)
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault22" />
-                            <label class="form-check-label" for="flexCheckDefault22">
-                                Bosh (39)
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault33" />
-                            <label class="form-check-label" for="flexCheckDefault33">
-                                Canon Inc. (128)
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault44" />
-                            <label class="form-check-label" for="flexCheckDefault44">
-                                Dell (310)
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault55" />
-                            <label class="form-check-label" for="flexCheckDefault55">
-                                Hewlett-Packard (42)
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault66" />
-                            <label class="form-check-label" for="flexCheckDefault66">
-                                Hitachi (217)
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault77" />
-                            <label class="form-check-label" for="flexCheckDefault77">
-                                LG Electronics (310)
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault88" />
-                            <label class="form-check-label" for="flexCheckDefault88">
-                                Panasonic (74)
-                            </label>
-                        </div>
+                        {brands?.map((b) => {
+                            return (
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value={b?.id} name="brandInput[]" onChange={(e) => updateFilterBrand(e.target.value)} />
+                                    <label class="form-check-label" for="flexCheckDefault22">
+                                        {b?.name} ({b?.id})
+                                    </label>
+                                </div>
+                            )
+                        })}
                     </div>
                     {/* <!-- End Single Widget --> */}
                 </div>
@@ -172,13 +156,9 @@ const GridProducts = () => {
                             <div class="col-lg-7 col-md-8 col-12">
                                 <div class="product-sorting">
                                     <label for="sorting">Sort by:</label>
-                                    <select class="form-control" id="sorting">
-                                        <option>Popularity</option>
-                                        <option>Low - High Price</option>
-                                        <option>High - Low Price</option>
-                                        <option>Average Rating</option>
-                                        <option>A - Z Order</option>
-                                        <option>Z - A Order</option>
+                                    <select class="form-control" id="sorting" onChange={(e) => setFilterPrice(e?.target?.value)}>
+                                        <option value='low'>Low - High Price</option>
+                                        <option value='high'>High - Low Price</option>
                                     </select>
                                     <h3 class="total-show-product">Showing: <span>1 - 12 items</span></h3>
                                 </div>
@@ -226,12 +206,9 @@ const GridProducts = () => {
                                     {/* <!-- Pagination --> */}
                                     <div class="pagination left">
                                         <ul class="pagination-list">
-                                            <li><a href="javascript:void(0)">1</a></li>
-                                            <li class="active"><a href="javascript:void(0)">2</a></li>
-                                            <li><a href="javascript:void(0)">3</a></li>
-                                            <li><a href="javascript:void(0)">4</a></li>
-                                            <li><a href="javascript:void(0)"><i
-                                                        class="lni lni-chevron-right"></i></a></li>
+                                            {(new Array(numberOfPages).fill(0)).map((item, i) => {
+                                                return <li class="active" onClick={() => setCurrentPage(i+1)}><a href="javascript:void(0)">{i+1}</a></li>
+                                            })}
                                         </ul>
                                     </div>
                                      {/* End Pagination  */}

@@ -12,19 +12,44 @@ import { Button, useMediaQuery } from '@mui/material';
 import ShopSidebar from '../../components/ShopSidebar';
 
 const ListProducts = () => {
-    const {filteredProducts, brands} = useSelector((state) => state?.generalReducer);
-    // console.log(filteredProducts, 'ffffffffffffffff')
+    const {filteredProducts, brands, categories ,numberOfPages} = useSelector((state) => state?.generalReducer);
+    
+    console.log(brands, 'ffffffffffffffff')
     // console.log('ggggg', brands);
     const [selected, setSelected] = useState('list');
     const [showSidebar, setShowSidebar] = useState(false);
     const [filterPrice, setFilterPrice] = useState('low');
     const [filterBrandText, setFilterBrandText] = useState('');
+    const [filterCategoryText, setFilterCategoryText] = useState('');
     const [filterText, setFilterText] = useState(`/filter-product`);
-    
+    const [currentPage, setCurrentPage] = useState(1);
     const [filterBrand, setFilterBrand] = useState([]);
+    const [filterCategory, setFilterCategory] = useState([]);
+
     const updateFilterBrand = (id) => {
-        setFilterBrand([...filterBrand, id]);
+        if (!filterBrand?.includes(id)) {
+            setFilterBrand([...filterBrand, id]);
+        }
+        else {
+            let newBrand = filterBrand.filter((brand) => brand != id);
+            console.log(filterCategory, newBrand)
+            setFilterBrand(newBrand)
+        }
     }
+    const updateFilterCategory = (id) => {
+        console.log(filterCategory?.includes(id))
+
+        if (!filterCategory?.includes(id)) {
+            
+            setFilterCategory([...filterCategory, id]);
+        }
+        else {  
+            let newCategory = filterCategory.filter((categ) => categ != id);
+            console.log(filterCategory, newCategory)
+            setFilterCategory(newCategory);
+        }
+    }
+
     const updateFilterPrice = (id) => {
 
     }
@@ -32,24 +57,32 @@ const ListProducts = () => {
     const navigate = useNavigate();
     // dispatch
     const dispatch = useDispatch();
+
     useEffect(() => {
-        let uniqueBrands = [...new Set(filterBrand)];
-        uniqueBrands?.map((brand, i) => {
-            setFilterBrandText(`${filterBrandText}&brandInputs[${i}]=${brand}`);
-            console.log('filterText', `${filterText}?sortPrice=${filterPrice}${filterBrandText}`)
-        });
-    }, [filterBrand]);
-    useEffect(() => {
-        dispatch(getShopPageProducts(`${filterText}?sortPrice=${filterPrice}${filterBrandText}`));
+        // let uniqueBrands = [...new Set(filterBrand)];
         
-    }, [filterPrice, filterBrandText]);
+        filterBrand?.map((brand, i) => {
+            setFilterBrandText(`${filterBrandText}&brandInputs[${i}]=${brand}`);
+        });
+
+        filterCategory?.map((category, i) => {
+            setFilterCategoryText(`${filterCategoryText}&categoryInputs[${i}]=${category}`);
+        });
+        
+    }, [filterBrand, filterCategory]);
+
+    useEffect(() => {
+        console.log('filterText', `${filterText}?sortPrice=${filterPrice}${filterBrandText}${filterCategoryText}`)
+        dispatch(getShopPageProducts(`${filterText}?sortPrice=${filterPrice}${filterBrandText}${filterCategoryText}&page=${currentPage}`));
+    }, [filterPrice, filterBrandText, currentPage, filterCategoryText]);
+
     // useEffect(() => {
-    //     dispatch(getShopPageBrand());
+    //     dispatch(getShopPageBrand(`/filter-product`));
     // }, []);
     const isNonMobile = useMediaQuery("(min-width: 980px)");
   return (
     <section class="product-grids section" >
-            {!isNonMobile && showSidebar && <ShopSidebar showSidebar={showSidebar} setShowSidebar={setShowSidebar} />}
+            <ShopSidebar showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
         <div class="container">
             <div class="row">
                 {isNonMobile && <div class="col-lg-3 col-12">
@@ -67,36 +100,23 @@ const ListProducts = () => {
                         <!-- Start Single Widget --> */}
                         <div class="single-widget">
                             <h3>All Categories</h3>
-                            <ul class="list">
-                                <li>
-                                    <a href="product-grids.html">Computers & Accessories </a><span>(1138)</span>
-                                </li>
-                                <li>
-                                    <a href="product-grids.html">Smartphones & Tablets</a><span>(2356)</span>
-                                </li>
-                                <li>
-                                    <a href="product-grids.html">TV, Video & Audio</a><span>(420)</span>
-                                </li>
-                                <li>
-                                    <a href="product-grids.html">Cameras, Photo & Video</a><span>(874)</span>
-                                </li>
-                                <li>
-                                    <a href="product-grids.html">Headphones</a><span>(1239)</span>
-                                </li>
-                                <li>
-                                    <a href="product-grids.html">Wearable Electronics</a><span>(340)</span>
-                                </li>
-                                <li>
-                                    <a href="product-grids.html">Printers & Ink</a><span>(512)</span>
-                                </li>
-                            </ul>
+                            {categories?.map((b, i) => {
+                                return (
+                                    <div class="form-check">
+                                        <input class="form-check-input" id={`input${i}`} type="checkbox" value={b?.id} name="brandInput[]"  onChange={(e) => updateFilterCategory(e.target.value)} />
+                                        <label class="form-check-label" for={`input${i}`}>
+                                            {b?.name} ({b?.id})
+                                        </label>
+                                    </div>
+                                )
+                            })}
                         </div>
                         {/* <!-- End Single Widget -->
                         <!-- Start Single Widget --> */}
                         <div class="single-widget range">
                             <h3>Price Range</h3>
                             <input type="range" class="form-range" name="range" step="1" min="100" max="10000"
-                                value="10" onchange="rangePrimary.value=value" />
+                                value="10" />
                             <div class="range-inner">
                                 <label>$</label>
                                 <input type="text" id="rangePrimary" placeholder="100" />
@@ -183,35 +203,12 @@ const ListProducts = () => {
                                             </div>
                                         </nav>
                                     </div>
-                                )
-                                
-                            
+                                )          
 }
-                                
                             </div>
                         </div>
                         <div class="tab-content" id="nav-tabContent">
-                            <div class="tab-pane fade" id="nav-grid" role="tabpanel" aria-labelledby="nav-grid-tab">
-                                <div class="row">
-
-                                </div>
-                                <div class="row">
-                                    <div class="col-12">
-                                        {/* <!-- Pagination --> */}
-                                        <div class="pagination left">
-                                            <ul class="pagination-list">
-                                                <li><a href="javascript:void(0)">1</a></li>
-                                                <li class="active"><a href="javascript:void(0)">2</a></li>
-                                                <li><a href="javascript:void(0)">3</a></li>
-                                                <li><a href="javascript:void(0)">4</a></li>
-                                                <li><a href="javascript:void(0)"><i
-                                                            class="lni lni-chevron-right"></i></a></li>
-                                            </ul>
-                                        </div>
-                                        {/* <!--/ End Pagination --> */}
-                                    </div>
-                                </div>
-                            </div>
+                            
                             <div class="tab-pane show active fade" id="nav-list" role="tabpanel"
                                 aria-labelledby="nav-list-tab">
                                 <div class="row">
@@ -222,6 +219,19 @@ const ListProducts = () => {
                                  })}  
                                 </div>
                                 
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    {/* <!-- Pagination --> */}
+                                    <div class="pagination left">
+                                        <ul class="pagination-list">
+                                            {(new Array(numberOfPages).fill(0)).map((item, i) => {
+                                                return <li class="active" onClick={() => setCurrentPage(i+1)}><a href="javascript:void(0)">{i+1}</a></li>
+                                            })}
+                                        </ul>
+                                    </div>
+                                     {/* End Pagination  */}
+                                </div>
                             </div>
                         </div>
                     </div>

@@ -9,6 +9,8 @@ const reducer = (state = {
         product: localStorage.getItem('product') ? JSON.parse(localStorage.getItem('product')) : {},
         language: 'Arabic',
         brands: localStorage.getItem('brands') ? JSON.parse(localStorage.getItem('brands')) : [] ,
+        categories: localStorage.getItem('categories') ? JSON.parse(localStorage.getItem('categories')) : [] ,
+        numberOfPages: localStorage.getItem('numberOfPages') ? JSON.parse(localStorage.getItem('numberOfPages')) : 1 ,
     },
     action
     ) => {
@@ -65,11 +67,14 @@ const reducer = (state = {
         //     return {...state, language: action?.payload}
         // }
         case ALL_PRODUCTS: {
-            return {...state, filteredProducts: action?.payload?.data}
+            
+            return {...state, filteredProducts: action?.payload?.data, numberOfPages: action?.payload?.last_page}
         }
         case GET_BRANDS: {
-            localStorage.setItem('brands', JSON.stringify(action?.payload));
-            return {...state, brands: action?.payload}
+            const {filter_brand, filter_category} = action?.payload
+            localStorage.setItem('brands', JSON.stringify(filter_brand));
+            localStorage.setItem('categories', JSON.stringify(filter_category));
+            return {...state, brands: filter_brand, categories: filter_category};
         }
         default: {
             return state;

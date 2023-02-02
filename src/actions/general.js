@@ -16,15 +16,16 @@ export const getCategories = () => async (dispatch) => {
 }
 // shop page functions
 export const getShopPageProducts = (text) => async (dispatch) =>  {
-    const {data: {data}} = await api.getShopPageProducts(text);
-    console.log('products', data);
-    dispatch({type: ALL_PRODUCTS, payload: data});
+    const {data} = await api.getShopPageProducts(text);
+    // console.log('products', data?.data);
+    dispatch({type: ALL_PRODUCTS, payload: data?.data});
+    const {filter_brand, filter_category} = data;
+    // console.log('filter', filter_brand);
+    dispatch({type: GET_BRANDS, payload: {filter_brand, filter_category}});
 }
 
-export const getShopPageBrand = () => async (dispatch) =>  {
-    const {data: {filter_brand}} = await api.getShopPageProducts();
-    console.log('filter', filter_brand);
-    dispatch({type: GET_BRANDS, payload: filter_brand});
+export const getShopPageBrand = (text) => async (dispatch) =>  {
+        
 }
 
 
