@@ -23,8 +23,7 @@ function App() {
         <Route path='/product/:slug' element={<ProdDetails />} />
         <Route path='/login' element={<LoginPage />} />
         <Route path='/register' element={<SignupPage />} />
-        <Route path='/shop' element={<GridProducts />} />
-
+        {/* <Route path='/shop' element={<GridProducts />} /> */}
       </Routes>
       <Footer />
     </div>

@@ -16,7 +16,7 @@ const GridProducts = () => {
     
     console.log(brands, 'ffffffffffffffff')
     // console.log('ggggg', brands);
-    const [selected, setSelected] = useState('list');
+    const [selected, setSelected] = useState('grid');
     const [showSidebar, setShowSidebar] = useState(false);
     const [filterPrice, setFilterPrice] = useState('low');
     const [filterBrandText, setFilterBrandText] = useState('');
@@ -58,7 +58,9 @@ const GridProducts = () => {
 
     useEffect(() => {
         // let uniqueBrands = [...new Set(filterBrand)];
-        
+        setFilterBrandText('');
+        setFilterCategoryText('');
+
         filterBrand?.map((brand, i) => {
             setFilterBrandText(`${filterBrandText}&brandInputs[${i}]=${brand}`);
         });
@@ -72,7 +74,7 @@ const GridProducts = () => {
     useEffect(() => {
         console.log('filterText', `${filterText}?sortPrice=${filterPrice}${filterBrandText}${filterCategoryText}`)
         dispatch(getShopPageProducts(`${filterText}?sortPrice=${filterPrice}${filterBrandText}${filterCategoryText}&page=${currentPage}`));
-    }, [filterBrandText,filterCategoryText]);
+    }, [filterBrandText,filterCategoryText, currentPage, filterPrice]);
 
     // useEffect(() => {
     //     dispatch(getShopPageBrand(`/filter-product`));

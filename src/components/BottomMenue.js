@@ -36,17 +36,44 @@ const nav = [
 ];
 const BottomMenue = () => {
     const [selected, setSelected] = useState('Home');
-    const isMobile = useMediaQuery("(min-width: 800px)")
+    const isMobile = useMediaQuery("(min-width: 800px)");
+    
   return (
     !isMobile && <Box sx={{position: 'sticky',zIndex: '1', bottom: '0', left: '0', backgroundColor: 'white', width: '100%', height: '4.5rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between'}} px='1rem'>
-        {
+        {/* {
             nav.map((item) => {
                 return <div className={`flex flex-col items-center relative text-gray-600 ${item.name == selected ? 'mb-[1rem]' : ''}`}>
                     <p onClick={() => {setSelected(item?.name)}} className={`text-[1.5rem] ${item?.name == selected ? 'p-[.5rem] bg-orange-500 text-white rounded-[50%] ' : ''}`}>{item?.icon}</p>
                     <p className='text-[.9rem]'>{item?.name}</p>
                 </div>
             })
-        }
+        } */}
+
+
+        <div className={`flex flex-col items-center relative text-gray-600 ${'Categories' == selected ? 'mb-[1rem]' : ''}`}>
+                <p onClick={() => {setSelected('Categories')}} className={`text-[1.5rem] ${'Categories' == selected ? 'p-[.5rem] bg-orange-500 text-white rounded-[50%] ' : ''}`}><CiTextAlignLeft  /></p>
+                <p className='text-[.9rem]'>Categories</p>
+        </div>
+
+        <div className={`flex flex-col items-center relative text-gray-600 ${'Cart' == selected ? 'mb-[1rem]' : ''}`}>
+                <p onClick={() => {setSelected('Cart')}} className={`text-[1.5rem] ${'Cart' == selected ? 'p-[.5rem] bg-orange-500 text-white rounded-[50%] ' : ''}`}><BsBag /></p>
+                <p className='text-[.9rem]'>{'Cart'}</p>
+        </div>
+
+        <div className={`flex flex-col items-center relative text-gray-600 ${'Home' == selected ? 'mb-[1rem]' : ''}`}>
+                <p onClick={() => {setSelected('Home')}} className={`text-[1.5rem] ${'Home' == selected ? 'p-[.5rem] bg-orange-500 text-white rounded-[50%] ' : ''}`}><AiOutlineHome  /></p>
+                <p className='text-[.9rem]'>Home</p>
+        </div>
+
+        <div className={`flex flex-col items-center relative text-gray-600 ${'Notification' == selected ? 'mb-[1rem]' : ''}`}>
+                <p onClick={() => {setSelected('Notification')}} className={`text-[1.5rem] ${'Notification' == selected ? 'p-[.5rem] bg-orange-500 text-white rounded-[50%] ' : ''}`}><IoIosNotificationsOutline  /></p>
+                <p className='text-[.9rem]'>Notification</p>
+        </div>
+
+        <div className={`flex flex-col items-center relative text-gray-600 ${'Account' == selected ? 'mb-[1rem]' : ''}`}>
+                <p onClick={() => {setSelected('Account')}} className={`text-[1.5rem] ${'Account' == selected ? 'p-[.5rem] bg-orange-500 text-white rounded-[50%] ' : ''}`}><BsPersonCircle /></p>
+                <p className='text-[.9rem]'>Account</p>
+        </div>
     </Box>
   )
 }

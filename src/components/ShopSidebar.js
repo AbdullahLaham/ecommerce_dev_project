@@ -2,8 +2,9 @@ import React from 'react'
 import '../containers/FilterProducts/ListProducts';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import CloseIcon from '@mui/icons-material/Close';
+import { useMediaQuery } from '@mui/material';
 const ShopSidebar = ({setShowSidebar, showSidebar}) => {
-
+    const isMobile = useMediaQuery("(max-width: 900px)");
   return (
     
     <div className={`absolute ${showSidebar ? 'right-0' : '-right-[100%]'} transition-all ease-in-out delay-150  top-0 w-[80%] max-w-[80%] bg-white h-[100vh] z-10 border-2 `} >

@@ -3,38 +3,45 @@ import React from 'react'
 import { Link } from 'react-router-dom';
 import '../containers/FilterProducts/filter.css';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
+import './flashDeals/localStyle.css';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import { useNavigate } from "react-router-dom";
+import AddIcon from '@mui/icons-material/Add';
 
 const GridProductsComp = ({product}) => {
     console.log('listProd', product);
-    const {name, selling_price, product_image, category, slug} = product;
+    const {name, selling_price, product_image, original_price , category, slug} = product;
     const {image} = product_image[0]; 
+    const navigate = useNavigate();
   return (
     <div class="col-lg-4 col-md-6 col-12">
         
         {/* <!-- Start Single Product --> */}
-        <div class="single-product">
-            <div class="product-image">
-                <img src={`https://applabb.account-collection.com/${image}`} className='max-h-[10rem] min-h-[10rem]' alt="#" />
-                <div class="button">
-                    <Link to={`/product/${slug}`} >
-                        <Button sx={{width: 'auto',}} variant='contained'><ShoppingCartOutlinedIcon sx={{fontSize:'1.5rem'}} /> Add to Cart</Button>
-                    </Link>        
+        <div className='box'>
+              <div className='product mtop'>
+                <div className='img'>
+                  <span className='discount'>{original_price}% Off</span>
+                  <img src={`https://applabb.account-collection.com/${image}`} className='' alt='' />
+                  <div className='product-like'>
+                    {/* <label>{count}</label> <br /> */}
+                    <FavoriteBorderIcon />
+                  </div>
                 </div>
-            </div>
-            <div class="product-info">
-                <span class="category">{category?.name}</span>
-                <h4 class="title">
-                    <a href="product-grids.html">{name}</a>
-                </h4>
-                <ul class="review">
-                    <Rating  value={4} readonly  />
-                    <li><span>4.0 Review(s)</span></li>
-                </ul>
-                <div class="price">
-                    <span>${selling_price}</span>
+                <div className='product-details'>
+                  <p className="text-start mb-0 mt-[.5rem] pl-[.4rem]">{name}</p>
+                  <div className='rate'>
+                    <Rating  sx={{textAlign: 'start', display: 'flex', justifyContent: 'start',my:'.5rem'}}  value={4} readOnly />
+                  </div>
+                  <div className='price'>
+                    <h4>{selling_price}$ <sub className='line-through	'>{original_price}$</sub></h4>
+                    {/* step : 3  
+                     if hami le button ma click garryo bahne 
+                    */}
+                    <button onClick={() => navigate(`/product/${slug}`)}><AddIcon /></button>
+                  </div>
                 </div>
+              </div>
             </div>
-        </div>
         {/* <!-- End Single Product --> */}
     </div>
   )

@@ -1,7 +1,7 @@
 
 import { Language } from '@mui/icons-material';
 import * as api from '../api'
-import {CATEGORY_PRODUCTS, CATEGORIES, LATEST_PRODUCTS, CURRENT_PRODUCT, LANGUAGE, ADD_TO_CART, ALL_PRODUCTS, GET_BRANDS} from '../constants'
+import {CATEGORY_PRODUCTS, CATEGORIES, LATEST_PRODUCTS, CURRENT_PRODUCT, LANGUAGE, ADD_TO_CART, ALL_PRODUCTS, GET_BRANDS, SLIDER_IMAGES} from '../constants'
 
 export const fetchLatestProducts = () => async (dispatch) => {
     const {data: {data}} = await api.getLatestProducts();
@@ -14,21 +14,24 @@ export const getCategories = () => async (dispatch) => {
     dispatch({type: CATEGORIES, payload: data});
 
 }
+
 // shop page functions
 export const getShopPageProducts = (text) => async (dispatch) =>  {
     const {data} = await api.getShopPageProducts(text);
-    // console.log('products', data?.data);
+    console.log('products', data);
     dispatch({type: ALL_PRODUCTS, payload: data?.data});
     const {filter_brand, filter_category} = data;
     // console.log('filter', filter_brand);
     dispatch({type: GET_BRANDS, payload: {filter_brand, filter_category}});
 }
 
-export const getShopPageBrand = (text) => async (dispatch) =>  {
-        
+export const getHomePageSlider = (text) => async (dispatch) =>  {
+    const {data: {data}} = await api.getHomePageSlider();
+    dispatch({type: SLIDER_IMAGES, payload: data});
+    console.log('sidebar', data);
 }
 
-
+// SliderImages
 
 export const getFilteredProducts = () => async (dispatch) =>  {
 

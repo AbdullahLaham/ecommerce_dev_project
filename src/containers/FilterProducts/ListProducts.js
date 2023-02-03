@@ -58,6 +58,8 @@ const ListProducts = () => {
 
     useEffect(() => {
         // let uniqueBrands = [...new Set(filterBrand)];
+        setFilterBrandText('');
+        setFilterCategoryText('');
         
         filterBrand?.map((brand, i) => {
             setFilterBrandText(`${filterBrandText}&brandInputs[${i}]=${brand}`);
@@ -72,7 +74,7 @@ const ListProducts = () => {
     useEffect(() => {
         console.log('filterText', `${filterText}?sortPrice=${filterPrice}${filterBrandText}${filterCategoryText}`)
         dispatch(getShopPageProducts(`${filterText}?sortPrice=${filterPrice}${filterBrandText}${filterCategoryText}&page=${currentPage}`));
-    }, [filterBrandText,filterCategoryText]);
+    }, [filterBrandText,filterCategoryText, currentPage, filterPrice]);
 
     // useEffect(() => {
     //     dispatch(getShopPageBrand(`/filter-product`));

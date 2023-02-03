@@ -6,8 +6,8 @@ import { styled, alpha } from '@mui/material/styles';
 import SearchIcon from '@mui/icons-material/Search';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
-import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Header = () => {
     const [language, setLanguage] = useState('Arabic');
@@ -15,6 +15,9 @@ const Header = () => {
     const [selected, setSelected] = useState('home') 
     const [anchorEl, setAnchorEl] = useState(null);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+    // categories data
+    const {categories} = useSelector((state) => state?.generalReducer);
     // useEffect(() => {
     //     dispatch(changeLanguage());
     // }, [language]);
@@ -25,6 +28,7 @@ const Header = () => {
     };
     const handleClose = () => {
         setAnchorEl(null);
+        navigate('/grid')
     };
 
     const isMobile = useMediaQuery("(min-width: 800px)");
@@ -143,9 +147,16 @@ const Header = () => {
                 open={open}
                 onClose={handleClose}
             >
-                <MenuItem onClick={handleClose} disableRipple>
-
-                </MenuItem>
+                {
+                    categories.map((item) => {
+                        return (
+                            <MenuItem onClick={handleClose} disableRipple>
+                                {item?.name}
+                            </MenuItem>
+                        )
+                    })
+                }
+                
                 
             </StyledMenu>
             <InputBase
@@ -185,7 +196,7 @@ const Header = () => {
         </Box>
         <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'center'}} mt='.5rem' >
             <Typography onClick={() => setSelected('home')} sx={{marginRight: '1rem', fontWeight: `${selected == 'home' ? 'bold' : 'normal'}`}}><Link to='/'  marginRight='1rem'>Home</Link></Typography>
-            <Link onClick={() => setSelected('shop')} to='/shop' sx={{fontWeight: `${selected == 'shop' ? 'bold' : 'normal'}`, fontWeight: 'bold'}}>Shop</Link>
+            <Link onClick={() => setSelected('shop')} to='/grid' sx={{fontWeight: `${selected == 'shop' ? 'bold' : 'normal'}`, fontWeight: 'bold'}}>Shop</Link>
         </Box>
     </div> : 
     // is Mobile screen
@@ -254,7 +265,7 @@ const Header = () => {
         </Box>
         <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'center'}} mt='.5rem' >
             <Typography onClick={() => setSelected('home')} sx={{marginRight: '1rem', fontWeight: `${selected == 'home' ? 'bold' : 'normal'}`}}><Link to='/'  marginRight='1rem'>Home</Link></Typography>
-            <Link onClick={() => setSelected('shop')} to='/shop' sx={{fontWeight: `${selected == 'shop' ? 'bold' : 'normal'}`, fontWeight: 'bold'}}>Shop</Link>
+            <Link onClick={() => setSelected('shop')} to='/grid' sx={{fontWeight: `${selected == 'shop' ? 'bold' : 'normal'}`, fontWeight: 'bold'}}>Shop</Link>
         </Box>
     </Box>
   )

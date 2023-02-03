@@ -6,7 +6,7 @@ import apple from '../images/Available_on_the_App_Store_logo.png'
 const Footer = () => {
   return (
     <>
-      <div className='flex justify-center py-[1rem] border-t-2 border-b-2 border-t-gray-300 border-b-gray-300 text-gray-600 bg-gray-800 text-white '>
+      <div className='flex justify-center py-[1rem] border-t-2 border-b-2 border-t-gray-300 border-b-gray-300  bg-gray-800 text-white relative'>
       <div className='flex flex-col lg:flex-row justify-between w-[85%]'>
         <div className='flex flex-col h-[10rem] justify-around w-[100%] lg:w-auto'>
           <img className='w-[20rem]' src={logo} />

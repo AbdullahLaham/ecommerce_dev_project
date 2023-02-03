@@ -1,4 +1,4 @@
-import {  ADD_TO_CART, DELETE_FROM_CART, UPDATE_CART_ITEM, TRANSACTION, LATEST_PRODUCTS, CATEGORY_PRODUCTS, CURRENT_PRODUCT, CATEGORIES, ALL_PRODUCTS, GET_BRANDS } from "../constants";
+import {  ADD_TO_CART, DELETE_FROM_CART, UPDATE_CART_ITEM, TRANSACTION, LATEST_PRODUCTS, CATEGORY_PRODUCTS, CURRENT_PRODUCT, CATEGORIES, ALL_PRODUCTS, GET_BRANDS, SLIDER_IMAGES } from "../constants";
 const reducer = (state = { 
         cart: localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')) : [],
         // transaction: null,
@@ -11,6 +11,7 @@ const reducer = (state = {
         brands: localStorage.getItem('brands') ? JSON.parse(localStorage.getItem('brands')) : [] ,
         categories: localStorage.getItem('categories') ? JSON.parse(localStorage.getItem('categories')) : [] ,
         numberOfPages: localStorage.getItem('numberOfPages') ? JSON.parse(localStorage.getItem('numberOfPages')) : 1 ,
+        sidebarData: localStorage.getItem('sidebarData') ? JSON.parse(localStorage.getItem('sidebarData')) : [] ,
     },
     action
     ) => {
@@ -71,10 +72,14 @@ const reducer = (state = {
             return {...state, filteredProducts: action?.payload?.data, numberOfPages: action?.payload?.last_page}
         }
         case GET_BRANDS: {
-            const {filter_brand, filter_category} = action?.payload
+            const {filter_brand, filter_category} = action?.payload;
             localStorage.setItem('brands', JSON.stringify(filter_brand));
             localStorage.setItem('categories', JSON.stringify(filter_category));
             return {...state, brands: filter_brand, categories: filter_category};
+        }
+        case SLIDER_IMAGES: {
+            localStorage.setItem('sidebarData', JSON.stringify(action?.payload))
+            return {...state, sidebarData: action?.payload}
         }
         default: {
             return state;

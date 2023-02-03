@@ -27,10 +27,10 @@ export const getShopPageProducts = async (text) => {
     return res;
 }
 
-export const getFilteredProducts = async () => {
-
+export const getHomePageSlider = async () => {
+    const res = await API.get('/slider-home');
+    return res;
 }
-
 
 export const getCategories = async () => {
     const res = await API.get('/categories');
