@@ -34,12 +34,12 @@ const nav = [
         icon: <BsPersonCircle />
     },
 ];
-const BottomMenue = () => {
+const BottomMenue = ({showAccountSidebar, setShowAccountSidebar}) => {
     const [selected, setSelected] = useState('Home');
     const isMobile = useMediaQuery("(min-width: 800px)");
     
   return (
-    !isMobile && <Box sx={{position: 'sticky',zIndex: '1', bottom: '0', left: '0', backgroundColor: 'white', width: '100%', height: '4.5rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between'}} px='1rem'>
+    !isMobile && <div className='fixed z-10 bottom-0 left-0 bg-white w-[100%] max-w-[100%] h-[4.5rem] flex items-center justify-between px-[1rem]'>
         {/* {
             nav.map((item) => {
                 return <div className={`flex flex-col items-center relative text-gray-600 ${item.name == selected ? 'mb-[1rem]' : ''}`}>
@@ -71,10 +71,10 @@ const BottomMenue = () => {
         </div>
 
         <div className={`flex flex-col items-center relative text-gray-600 ${'Account' == selected ? 'mb-[1rem]' : ''}`}>
-                <p onClick={() => {setSelected('Account')}} className={`text-[1.5rem] ${'Account' == selected ? 'p-[.5rem] bg-orange-500 text-white rounded-[50%] ' : ''}`}><BsPersonCircle /></p>
+                <p onClick={() => { setShowAccountSidebar(true)}} className={`text-[1.5rem] ${'Account' == selected ? 'p-[.5rem] bg-orange-500 text-white rounded-[50%] ' : ''}`}><BsPersonCircle /></p>
                 <p className='text-[.9rem]'>Account</p>
         </div>
-    </Box>
+    </div>
   )
 }
 

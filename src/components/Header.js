@@ -8,6 +8,7 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { CURRENT_CATEGORY } from '../constants';
 
 const Header = () => {
     const [language, setLanguage] = useState('Arabic');
@@ -26,9 +27,10 @@ const Header = () => {
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
-    const handleClose = () => {
+    const handleClose = (categoryId) => {
         setAnchorEl(null);
-        navigate('/grid')
+        dispatch({type: CURRENT_CATEGORY, payload: categoryId});
+        navigate('/grid');
     };
 
     const isMobile = useMediaQuery("(min-width: 800px)");
@@ -53,20 +55,20 @@ const Header = () => {
         },
         '& .MuiPaper-root': {
           borderRadius: 6,
-          marginTop: theme.spacing(1),
+        //   marginTop: theme.spacing(1),
           minWidth: 100,
           color:
             theme.palette.mode === 'light' ? 'rgb(55, 65, 81)' : theme.palette.grey[300],
           boxShadow:
             'rgb(255, 255, 255) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px',
           '& .MuiMenu-list': {
-            padding: '4px 0',
+            // padding: '4px 0',
           },
           '& .MuiMenuItem-root': {
             '& .MuiSvgIcon-root': {
               fontSize: 18,
               color: theme.palette.text.secondary,
-              marginRight: theme.spacing(1.5),
+            //   marginRight: theme.spacing(1.5),
             },
             '&:active': {
               backgroundColor: alpha(
@@ -150,7 +152,7 @@ const Header = () => {
                 {
                     categories.map((item) => {
                         return (
-                            <MenuItem onClick={handleClose} disableRipple>
+                            <MenuItem onClick={() => handleClose(item?.id)} disableRipple>
                                 {item?.name}
                             </MenuItem>
                         )
@@ -256,9 +258,15 @@ const Header = () => {
                     open={open}
                     onClose={handleClose}
                 >
-                    <MenuItem onClick={handleClose} disableRipple>
-
-                    </MenuItem>
+                {
+                    categories.map((item) => {
+                        return (
+                            <MenuItem onClick={() => handleClose(item?.id)} disableRipple>
+                                {item?.name}
+                            </MenuItem>
+                        )
+                    })
+                }
                     
                 </StyledMenu>
             </Box>    

@@ -8,7 +8,7 @@ const SliderHome = () => {
   console.log('dddd', sidebarData)
   return (
     <>
-      <section className='homeSlide contentWidth '>
+      <section className='homeSlide contentWidth -mt-[3rem]'>
         <div className='container'>
           <SlideCard data={sidebarData} />
         </div>

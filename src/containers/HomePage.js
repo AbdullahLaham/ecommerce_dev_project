@@ -11,7 +11,7 @@ import Footer from '../components/Footer'
 import Header from '../components/Header'
 import LatestProducts from '../components/latestProducts/LatestProducts'
 import SliderHome from '../components/productsSlider/Slider'
-
+import AccountSidebarComponent from '../components/AccountSidebarComponent'
 const HomePage = () => {
   const dispatch = useDispatch();
   useEffect(() => {
@@ -26,12 +26,12 @@ const HomePage = () => {
   return (
     <Box sx={{maxWidth: '100%',}}>
       <Box sx={{backgroundColor: '#F5F5F5', paddingTop: '1rem',}}>
-        
+        <AccountSidebarComponent showAccountSidebar={showAccountSidebar} setShowAccountSidebar={setShowAccountSidebar} />
         <SliderHome />
         <CategoriesBar categories={categories} />
         <FlashDeals products={products} />
         <BottomNav />
-        <BottomMenue />
+        <BottomMenue showAccountSidebar={showAccountSidebar} setShowAccountSidebar={setShowAccountSidebar}  /> 
       </Box>
       
       

@@ -11,10 +11,10 @@ import { useNavigate } from 'react-router-dom';
 
 import './filter.css';
 import ShopSidebar from '../../components/ShopSidebar';
+import { CURRENT_CATEGORY } from '../../constants';
 const GridProducts = () => {
-    const {filteredProducts, brands, categories ,numberOfPages} = useSelector((state) => state?.generalReducer);
-    
-    console.log(brands, 'ffffffffffffffff')
+    const {filteredProducts, brands, categories ,numberOfPages, currentCategory} = useSelector((state) => state?.generalReducer);
+    console.log(currentCategory, 'ffffffffffffffff')
     // console.log('ggggg', brands);
     const [selected, setSelected] = useState('grid');
     const [showSidebar, setShowSidebar] = useState(false);
@@ -24,28 +24,30 @@ const GridProducts = () => {
     const [filterText, setFilterText] = useState(`/filter-product`);
     const [currentPage, setCurrentPage] = useState(1);
     const [filterBrand, setFilterBrand] = useState([]);
-    const [filterCategory, setFilterCategory] = useState([]);
+    const [filterCategory, setFilterCategory] = useState(currentCategory);
 
+    const dispatch = useDispatch();
     const updateFilterBrand = (id) => {
         if (!filterBrand?.includes(id)) {
             setFilterBrand([...filterBrand, id]);
         }
         else {
             let newBrand = filterBrand.filter((brand) => brand != id);
-            console.log(filterCategory, newBrand)
-            setFilterBrand(newBrand)
+            setFilterBrand(newBrand);
         }
     }
     const updateFilterCategory = (id) => {
-        if (!filterCategory?.includes(id)) {
+        dispatch({type: CURRENT_CATEGORY, payload: id});
+        console.log(id, currentCategory)
+        // if (!filterCategory?.includes(id)) {
             
-            setFilterCategory([...filterCategory, id]);
-        }
-        else {  
-            let newCategory = filterCategory.filter((categ) => categ != id);
-            console.log(filterCategory, newCategory)
-            setFilterCategory(newCategory);
-        }
+        //     setFilterCategory([...filterCategory, id]);
+        // }
+        // else {  
+        //     let newCategory = filterCategory.filter((categ) => categ != id);
+        //     console.log('dddddd',filterCategory, newCategory)
+        //     setFilterCategory(newCategory);
+        // }
     }
 
     const updateFilterPrice = (id) => {
@@ -54,8 +56,11 @@ const GridProducts = () => {
     // navigate
     const navigate = useNavigate();
     // dispatch
-    const dispatch = useDispatch();
-
+    // useEffect(() => {
+    //     if (currentCategory != -1) {
+    //         updateFilterCategory(currentCategory);
+    //     }
+    // }, [currentCategory]);
     useEffect(() => {
         // let uniqueBrands = [...new Set(filterBrand)];
         setFilterBrandText('');
@@ -65,16 +70,16 @@ const GridProducts = () => {
             setFilterBrandText(`${filterBrandText}&brandInputs[${i}]=${brand}`);
         });
 
-        filterCategory?.map((category, i) => {
-            setFilterCategoryText(`${filterCategoryText}&categoryInputs[${i}]=${category}`);
-        });
+        // filterCategory?.map((category, i) => {
+        //     setFilterCategoryText(`${filterCategoryText}&categoryInputs[${i}]=${category}`);
+        // });
         
     }, [filterBrand, filterCategory]);
 
     useEffect(() => {
         console.log('filterText', `${filterText}?sortPrice=${filterPrice}${filterBrandText}${filterCategoryText}`)
-        dispatch(getShopPageProducts(`${filterText}?sortPrice=${filterPrice}${filterBrandText}${filterCategoryText}&page=${currentPage}`));
-    }, [filterBrandText,filterCategoryText, currentPage, filterPrice]);
+        dispatch(getShopPageProducts(`${filterText}?sortPrice=${filterPrice}${filterBrandText}&categoryInputs[0]=${currentCategory}&page=${currentPage}`));
+    }, [filterBrandText,filterCategory, currentPage, filterPrice, currentCategory]);
 
     // useEffect(() => {
     //     dispatch(getShopPageBrand(`/filter-product`));
@@ -83,7 +88,10 @@ const GridProducts = () => {
   return (
     <>  
     <section class="product-grids section">
-    <ShopSidebar showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
+    <ShopSidebar showSidebar={showSidebar} setShowSidebar={setShowSidebar} filterPrice={filterPrice} setFilterPrice={setFilterPrice} filterBrandText={filterBrandText} 
+    setFilterBrandText={setFilterBrandText} filterText={filterText} setFilterText={setFilterText} currentPage={currentPage} setCurrentPage={setCurrentPage}
+    filterBrand={filterBrand} setFilterBrand={setFilterBrand} filterCategory={filterCategory} setFilterCategory={setFilterCategory}
+        />
     <div class="container">
         <div class="row">
             {isNonMobile && <div class="col-lg-3 col-12">
@@ -102,15 +110,15 @@ const GridProducts = () => {
                     <div class="single-widget">
                         <h3>All Categories</h3>
                         {categories?.map((b, i) => {
-                            return (
-                                <div class="form-check">
-                                    <input class="form-check-input" id={`input${i}`} type="checkbox" value={b?.id} name="brandInput[]"  onChange={(e) => updateFilterCategory(e.target.value)} />
-                                    <label class="form-check-label" for={`input${i}`}>
-                                        {b?.name} ({b?.id})
-                                    </label>
-                                </div>
-                            )
-                        })}
+                                return (
+                                    <div class="form-check">
+                                        {/* <input class="form-check-input" id={`input${i}`} type="checkbox" value={} name="brandInput[]"   /> */}
+                                        <label className='cursor-pointer' for={`input${i}`} onClick={() => updateFilterCategory(b?.id)}>
+                                            {b?.name} ({b?.id})
+                                        </label>
+                                    </div>
+                                )
+                            })}
                     </div>
                     {/* <!-- End Single Widget -->
                     <!-- Start Single Widget --> */}
@@ -159,7 +167,7 @@ const GridProducts = () => {
                         {brands?.map((b) => {
                             return (
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value={b?.id} name="brandInput[]" onChange={(e) => updateFilterBrand(e.target.value)} />
+                                    <input className='mr-[.5rem]' type="checkbox" value={b?.id} name="brandInput[]" onChange={(e) => updateFilterBrand(e.target.value)} />
                                     <label class="form-check-label" for="flexCheckDefault22">
                                         {b?.name} ({b?.id})
                                     </label>

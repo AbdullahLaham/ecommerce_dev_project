@@ -1,10 +1,91 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import '../containers/FilterProducts/ListProducts';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import CloseIcon from '@mui/icons-material/Close';
-import { useMediaQuery } from '@mui/material';
-const ShopSidebar = ({setShowSidebar, showSidebar}) => {
+import { Button, Rating, useMediaQuery } from '@mui/material';
+import { useDispatch, useSelector } from 'react-redux';
+import { getShopPageBrand, getShopPageProducts } from '../actions/general';
+import GridViewIcon from '@mui/icons-material/GridView';
+import FilterAltIcon from '@mui/icons-material/FilterAlt';
+import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
+import { useNavigate } from 'react-router-dom';
+
+import '../containers/FilterProducts/filter.css';
+import { CURRENT_CATEGORY } from '../constants';
+const ShopSidebar = ({showSidebar, setShowSidebar, filterPrice, setFilterPrice, filterBrandText, 
+    setFilterBrandText, filterText, setFilterText, currentPage, setCurrentPage,
+    filterBrand, setFilterBrand, filterCategory, setFilterCategory,}) => {
     const isMobile = useMediaQuery("(max-width: 900px)");
+    const {filteredProducts, brands, categories ,numberOfPages, currentCategory} = useSelector((state) => state?.generalReducer);
+    console.log(currentCategory, 'ffffffffffffffff')
+    // console.log('ggggg', brands);
+    const [selected, setSelected] = useState('grid');
+
+    const dispatch = useDispatch();
+    const updateFilterBrand = (id) => {
+        if (!filterBrand?.includes(id)) {
+            setFilterBrand([...filterBrand, id]);
+        }
+        else {
+            let newBrand = filterBrand.filter((brand) => brand != id);
+            console.log(filterCategory, newBrand);
+            setFilterBrand(newBrand);
+        }
+    }
+    const updateFilterCategory = (id) => {
+        dispatch({type: CURRENT_CATEGORY, payload: id});
+        console.log(id, currentCategory)
+        // if (!filterCategory?.includes(id)) {
+            
+        //     setFilterCategory([...filterCategory, id]);
+        // }
+        // else {  
+        //     let newCategory = filterCategory.filter((categ) => categ != id);
+        //     console.log('dddddd',filterCategory, newCategory)
+        //     setFilterCategory(newCategory);
+        // }
+    }
+
+    const updateFilterPrice = (id) => {
+
+    }
+    // navigate
+    const navigate = useNavigate();
+    // dispatch
+    // useEffect(() => {
+    //     if (currentCategory != -1) {
+    //         updateFilterCategory(currentCategory);
+    //     }
+    // }, [currentCategory]);
+    useEffect(() => {
+        
+        // let uniqueBrands = [...new Set(filterBrand)];
+        setFilterBrandText('');
+        // setFilterCategoryText('');
+
+        filterBrand?.map((brand, i) => {
+            setFilterBrandText(`${filterBrandText}&brandInputs[${i}]=${brand}`);
+        });
+
+        // filterCategory?.map((category, i) => {
+        //     setFilterCategoryText(`${filterCategoryText}&categoryInputs[${i}]=${category}`);
+        // });
+        
+    }, [filterBrand, filterCategory]);
+
+    useEffect(() => {
+        console.log('filterText', `${filterText}?sortPrice=${filterPrice}${filterBrandText}`)
+        dispatch(getShopPageProducts(`${filterText}?sortPrice=${filterPrice}${filterBrandText}&categoryInputs[0]=${currentCategory}&page=${currentPage}`));
+    }, [filterBrandText,filterCategory, currentPage, filterPrice, currentCategory]);
+
+    // useEffect(() => {
+    //     dispatch(getShopPageBrand(`/filter-product`));
+    // }, []);
+    const isNonMobile = useMediaQuery("(min-width: 980px)");
+
+
+
+
   return (
     
     <div className={`absolute ${showSidebar ? 'right-0' : '-right-[100%]'} transition-all ease-in-out delay-150  top-0 w-[80%] max-w-[80%] bg-white h-[100vh] z-10 border-2 `} >
@@ -24,29 +105,16 @@ const ShopSidebar = ({setShowSidebar, showSidebar}) => {
             <!-- Start Single Widget --> */}
             <div class="single-widget">
                 <h3>All Categories</h3>
-                <ul class="list">
-                    <li>
-                        <a href="product-grids.html">Computers & Accessories </a><span>(1138)</span>
-                    </li>
-                    <li>
-                        <a href="product-grids.html">Smartphones & Tablets</a><span>(2356)</span>
-                    </li>
-                    <li>
-                        <a href="product-grids.html">TV, Video & Audio</a><span>(420)</span>
-                    </li>
-                    <li>
-                        <a href="product-grids.html">Cameras, Photo & Video</a><span>(874)</span>
-                    </li>
-                    <li>
-                        <a href="product-grids.html">Headphones</a><span>(1239)</span>
-                    </li>
-                    <li>
-                        <a href="product-grids.html">Wearable Electronics</a><span>(340)</span>
-                    </li>
-                    <li>
-                        <a href="product-grids.html">Printers & Ink</a><span>(512)</span>
-                    </li>
-                </ul>
+                {categories?.map((b, i) => {
+                    return (
+                        <div class="form-check">
+                            {/* <input class="form-check-input" id={`input${i}`} type="checkbox" value={} name="brandInput[]"   /> */}
+                            <label className='cursor-pointer' for={`input${i}`} onClick={() => updateFilterCategory(b?.id)}>
+                                {b?.name} ({b?.id})
+                            </label>
+                        </div>
+                    )
+                })}
             </div>
             {/* <!-- End Single Widget -->
             <!-- Start Single Widget --> */}
@@ -91,55 +159,18 @@ const ShopSidebar = ({setShowSidebar, showSidebar}) => {
             {/* <!-- End Single Widget -->
             <!-- Start Single Widget --> */}
             <div class="single-widget condition">
-                <h3>Filter by Brand</h3>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault11" />
-                    <label class="form-check-label" for="flexCheckDefault11">
-                        Apple (254)
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault22" />
-                    <label class="form-check-label" for="flexCheckDefault22">
-                        Bosh (39)
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault33" />
-                    <label class="form-check-label" for="flexCheckDefault33">
-                        Canon Inc. (128)
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault44" />
-                    <label class="form-check-label" for="flexCheckDefault44">
-                        Dell (310)
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault55" />
-                    <label class="form-check-label" for="flexCheckDefault55">
-                        Hewlett-Packard (42)
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault66" />
-                    <label class="form-check-label" for="flexCheckDefault66">
-                        Hitachi (217)
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault77" />
-                    <label class="form-check-label" for="flexCheckDefault77">
-                        LG Electronics (310)
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault88" />
-                    <label class="form-check-label" for="flexCheckDefault88">
-                        Panasonic (74)
-                    </label>
-                </div>
+            <h3>Filter by Brand</h3>
+                           
+            {brands?.map((b) => {
+                return (
+                    <div class="form-check">
+                        <input className='mr-[.5rem]' type="checkbox" value={b?.id} name="brandInput[]" onChange={(e) => updateFilterBrand(e.target.value)} />
+                        <label class="form-check-label" for="flexCheckDefault22">
+                            {b?.name} ({b?.id})
+                        </label>
+                    </div>
+                )
+            })}
             </div>
             {/* <!-- End Single Widget --> */}
         </div>

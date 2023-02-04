@@ -5,7 +5,7 @@ import { SwiperSlide } from 'swiper/react'
 import mobile from '../../images/mobile.png'
 const CategoryComponent = ({ category }) => {
   const {name, description, image} = category;
-
+//  const 
   return (
       <Paper sx={{display: 'flex', flexDirection: 'column', width:'17rem', marginX: 'auto', }}>
         {/* category image */}

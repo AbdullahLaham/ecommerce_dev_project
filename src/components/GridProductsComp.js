@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 import AddIcon from '@mui/icons-material/Add';
 
 const GridProductsComp = ({product}) => {
-    console.log('listProd', product);
+    // console.log('listProd', product);
     const {name, selling_price, product_image, original_price , category, slug} = product;
     const {image} = product_image[0]; 
     const navigate = useNavigate();

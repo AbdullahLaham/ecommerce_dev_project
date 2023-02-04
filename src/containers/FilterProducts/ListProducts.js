@@ -10,10 +10,10 @@ import { useNavigate } from 'react-router-dom';
 import './filter.css';
 import { Button, useMediaQuery } from '@mui/material';
 import ShopSidebar from '../../components/ShopSidebar';
+import { CURRENT_CATEGORY } from '../../constants';
 
 const ListProducts = () => {
-    const {filteredProducts, brands, categories ,numberOfPages} = useSelector((state) => state?.generalReducer);
-    
+    const {filteredProducts, brands, categories ,numberOfPages, currentCategory} = useSelector((state) => state?.generalReducer);
     console.log(brands, 'ffffffffffffffff')
     // console.log('ggggg', brands);
     const [selected, setSelected] = useState('list');
@@ -24,7 +24,7 @@ const ListProducts = () => {
     const [filterText, setFilterText] = useState(`/filter-product`);
     const [currentPage, setCurrentPage] = useState(1);
     const [filterBrand, setFilterBrand] = useState([]);
-    const [filterCategory, setFilterCategory] = useState([]);
+    const [filterCategory, setFilterCategory] = useState(currentCategory);
 
     const updateFilterBrand = (id) => {
         if (!filterBrand?.includes(id)) {
@@ -37,15 +37,18 @@ const ListProducts = () => {
         }
     }
     const updateFilterCategory = (id) => {
-        if (!filterCategory?.includes(id)) {
+        dispatch({type: CURRENT_CATEGORY, payload: id});
+        console.log(id, currentCategory);
+
+        // if (!filterCategory?.includes(id)) {
             
-            setFilterCategory([...filterCategory, id]);
-        }
-        else {  
-            let newCategory = filterCategory.filter((categ) => categ != id);
-            console.log(filterCategory, newCategory)
-            setFilterCategory(newCategory);
-        }
+        //     setFilterCategory([...filterCategory, id]);
+        // }
+        // else {  
+        //     let newCategory = filterCategory.filter((categ) => categ != id);
+        //     console.log(filterCategory, newCategory)
+        //     setFilterCategory(newCategory);
+        // }
     }
 
     const updateFilterPrice = (id) => {
@@ -65,16 +68,16 @@ const ListProducts = () => {
             setFilterBrandText(`${filterBrandText}&brandInputs[${i}]=${brand}`);
         });
 
-        filterCategory?.map((category, i) => {
-            setFilterCategoryText(`${filterCategoryText}&categoryInputs[${i}]=${category}`);
-        });
+        // filterCategory?.map((category, i) => {
+        //     setFilterCategoryText(`${filterCategoryText}&categoryInputs[${i}]=${category}`);
+        // });
         
     }, [filterBrand, filterCategory]);
 
     useEffect(() => {
         console.log('filterText', `${filterText}?sortPrice=${filterPrice}${filterBrandText}${filterCategoryText}`)
-        dispatch(getShopPageProducts(`${filterText}?sortPrice=${filterPrice}${filterBrandText}${filterCategoryText}&page=${currentPage}`));
-    }, [filterBrandText,filterCategoryText, currentPage, filterPrice]);
+        dispatch(getShopPageProducts(`${filterText}?sortPrice=${filterPrice}${filterBrandText}&categoryInputs[0]=${currentCategory}&page=${currentPage}`));
+    }, [filterBrandText,filterCategory, currentPage, filterPrice, currentCategory]);
 
     // useEffect(() => {
     //     dispatch(getShopPageBrand(`/filter-product`));
@@ -82,7 +85,10 @@ const ListProducts = () => {
     const isNonMobile = useMediaQuery("(min-width: 980px)");
   return (
     <section class="product-grids section" >
-        <ShopSidebar showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
+        <ShopSidebar showSidebar={showSidebar} setShowSidebar={setShowSidebar} filterPrice={filterPrice} setFilterPrice={setFilterPrice} filterBrandText={filterBrandText} 
+        setFilterBrandText={setFilterBrandText} filterText={filterText} setFilterText={setFilterText} currentPage={currentPage} setCurrentPage={setCurrentPage}
+        filterBrand={filterBrand} setFilterBrand={setFilterBrand} filterCategory={filterCategory} setFilterCategory={setFilterCategory}
+            />
         <div class="container">
             <div class="row">
                 {isNonMobile && <div class="col-lg-3 col-12">
@@ -103,8 +109,8 @@ const ListProducts = () => {
                             {categories?.map((b, i) => {
                                 return (
                                     <div class="form-check">
-                                        <input class="form-check-input" id={`input${i}`} type="checkbox" value={b?.id} name="brandInput[]"  onChange={(e) => updateFilterCategory(e.target.value)} />
-                                        <label class="form-check-label" for={`input${i}`}>
+                                        {/* <input class="form-check-input" id={`input${i}`} type="checkbox" value={} name="brandInput[]"   /> */}
+                                        <label className='cursor-pointer' for={`input${i}`} onClick={() => updateFilterCategory(b?.id)}>
                                             {b?.name} ({b?.id})
                                         </label>
                                     </div>
@@ -159,7 +165,7 @@ const ListProducts = () => {
                             {brands?.map((b) => {
                                 return (
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value={b?.id} name="brandInput[]" onChange={(e) => updateFilterBrand(e.target.value)} />
+                                        <input className='mr-[.5rem]' type="checkbox" value={b?.id} name="brandInput[]" onChange={(e) => updateFilterBrand(e.target.value)} />
                                         <label class="form-check-label" for="flexCheckDefault22">
                                             {b?.name} ({b?.id})
                                         </label>
@@ -203,7 +209,7 @@ const ListProducts = () => {
                                             </div>
                                         </nav>
                                     </div>
-                                )          
+                                )
 }
                             </div>
                         </div>
