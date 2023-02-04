@@ -13,14 +13,25 @@ import ProductDetails from './containers/productDetails';
 import ProdDetails from './containers/ProdDetails';
 import WishlistPage from './containers/WishlistPage';
 import CartPage from './containers/CartPage';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import BottomMenue from './components/BottomMenue';
+import AccountSidebarComponent from './components/AccountSidebarComponent';
+import { useMediaQuery } from '@mui/material';
+
 
 function App() {
   const [showAccountSidebar, setShowAccountSidebar] = useState(false);
+  const isMobile = useMediaQuery("(max-width: 800px)");
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  }, [showAccountSidebar])
   return (
-    <div className="App relative">
+    <div className="App w-[100%] min-w-[100%] ">
       <Header />
+      {isMobile && <AccountSidebarComponent showAccountSidebar={showAccountSidebar} setShowAccountSidebar={setShowAccountSidebar} />}
       <Routes>
         <Route path='/' element={<HomePage showAccountSidebar={showAccountSidebar} setShowAccountSidebar={setShowAccountSidebar} />} />
         <Route path='/list' element={<ListProducts />} />

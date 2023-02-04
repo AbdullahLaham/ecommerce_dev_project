@@ -23,9 +23,9 @@ const HomePage = ({showAccountSidebar, setShowAccountSidebar}) => {
   const {categories} = useSelector((state) => state?.generalReducer);
   console.log('prod', categories);
   return (
-    <Box sx={{maxWidth: '100%', }} mx='auto' width='100%' >
+    <Box sx={{maxWidth: '100%', }} mx='auto' minWidth='100%' >
       <Box sx={{backgroundColor: '#F5F5F5', paddingTop: '1rem',}}>
-        <AccountSidebarComponent showAccountSidebar={showAccountSidebar} setShowAccountSidebar={setShowAccountSidebar} />
+        
         <SliderHome />
         <CategoriesBar categories={categories} />
         <FlashDeals products={products} />
