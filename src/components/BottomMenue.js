@@ -77,4 +77,4 @@ const BottomMenue = ({showAccountSidebar, setShowAccountSidebar}) => {
   )
 }
 
-export default BottomMenue
+export default BottomMenue;

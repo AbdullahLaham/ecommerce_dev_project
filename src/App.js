@@ -17,6 +17,7 @@ import { useEffect, useState } from 'react';
 import BottomMenue from './components/BottomMenue';
 import AccountSidebarComponent from './components/AccountSidebarComponent';
 import { useMediaQuery } from '@mui/material';
+import Dashboard from './containers/Dashboard';
 
 
 function App() {
@@ -29,7 +30,7 @@ function App() {
     });
   }, [showAccountSidebar])
   return (
-    <div className="App w-[100%] min-w-[100%] ">
+    <div className="App w-[100%] min-w-[100%] max-w-[100%] overflow-x-hidden ">
       <Header />
       {isMobile && <AccountSidebarComponent showAccountSidebar={showAccountSidebar} setShowAccountSidebar={setShowAccountSidebar} />}
       <Routes>
@@ -41,6 +42,8 @@ function App() {
         <Route path='/register' element={<SignupPage />} />
         <Route path='/wishlist' element={<WishlistPage />} />
         <Route path='/cart' element={<CartPage />} />
+        <Route path='/dashboard' element={<Dashboard />} />
+
         {/* <Route path='/shop' element={<GridProducts />} /> */}
       </Routes>
       <Footer />
