@@ -30,7 +30,7 @@ function App() {
     });
   }, [showAccountSidebar])
   return (
-    <div className="App w-[100%] min-w-[100%] max-w-[100%] overflow-x-hidden ">
+    <div className="App w-[100%] min-w-[100%] max-w-[100%] ">
       <Header />
       {isMobile && <AccountSidebarComponent showAccountSidebar={showAccountSidebar} setShowAccountSidebar={setShowAccountSidebar} />}
       <Routes>
