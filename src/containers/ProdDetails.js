@@ -3,7 +3,7 @@ import { Navigate, useNavigate, useParams } from 'react-router-dom'
 import axios from 'axios'
 import Checkbox from '../components/Checkbox'
 import { useSelector, useDispatch } from 'react-redux'
-import {addToCart, fetchProductDetails} from '../actions/general';
+import {fetchProductDetails} from '../actions/general';
 import CollectionsBookmarkOutlinedIcon from '@mui/icons-material/CollectionsBookmarkOutlined';
 import './FilterProducts/filter.css'
 import { Rating } from '@mui/material'
@@ -25,7 +25,7 @@ const ProdDetails = () => {
         // dispatch({type: UPDATE_CART_ITEM, payload: newCartComponent});
     }
     const addProductToCart = async () => {
-        dispatch(addToCart(product));
+        dispatch();
         navigate('/cart');
     }
         

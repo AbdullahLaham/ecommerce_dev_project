@@ -1,4 +1,4 @@
-import {  ADD_TO_CART, DELETE_FROM_CART, UPDATE_CART_ITEM, TRANSACTION, LATEST_PRODUCTS, CATEGORY_PRODUCTS, CURRENT_PRODUCT, CATEGORIES, ALL_PRODUCTS, GET_BRANDS, SLIDER_IMAGES, CURRENT_CATEGORY } from "../constants";
+import {  ADD_TO_CART, DELETE_FROM_CART, UPDATE_CART_ITEM, TRANSACTION, LATEST_PRODUCTS, CATEGORY_PRODUCTS, CURRENT_PRODUCT, CATEGORIES, ALL_PRODUCTS, GET_BRANDS, SLIDER_IMAGES, CURRENT_CATEGORY, WHISHLIST_ITEMS } from "../constants";
 const reducer = (state = { 
         cart: localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')) : [],
         // transaction: null,
@@ -13,6 +13,7 @@ const reducer = (state = {
         numberOfPages: localStorage.getItem('numberOfPages') ? JSON.parse(localStorage.getItem('numberOfPages')) : 1 ,
         sidebarData: localStorage.getItem('sidebarData') ? JSON.parse(localStorage.getItem('sidebarData')) : [],
         currentCategory: localStorage.getItem('currentCategory') ? localStorage.getItem('currentCategory') : -1,
+        whislistItems: localStorage.getItem('whislistItems') ? JSON.parse(localStorage.getItem('whislistItems')) : [],
     },
     action
     ) => {
@@ -47,24 +48,30 @@ const reducer = (state = {
             localStorage.setItem('cart', JSON.stringify(newCart));
             return {...state, cart: newCart}
         }
+
         case TRANSACTION: {
             localStorage.setItem('cart', null);
             return {...state, transaction: action?.payload};
         }
+
         case LATEST_PRODUCTS: {
             localStorage.setItem('products', JSON.stringify(action?.payload));
             return {...state, products: action?.payload};
         }
+        
         case CATEGORY_PRODUCTS: {
             return {...state, categoryProducts: action?.payload}
         }
+
         case CURRENT_PRODUCT: {
             localStorage.setItem('product', JSON.stringify(action?.payload))
             return {...state, product: action.payload}
         }
+
         case CATEGORIES: {
             return {...state, categories: action?.payload}
         }
+        
         // case LANGUAGE: {
         //     return {...state, language: action?.payload}
         // }
@@ -72,20 +79,29 @@ const reducer = (state = {
             
             return {...state, filteredProducts: action?.payload?.data, numberOfPages: action?.payload?.last_page}
         }
+
         case GET_BRANDS: {
             const {filter_brand, filter_category} = action?.payload;
             localStorage.setItem('brands', JSON.stringify(filter_brand));
             localStorage.setItem('categories', JSON.stringify(filter_category));
             return {...state, brands: filter_brand, categories: filter_category};
         }
+
         case SLIDER_IMAGES: {
             localStorage.setItem('sidebarData', JSON.stringify(action?.payload))
             return {...state, sidebarData: action?.payload}
         }
+
         case CURRENT_CATEGORY: {
             localStorage.setItem('currentCategory', action?.payload)
             return {...state, currentCategory: action.payload}
         }
+
+        case WHISHLIST_ITEMS: {
+            localStorage.setItem('whislistItems', JSON.stringify(action?.payload));
+            return {...state, whislistItems: action?.payload}
+        }
+
         default: {
             return state;
         }

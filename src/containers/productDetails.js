@@ -3,7 +3,8 @@ import { Navigate, useNavigate, useParams } from 'react-router-dom'
 import axios from 'axios'
 import Checkbox from '../components/Checkbox'
 import { useSelector, useDispatch } from 'react-redux'
-import {addToCart, fetchProductDetails} from '../actions/general';
+import { fetchProductDetails} from '../actions/general';
+import { ADD_TO_CART } from '../constants'
 
 const ProductDetails = () => {
     // const profile = useSelector((state) => state.login.data);
@@ -20,8 +21,8 @@ const ProductDetails = () => {
     // // dispatch
     const dispatch = useDispatch();
     
-    const addProductToCart = async () => {
-        dispatch(addToCart(product));
+    const addProductToCart = () => {
+        dispatch({type: ADD_TO_CART, paylod: product});
         navigate('/cart');
     }
         

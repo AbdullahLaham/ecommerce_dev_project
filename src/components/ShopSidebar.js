@@ -31,10 +31,12 @@ const ShopSidebar = ({showSidebar, setShowSidebar, filterPrice, setFilterPrice, 
             console.log(filterCategory, newBrand);
             setFilterBrand(newBrand);
         }
+        setShowSidebar(false);
     }
     const updateFilterCategory = (id) => {
         dispatch({type: CURRENT_CATEGORY, payload: id});
-        console.log(id, currentCategory)
+        console.log(id, currentCategory);
+        setShowSidebar(false);
         // if (!filterCategory?.includes(id)) {
             
         //     setFilterCategory([...filterCategory, id]);
@@ -82,10 +84,7 @@ const ShopSidebar = ({showSidebar, setShowSidebar, filterPrice, setFilterPrice, 
     //     dispatch(getShopPageBrand(`/filter-product`));
     // }, []);
     const isNonMobile = useMediaQuery("(min-width: 980px)");
-
-
-
-
+    
   return (
     
     <div className={`absolute ${showSidebar ? 'right-0' : '-right-[100%]'} transition-all ease-in-out delay-150  top-0 w-[80%] max-w-[80%] bg-white h-[100vh] z-10 border-2 `} >

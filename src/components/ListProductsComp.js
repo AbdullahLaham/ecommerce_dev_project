@@ -5,7 +5,9 @@ import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import { Link } from 'react-router-dom';
 const ListProductsComp = ({product}) => {
   const {name, selling_price, original_price, product_image, category, slug} = product;
-  const {image} = product_image[0]; 
+  const {image} = product_image[0];
+  
+   
   return (
     <div class="col-lg-12 col-md-12 col-12">
       {/* <!-- Start Single Product --> */}

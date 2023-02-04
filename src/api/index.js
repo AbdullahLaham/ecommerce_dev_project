@@ -51,3 +51,17 @@ export const createTransaction = async (orderData) => {
     const res = await API.post(`/general/createTransaction`, orderData);
     return res;
 }
+
+export const fetchWishlistItems = async () => {
+    const res = await API.get(`/wishlist-item`);
+    console.log('res', res);
+    return res;
+}
+export const addToWishlist = async (id) => {
+    const res = await API.post(`/add-wishlist`, {
+        product_id: id,
+    });
+    console.log('res', res);
+    return res;
+}
+

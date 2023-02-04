@@ -87,11 +87,11 @@ const GridProducts = () => {
     const isNonMobile = useMediaQuery("(min-width: 980px)");
   return (
     <>  
-    <section class="product-grids section">
+    <section class="product-grids section overflow-x-hidden">
     <ShopSidebar showSidebar={showSidebar} setShowSidebar={setShowSidebar} filterPrice={filterPrice} setFilterPrice={setFilterPrice} filterBrandText={filterBrandText} 
     setFilterBrandText={setFilterBrandText} filterText={filterText} setFilterText={setFilterText} currentPage={currentPage} setCurrentPage={setCurrentPage}
     filterBrand={filterBrand} setFilterBrand={setFilterBrand} filterCategory={filterCategory} setFilterCategory={setFilterCategory}
-        />
+    />
     <div class="container">
         <div class="row">
             {isNonMobile && <div class="col-lg-3 col-12">
@@ -106,6 +106,9 @@ const GridProducts = () => {
                         </form>
                     </div>
                     {/* <!-- End Single Widget -->
+
+
+to here
                     <!-- Start Single Widget --> */}
                     <div class="single-widget">
                         <h3>All Categories</h3>

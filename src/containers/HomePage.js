@@ -12,7 +12,7 @@ import Header from '../components/Header'
 import LatestProducts from '../components/latestProducts/LatestProducts'
 import SliderHome from '../components/productsSlider/Slider'
 import AccountSidebarComponent from '../components/AccountSidebarComponent'
-const HomePage = () => {
+const HomePage = ({showAccountSidebar, setShowAccountSidebar}) => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchLatestProducts());
@@ -21,17 +21,16 @@ const HomePage = () => {
   }, []);
   const {products} = useSelector((state) => state?.generalReducer);
   const {categories} = useSelector((state) => state?.generalReducer);
-  const [showAccountSidebar, setShowAccountSidebar] = useState(false);
   console.log('prod', categories);
   return (
-    <Box sx={{maxWidth: '100%',}}>
+    <Box sx={{maxWidth: '100%', }} mx='auto' width='100%' >
       <Box sx={{backgroundColor: '#F5F5F5', paddingTop: '1rem',}}>
         <AccountSidebarComponent showAccountSidebar={showAccountSidebar} setShowAccountSidebar={setShowAccountSidebar} />
         <SliderHome />
         <CategoriesBar categories={categories} />
         <FlashDeals products={products} />
         <BottomNav />
-        <BottomMenue showAccountSidebar={showAccountSidebar} setShowAccountSidebar={setShowAccountSidebar}  /> 
+        
       </Box>
       
       

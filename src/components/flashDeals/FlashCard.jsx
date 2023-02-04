@@ -9,6 +9,9 @@ import AddIcon from '@mui/icons-material/Add';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { useNavigate } from "react-router-dom";
 import "./localStyle.css"
+import { useDispatch } from "react-redux";
+import { addToWishlist } from "../../actions/general";
+import { ADD_TO_CART } from "../../constants";
 
 
 const SampleNextArrow = (props) => {
@@ -32,15 +35,27 @@ const SamplePrevArrow = (props) => {
     </div>
   )
 }
+
+
 const FlashCard = ({products}) => {
   const [count, setCount] = useState(0);
   // navigate
   const navigate = useNavigate();
-
+  // dispatch
+  const dispatch = useDispatch();
   const isNonMobile = useMediaQuery("(min-width: 800px)");
   const isDisktop = useMediaQuery("(min-width: 1000px)");
+  
   const increment = () => {
     setCount(count + 1)
+  }
+  // add to cart function 
+  const addToCart = (product) => {
+    dispatch({type: ADD_TO_CART, payload: product});
+  }
+
+  const addProductToWishist = (id) => {
+    dispatch(addToWishlist(id));
   }
 
   const settings = {
@@ -58,7 +73,7 @@ const FlashCard = ({products}) => {
     <>
       <Slider {...settings}>
         {products.map((productItem) => {
-          const {name, original_price, selling_price, slug, product_image} = productItem;
+          const {name, original_price, selling_price, slug, product_image, id} = productItem;
           const current_product_image = product_image[0];
           const {image} = current_product_image;
           
@@ -70,7 +85,7 @@ const FlashCard = ({products}) => {
                   <img src={`https://applabb.account-collection.com/${image}`} className='' alt='' />
                   <div className='product-like'>
                     <label>{count}</label> <br />
-                    <FavoriteBorderIcon />
+                    <FavoriteBorderIcon onClick={() => addProductToWishist(id)} />
                   </div>
                 </div>
                 <div className='product-details'>

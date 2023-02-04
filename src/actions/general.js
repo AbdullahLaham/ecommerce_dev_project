@@ -1,7 +1,7 @@
 
 import { Language } from '@mui/icons-material';
 import * as api from '../api'
-import {CATEGORY_PRODUCTS, CATEGORIES, LATEST_PRODUCTS, CURRENT_PRODUCT, LANGUAGE, ADD_TO_CART, ALL_PRODUCTS, GET_BRANDS, SLIDER_IMAGES} from '../constants'
+import {CATEGORY_PRODUCTS, CATEGORIES, LATEST_PRODUCTS, CURRENT_PRODUCT, LANGUAGE, ADD_TO_CART, ALL_PRODUCTS, GET_BRANDS, SLIDER_IMAGES, WHISHLIST_ITEMS} from '../constants'
 
 export const fetchLatestProducts = () => async (dispatch) => {
     const {data: {data}} = await api.getLatestProducts();
@@ -38,10 +38,6 @@ export const getFilteredProducts = () => async (dispatch) =>  {
 }
 
 
-export const addToCart = (product) => async (dispatch) => {
-    dispatch({type: CATEGORIES, payload: product});
-}
-
 // export const getCategories = () => async (dispatch) => {
 //     const {data: {data}} = await api.getCategories();
 //     console.log('fff', data)
@@ -73,3 +69,22 @@ export const createTransaction = (orderData) => async (dispatch) => {
 export const changeLanguage = (language) => async (dispatch) => {
     dispatch({type: LANGUAGE, payload: language});
 }
+
+
+// wishlist page functions ..
+
+export const fetchWishlistItems = () => async (dispatch) => {
+    const {data} = await api.fetchWishlistItems();
+    dispatch({type: WHISHLIST_ITEMS, payload: data});
+}
+
+export const addToWishlist = (id) => async (dispatch) => {
+    const {data} = await api.addToWishlist(id);
+    console.log('res', data);
+    // dispatch({type: WHISHLIST_ITEMS, payload: data});
+}
+
+
+
+// cart page functions 
+

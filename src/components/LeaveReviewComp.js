@@ -12,9 +12,9 @@ const LeaveReviewComp = () => {
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label for="review-name">Your Name</label>
+                        <div class="col-sm-6" >
+                            <div class="form-group" >
+                                <label for="review-name" >Your Name</label>
                                 <input class="form-control" type="text" id="review-name" required />
                             </div>
                         </div>
@@ -59,4 +59,4 @@ const LeaveReviewComp = () => {
   )
 }
 
-export default LeaveReviewComp
+export default LeaveReviewComp;

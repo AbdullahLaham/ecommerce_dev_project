@@ -18,7 +18,7 @@ const Header = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     // categories data
-    const {categories} = useSelector((state) => state?.generalReducer);
+    const {categories, whislistItems} = useSelector((state) => state?.generalReducer);
     // useEffect(() => {
     //     dispatch(changeLanguage());
     // }, [language]);
@@ -175,7 +175,7 @@ const Header = () => {
                     <FavoriteBorderIcon sx={{color: 'gray', marginRight: '.2rem'}} />
                     <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'start', color: '#DAD0CF'}}>
                         <Typography sx={{display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '.6rem', height: '.7rem', width: '.7rem', color: 'white', backgroundColor: 'orange', borderRadius: '50%'}}>
-                            0
+                            {whislistItems?.length}
                         </Typography>
                         <Typography>
                             Wishlist

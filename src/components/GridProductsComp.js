@@ -13,6 +13,8 @@ const GridProductsComp = ({product}) => {
     const {name, selling_price, product_image, original_price , category, slug} = product;
     const {image} = product_image[0]; 
     const navigate = useNavigate();
+
+     
   return (
     <div class="col-lg-4 col-md-6 col-12">
         
