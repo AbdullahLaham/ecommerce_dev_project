@@ -3,20 +3,23 @@ import { Navigate, useNavigate, useParams } from 'react-router-dom'
 import axios from 'axios'
 import Checkbox from '../components/Checkbox'
 import { useSelector, useDispatch } from 'react-redux'
-import {fetchProductDetails} from '../actions/general';
+import {addToWishlist, fetchProductDetails} from '../actions/general';
 import CollectionsBookmarkOutlinedIcon from '@mui/icons-material/CollectionsBookmarkOutlined';
 import './FilterProducts/filter.css'
-import { Rating } from '@mui/material'
+import { Rating } from '@mui/material';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import { useSnackbar } from 'notistack'
+
 const ProdDetails = () => {
     const {slug} = useParams();
     const { product } = useSelector((state) => state?.generalReducer);
     
-    const {name, small_description, description, original_price, selling_price, quantity, category, product_image} = product;
+    const {name, small_description, description, original_price, selling_price, quantity, category, product_image, id} = product;
     const {image} = product_image ? product_image[0] : {};
     const [currentImage, setCurrentImage] = useState(image);
     const [counter, setCounter] = useState(quantity);
+    
     // navigate
-    console.log('prod', product);
     const navigate = useNavigate();
     // // dispatch
     const dispatch = useDispatch();
@@ -24,6 +27,7 @@ const ProdDetails = () => {
         const newCartComponent = {...product, quantity: counter + 1}
         // dispatch({type: UPDATE_CART_ITEM, payload: newCartComponent});
     }
+    
     const addProductToCart = async () => {
         dispatch();
         navigate('/cart');
@@ -35,8 +39,11 @@ const ProdDetails = () => {
     useEffect(() => {
         setCurrentImage(image);
         // setCounter(quantity)
-    })
-
+    }, []);
+    const { enqueueSnackbar } = useSnackbar();
+    const addProductToWishist = () => {
+        dispatch(addToWishlist(id, enqueueSnackbar));
+    }
 
   return (
     <section class="item-details section">
@@ -89,13 +96,13 @@ const ProdDetails = () => {
                                     </div>
                                 </div>
                                 
-                                <div class="col-lg-8 col-md-8 col-12">
+                                {/* <div class="col-lg-8 col-md-8 col-12">
                                     <div className='flex '>
                                         <p className='p-[.3rem]  flex items-center- justify-center h-[2.5rem]  w-[2.3rem]  cursor-pointer select-none ' onClick={() => {setCounter(counter-1 < 1 ? 1 : counter-1); updateQuantity()} }>-</p>
                                         <p className='p-[.3rem] border flex items-center- justify-center h-[2.5rem] w-[2.3rem] border-gray-300 '>{counter}</p>
                                         <p className='p-[.3rem]  flex items-center- justify-center h-[2.5rem] w-[2.3rem]  cursor-pointer select-none ' onClick={() => {setCounter(counter+1 > quantity ? quantity : counter+1); updateQuantity()}}>+</p>
                                     </div>
-                                </div>
+                                </div> */}
                             </div>
                             <div class="bottom-content">
                                 <div class="row align-items-end">
@@ -111,7 +118,7 @@ const ProdDetails = () => {
                                     </div>
                                     <div class="col-lg-4 col-md-4 col-12">
                                         <div class="wish-button">
-                                            <button class="btn"><i class="lni lni-heart"></i> To Wishlist</button>
+                                            <button onClick={addProductToWishist} class="btn"><FavoriteBorderIcon sx={{fill: 'red', fontSize: '1.3rem', }} />  To Wishlist</button>
                                         </div>
                                     </div>
                                 </div>

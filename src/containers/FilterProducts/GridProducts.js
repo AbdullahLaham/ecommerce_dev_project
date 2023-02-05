@@ -1,7 +1,7 @@
 import { Button, Rating, useMediaQuery } from '@mui/material';
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { getShopPageBrand, getShopPageProducts } from '../../actions/general';
+import { addToWishlist, getShopPageBrand, getShopPageProducts } from '../../actions/general';
 import GridProductsComp from '../../components/GridProductsComp';
 import GridViewIcon from '@mui/icons-material/GridView';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
@@ -12,6 +12,7 @@ import { useNavigate } from 'react-router-dom';
 import './filter.css';
 import ShopSidebar from '../../components/ShopSidebar';
 import { CURRENT_CATEGORY } from '../../constants';
+import { useSnackbar } from 'notistack';
 const GridProducts = () => {
     const {filteredProducts, brands, categories ,numberOfPages, currentCategory} = useSelector((state) => state?.generalReducer);
     console.log(currentCategory, 'ffffffffffffffff')
@@ -36,6 +37,12 @@ const GridProducts = () => {
             setFilterBrand(newBrand);
         }
     }
+    const { enqueueSnackbar } = useSnackbar();
+
+    const addProductToWishist = (id) => {
+        dispatch(addToWishlist(id, enqueueSnackbar));
+    }
+
     const updateFilterCategory = (id) => {
         dispatch({type: CURRENT_CATEGORY, payload: id});
         console.log(id, currentCategory)

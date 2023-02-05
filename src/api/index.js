@@ -61,14 +61,33 @@ export const fetchWishlistItems = async () => {
     console.log('res', res);
     return res;
 }
-export const addToWishlist = async (id) => {
-    const res = await API.post(`/add-wishlist`, {
+export const addToWishlist = async (id, enqueueSnackbar) => {
+    await API.post(`/add-wishlist`, {
         headers: {
             'Authorization': `Bearer ${localStorage.getItem('token')}`
         },
         product_id: id,
-    });
-    console.log('res', res);
-    return res;
+    }).then((res) => {
+        enqueueSnackbar('Added to wishlist Succesfully', {variant: 'success',});
+        return res;
+
+    }).catch((err) => {
+        enqueueSnackbar('Already added to wishlist', {variant: 'error',});
+    })
+    // console.log('res', res);
+}
+export const deleteFromWishlist = async (id, enqueueSnackbar) => {
+    await API.delete(`/delWishlist-item/${id}`, {
+        headers: {
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+        },
+    }).then((res) => {
+        enqueueSnackbar('Product deleted from wishlist Succesfully', {variant: 'success',});
+        return res;
+
+    }).catch((err) => {
+        enqueueSnackbar(`${err?.data?.message}`, {variant: 'error',});
+    })
+    
 }
 

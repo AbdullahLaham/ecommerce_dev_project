@@ -18,7 +18,7 @@ export const getCategories = () => async (dispatch) => {
 // shop page functions
 export const getShopPageProducts = (text) => async (dispatch) =>  {
     const {data} = await api.getShopPageProducts(text);
-    // console.log('products', data);
+    console.log('productssssssssssssssssssssss', data);
     dispatch({type: ALL_PRODUCTS, payload: data?.data});
     const {filter_brand, filter_category} = data;
     // console.log('filter', filter_brand);
@@ -78,13 +78,24 @@ export const fetchWishlistItems = () => async (dispatch) => {
     dispatch({type: WHISHLIST_ITEMS, payload: data});
 }
 
-export const addToWishlist = (id) => async (dispatch) => {
-    const {data} = await api.addToWishlist(id);
+export const addToWishlist = (id, enqueueSnackbar) => async (dispatch) => {
+    
+    const {data} = await api.addToWishlist(id, enqueueSnackbar);
+    if (data) {
+        // enqueueSnackbar('Added to wishlist Succesfully', {variant: 'success',});
+    } else {
+        // enqueueSnackbar('Already added to wishlist', {variant: 'error',});
+    }
     console.log('res', data);
     // dispatch({type: WHISHLIST_ITEMS, payload: data});
 }
 
 
-
+export const deleteFromWishlist = (id, enqueueSnackbar) => async (dispatch) => {
+    const {data} = await api.deleteFromWishlist(id, enqueueSnackbar);
+    if (data) {
+        // enqueueSnackbar('Product deleted from wishlist Succesfully', {variant: 'success',});
+    }
+}
 // cart page functions 
 

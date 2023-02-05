@@ -18,6 +18,8 @@ import BottomMenue from './components/BottomMenue';
 import AccountSidebarComponent from './components/AccountSidebarComponent';
 import { useMediaQuery } from '@mui/material';
 import Dashboard from './containers/Dashboard';
+import { SnackbarProvider } from 'notistack';
+import ProfilePage from './containers/ProfilePage';
 
 
 function App() {
@@ -43,7 +45,7 @@ function App() {
         <Route path='/dashboard' element={<Dashboard />} >
           <Route path='cart' element={<CartPage />} />
           <Route path='wishlist' element={<WishlistPage />} />
-
+          <Route path='profile' element={<ProfilePage />} />
         </Route>
 
         {/* <Route path='/shop' element={<GridProducts />} /> */}

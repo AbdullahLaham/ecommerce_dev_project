@@ -1,23 +1,32 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchWishlistItems } from '../actions/general';
+import { deleteFromWishlist, fetchWishlistItems } from '../actions/general';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { Rating } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import AddIcon from '@mui/icons-material/Add';
+import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
+import { useSnackbar } from 'notistack';
 
 const WishlistPage = () => {
   // dispatch
   const dispatch = useDispatch();
   // navigate
   const navigate = useNavigate();
+  const { enqueueSnackbar } = useSnackbar();
+ 
 
-  useEffect(() => {
-    dispatch(fetchWishlistItems());
-  } ,[]);
+  const deleteItemFromWishlist = (id) => {
+    dispatch(deleteFromWishlist(id, enqueueSnackbar));
+  }
+
   const {whislistItems} = useSelector((state) => state?.generalReducer);
+   useEffect(() => {
+    dispatch(fetchWishlistItems());
+  } ,[whislistItems]);
   
-  console.log('dd', whislistItems)
+  console.log('dd', whislistItems);
+
   return (
     <div>
         <h3 className='text-3rem text-start pl-[2rem] flex items-center gap-2'> <FavoriteBorderIcon sx={{fill: 'red', fontSize: '1.8rem', }} /> Wishlist Page</h3>
@@ -32,7 +41,7 @@ const WishlistPage = () => {
                 <div className='product mtop'>
                   <div className='img'>
                     <span className='discount'>{original_price}% Off</span>
-                    <img src={`https://applabb.account-collection.com/${image}`} className='' alt='' />
+                    <img src={`https://applabb.account-collection.com/${image}`} className='w-[12rem] ' alt='' />
                     {/* <div className='product-like'>
                       <label>{count}</label> <br />
                       <FavoriteBorderIcon sx={{color: 'red',}} onClick={() => addProductToWishist(id)} />
@@ -48,7 +57,11 @@ const WishlistPage = () => {
                       {/* step : 3  
                       if hami le button ma click garryo bahne 
                       */}
+                      
+                    </div>
+                    <div className='flex price'>
                       <button onClick={() => navigate(`/product/${slug}`)}><AddIcon /></button>
+                      <button onClick={() => deleteItemFromWishlist(item?.id)}><DeleteOutlinedIcon /></button>
                     </div>
                   </div>
                 </div>

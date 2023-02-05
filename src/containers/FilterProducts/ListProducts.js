@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getShopPageBrand, getShopPageProducts } from '../../actions/general';
+import { addToWishlist, getShopPageBrand, getShopPageProducts } from '../../actions/general';
 import ListProductsComp from '../../components/ListProductsComp';
 import GridViewIcon from '@mui/icons-material/GridView';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
@@ -11,6 +11,7 @@ import './filter.css';
 import { Button, useMediaQuery } from '@mui/material';
 import ShopSidebar from '../../components/ShopSidebar';
 import { CURRENT_CATEGORY } from '../../constants';
+import { useSnackbar } from 'notistack';
 
 const ListProducts = () => {
     const {filteredProducts, brands, categories ,numberOfPages, currentCategory} = useSelector((state) => state?.generalReducer);
@@ -51,8 +52,9 @@ const ListProducts = () => {
         // }
     }
 
-    const updateFilterPrice = (id) => {
-
+    const { enqueueSnackbar } = useSnackbar();
+    const addProductToWishist = (id, enqueueSnackbar) => {
+        dispatch(addToWishlist(id));
     }
     // navigate
     const navigate = useNavigate();

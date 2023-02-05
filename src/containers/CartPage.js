@@ -9,6 +9,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios';
 const CartPage = () => {
   const {cart} = useSelector((state) => state.generalReducer);
+  console.log('cart')
   console.log('cart', cart);
   // navigate
   const navigate = useNavigate();

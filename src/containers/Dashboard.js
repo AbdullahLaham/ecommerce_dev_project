@@ -19,6 +19,7 @@ const Dashboard = () => {
   const deleteCurrentUser = () => {
     dispatch({type: LOGOUT});
   }
+
   const isMobile = useMediaQuery("(max-width: 800px)");
   const headerItems = [
     {
@@ -29,21 +30,22 @@ const Dashboard = () => {
     {
       name: 'Wishlist',
       icon: <FavoriteBorderOutlinedIcon sx={{fontSize: '1.5rem',}} />,
-      link: '/wishlist'
+      link: '/dashboard/wishlist'
     },
     {
       name: 'Manage Profile',
       icon: <PersonOutlineOutlinedIcon sx={{fontSize: '1.5rem',}} />,
-      link: '/profile',
+      link: '/dashboard/profile',
     },
     {
       name: 'Your Cart',
       icon: <ShoppingCartOutlinedIcon sx={{fontSize: '1.5rem',}} />,
-      link: '/cart',
+      link: '/dashboard/cart',
     },
 
   
   ];
+
   return (
     <div className='min-w-[100%]  flex '>
         {!isMobile && (

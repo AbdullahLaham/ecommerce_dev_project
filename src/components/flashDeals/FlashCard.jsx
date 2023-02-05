@@ -12,6 +12,7 @@ import "./localStyle.css"
 import { useDispatch } from "react-redux";
 import { addToWishlist } from "../../actions/general";
 import { ADD_TO_CART } from "../../constants";
+import { useSnackbar } from "notistack";
 
 
 const SampleNextArrow = (props) => {
@@ -53,9 +54,9 @@ const FlashCard = ({products}) => {
   const addToCart = (product) => {
     dispatch({type: ADD_TO_CART, payload: product});
   }
-
+  const { enqueueSnackbar } = useSnackbar();
   const addProductToWishist = (id) => {
-    dispatch(addToWishlist(id));
+    dispatch(addToWishlist(id, enqueueSnackbar));
   }
 
   const settings = {

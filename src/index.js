@@ -8,6 +8,7 @@ import { createStoreHook, Provider } from 'react-redux';
 import {createStore, applyMiddleware, compose} from 'redux';
 import thunk from 'redux-thunk';
 import reducers from './reducers';
+import { SnackbarProvider } from 'notistack';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const store = createStore(reducers, compose(applyMiddleware(thunk)))
@@ -15,11 +16,16 @@ const store = createStore(reducers, compose(applyMiddleware(thunk)))
 root.render(
 
   <React.StrictMode>
-    <Provider store={store}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </Provider>
+    <SnackbarProvider
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      >
+      <Provider store={store}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </Provider>
+    </SnackbarProvider>
+    
   </React.StrictMode>
   
 );
