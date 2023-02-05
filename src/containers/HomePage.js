@@ -12,6 +12,7 @@ import Header from '../components/Header'
 import LatestProducts from '../components/latestProducts/LatestProducts'
 import SliderHome from '../components/productsSlider/Slider'
 import AccountSidebarComponent from '../components/AccountSidebarComponent'
+import TopCate from '../components/top/TopCate'
 const HomePage = ({showAccountSidebar, setShowAccountSidebar}) => {
   const dispatch = useDispatch();
   useEffect(() => {
@@ -27,6 +28,7 @@ const HomePage = ({showAccountSidebar, setShowAccountSidebar}) => {
       <Box sx={{backgroundColor: '#F5F5F5', paddingTop: '1rem',}}>
         
         <SliderHome />
+        <TopCate />
         {/* <CategoriesBar categories={categories} /> */}
         <FlashDeals products={products} />
         <BottomNav />

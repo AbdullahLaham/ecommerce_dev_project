@@ -15,8 +15,8 @@ const ProdDetails = () => {
     const { product } = useSelector((state) => state?.generalReducer);
     
     const {name, small_description, description, original_price, selling_price, quantity, category, product_image, id} = product;
-    const {image} = product_image ? product_image[0] : {};
-    const [currentImage, setCurrentImage] = useState(image);
+    // const {image} = product_image ? product_image[0] : {};
+    const [currentImage, setCurrentImage] = useState('');
     const [counter, setCounter] = useState(quantity);
     
     // navigate
@@ -37,9 +37,9 @@ const ProdDetails = () => {
        dispatch(fetchProductDetails(slug));
     }, [slug]);
     useEffect(() => {
-        setCurrentImage(image);
+        setCurrentImage(product_image[0]['image']);
         // setCounter(quantity)
-    }, []);
+    }, [product]);
     const { enqueueSnackbar } = useSnackbar();
     const addProductToWishist = () => {
         dispatch(addToWishlist(id, enqueueSnackbar));

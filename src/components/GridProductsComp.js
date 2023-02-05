@@ -5,16 +5,29 @@ import '../containers/FilterProducts/filter.css';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import './flashDeals/localStyle.css';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import { useNavigate } from "react-router-dom";
 import AddIcon from '@mui/icons-material/Add';
+import { useSnackbar } from 'notistack';
+import { addToWishlist } from '../actions/general';
+import { useDispatch } from 'react-redux';
 
 const GridProductsComp = ({product}) => {
     // console.log('listProd', product);
-    const {name, selling_price, product_image, original_price , category, slug} = product;
+    const {name, selling_price, product_image, original_price , category, slug, id} = product;
     const {image} = product_image[0]; 
     const navigate = useNavigate();
+    const { enqueueSnackbar } = useSnackbar();
+    // dispatch
+   const dispatch = useDispatch();
 
-     
+    const addProductToWishist = () => {
+      dispatch(addToWishlist(id, enqueueSnackbar));
+    }
+    const addProductToCart = () => {
+      
+    }
+
   return (
     <div class="col-lg-4 col-md-6 col-12">
         
@@ -26,7 +39,7 @@ const GridProductsComp = ({product}) => {
                   <img src={`https://applabb.account-collection.com/${image}`} className='' alt='' />
                   <div className='product-like'>
                     {/* <label>{count}</label> <br /> */}
-                    <FavoriteBorderIcon />
+                    <FavoriteBorderIcon onClick={() => addProductToWishist()} />
                   </div>
                 </div>
                 <div className='product-details'>
@@ -39,7 +52,8 @@ const GridProductsComp = ({product}) => {
                     {/* step : 3  
                      if hami le button ma click garryo bahne 
                     */}
-                    <button onClick={() => navigate(`/product/${slug}`)}><AddIcon /></button>
+                    <button onClick={() => addProductToCart()}><AddIcon /></button>
+                    <button onClick={() => navigate(`/product/${slug}`)}><VisibilityOutlinedIcon /></button>
                   </div>
                 </div>
               </div>

@@ -29,7 +29,8 @@ const CartPage = () => {
 
 
   return (
-    <div>
+    <div className='w-[100%]'>
+      
       {cart?.length > 0 ? (
         <div className='mx-auto bg-red-500 '>
         <p className='ml-[8.5rem] flex gap-1 items-center cursor-pointer mb-[.7rem]' onClick={() => navigate(-1)}><TbArrowNarrowLeft /> Return to the product details</p>
@@ -41,11 +42,13 @@ const CartPage = () => {
         <hr className='my-[1rem]' />
         <Link to='/payment' className='w-[80%] mx-auto mb-[1rem] flex justify-end'><button className=' rounded-md bg-orange-600 text-[#fff] p-[.5rem] hover:bg-opacity-[.8] cursor-pointer' onClick={() => addProductsToTheCart()}>Go To Payment</button></Link>
       </div>
-      ) : <div className='pt-[10rem] h-[70vh] flex flex-col items-center justify-center'>
+      ) : <div className='min-w-[100%] h-[100%] m-auto flex flex-col items-center justify-center '>
           <p className='text-[#af2e2e] text-3xl '>The Cart is Empty </p>
-          <Link to='/' className='bg-[#af2e2e] text-white mt-[1rem] rounded-lg p-[.7rem] cursor-pointer'>
-            Go To Buy 
-          </Link>
+          {/* <button onClick={() => navigate('/grid')}>
+            <p className='bg-[#af2e2e] text-white mt-[1rem] rounded-lg p-[.7rem] cursor-pointer'>
+              Go To Buy 
+            </p>
+          </button> */}
         </div>}
 
 
