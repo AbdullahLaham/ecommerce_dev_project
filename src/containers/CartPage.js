@@ -29,9 +29,8 @@ const CartPage = () => {
 
   return (
     <div>
-      <Header />
       {cart?.length > 0 ? (
-        <div className='pt-[10rem]'>
+        <div className='mx-auto bg-red-500 '>
         <p className='ml-[8.5rem] flex gap-1 items-center cursor-pointer mb-[.7rem]' onClick={() => navigate(-1)}><TbArrowNarrowLeft /> Return to the product details</p>
         {cart?.length && cart?.map((item) => {
           return (
@@ -48,7 +47,8 @@ const CartPage = () => {
           </Link>
         </div>}
 
-      <Footer />
+
+      {/* <Footer /> */}
     </div>
   )
 }

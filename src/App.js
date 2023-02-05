@@ -30,7 +30,7 @@ function App() {
     });
   }, [showAccountSidebar])
   return (
-    <div className="App w-[100%] min-w-[100%] max-w-[100%] ">
+    <div className="App w-[100%] min-w-[100%] max-w-[100%] relative">
       <Header />
       {isMobile && <AccountSidebarComponent showAccountSidebar={showAccountSidebar} setShowAccountSidebar={setShowAccountSidebar} />}
       <Routes>
@@ -40,9 +40,11 @@ function App() {
         <Route path='/product/:slug' element={<ProdDetails />} />
         <Route path='/login' element={<LoginPage />} />
         <Route path='/register' element={<SignupPage />} />
-        <Route path='/wishlist' element={<WishlistPage />} />
-        <Route path='/cart' element={<CartPage />} />
-        <Route path='/dashboard' element={<Dashboard />} />
+        <Route path='/dashboard' element={<Dashboard />} >
+          <Route path='cart' element={<CartPage />} />
+          <Route path='wishlist' element={<WishlistPage />} />
+
+        </Route>
 
         {/* <Route path='/shop' element={<GridProducts />} /> */}
       </Routes>

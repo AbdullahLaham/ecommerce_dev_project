@@ -14,7 +14,7 @@ export const signup = async (user) => {
     return res;
 }
 export const login = async (user) => {
-    const res = await API.post('/management/loginUser', user);
+    const res = await API.post('/auth/tokens', user);
     return res;
 }
 // system functions
@@ -53,12 +53,19 @@ export const createTransaction = async (orderData) => {
 }
 
 export const fetchWishlistItems = async () => {
-    const res = await API.get(`/wishlist-item`);
+    const res = await API.get(`/wishlist-item`, {
+        headers: {
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+        },
+    });
     console.log('res', res);
     return res;
 }
 export const addToWishlist = async (id) => {
     const res = await API.post(`/add-wishlist`, {
+        headers: {
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+        },
         product_id: id,
     });
     console.log('res', res);

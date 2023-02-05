@@ -110,4 +110,5 @@ const FlashCard = ({products}) => {
   )
 }
 
-export default FlashCard
+export default FlashCard;
+

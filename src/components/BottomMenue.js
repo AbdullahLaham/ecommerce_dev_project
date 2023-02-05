@@ -51,27 +51,27 @@ const BottomMenue = ({showAccountSidebar, setShowAccountSidebar}) => {
 
 
         <div className={`flex flex-col items-center relative text-gray-600 ${'Categories' == selected ? 'mb-[1rem]' : ''}`}>
-                <p onClick={() => {setSelected('Categories')}} className={`text-[1.4rem] ${'Categories' == selected ? 'p-[.5rem] bg-orange-500 text-white rounded-[50%] ' : ''}`}><CiTextAlignLeft  /></p>
-                {/* <p className='text-[.7rem]'>Categories</p> */}
+                <p onClick={() => {setSelected('Categories')}} className={`text-[.9rem] ${'Categories' == selected ? 'p-[.5rem] bg-orange-500 text-white rounded-[50%] ' : ''}`}><CiTextAlignLeft  /></p>
+                <p className='text-[.7rem]'>Categories</p>
         </div>
 
         <div className={`flex flex-col items-center relative text-gray-600 ${'Cart' == selected ? 'mb-[1rem]' : ''}`}>
-                <p onClick={() => {setSelected('Cart')}} className={`text-[1.4rem] ${'Cart' == selected ? 'p-[.2rem] bg-orange-500 text-white rounded-[50%] ' : ''}`}><BsBag /></p>
-                {/* <p className='text-[.7rem]'>{'Cart'}</p> */}
+                <p onClick={() => {setSelected('Cart')}} className={`text-[.9rem] ${'Cart' == selected ? 'p-[.2rem] bg-orange-500 text-white rounded-[50%] ' : ''}`}><BsBag /></p>
+                <p className='text-[.7rem]'>{'Cart'}</p>
         </div>
 
         <div className={`flex flex-col items-center relative text-gray-600 ${'Home' == selected ? 'mb-[1rem]' : ''}`}>
-                <p onClick={() => {setSelected('Home')}} className={`text-[1.4rem] ${'Home' == selected ? 'p-[.2rem] bg-orange-500 text-white rounded-[50%] ' : ''}`}><AiOutlineHome  /></p>
-                {/* <p className='text-[.7rem]'>Home</p> */}
+                <p onClick={() => {setSelected('Home')}} className={`text-[.9rem] ${'Home' == selected ? 'p-[.2rem] bg-orange-500 text-white rounded-[50%] ' : ''}`}><AiOutlineHome  /></p>
+                <p className='text-[.7rem]'>Home</p>
         </div>
         <div className={`flex flex-col items-center relative text-gray-600 ${'Notification' == selected ? 'mb-[1rem]' : ''}`}>
-                <p onClick={() => {setSelected('Notification')}} className={`text-[1.4rem] ${'Notification' == selected ? 'p-[.2rem] bg-orange-500 text-white rounded-[50%] ' : ''}`}><IoIosNotificationsOutline  /></p>
-                {/* <p className='text-[.7rem]'>Notification</p> */}
+                <p onClick={() => {setSelected('Notification')}} className={`text-[.9rem] ${'Notification' == selected ? 'p-[.2rem] bg-orange-500 text-white rounded-[50%] ' : ''}`}><IoIosNotificationsOutline  /></p>
+                <p className='text-[.7rem]'>Notices</p>
         </div>
 
         <div className={`flex flex-col items-center relative text-gray-600 ${'Account' == selected ? 'mb-[1rem]' : ''}`}>
-                <p onClick={() => {setShowAccountSidebar(true);}} className={`text-[1.4rem] ${'Account' == selected ? 'p-[.2rem] bg-orange-500 text-white rounded-[50%] ' : ''}`}><BsPersonCircle /></p>
-                {/* <p className='text-[.7rem]'>Account</p> */}
+                <p onClick={() => {setShowAccountSidebar(true);}} className={`text-[.9rem] ${'Account' == selected ? 'p-[.2rem] bg-orange-500 text-white rounded-[50%] ' : ''}`}><BsPersonCircle /></p>
+                <p className='text-[.7rem]'>Account</p>
         </div>
     </div>
   )

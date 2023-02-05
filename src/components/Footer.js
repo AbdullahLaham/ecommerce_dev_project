@@ -6,7 +6,7 @@ import apple from '../images/Available_on_the_App_Store_logo.png'
 const Footer = () => {
   return (
     <>
-      <div className='flex justify-center py-[1rem] border-t-2 border-b-2 border-t-gray-300 border-b-gray-300  bg-gray-800 text-white relative'>
+      <div className='flex justify-center py-[1rem] border-t-2 border-b-2 border-t-gray-300 border-b-gray-300  bg-gray-100 text-gray-800 relative'>
       <div className='flex flex-col lg:flex-row justify-between w-[85%]'>
         <div className='flex flex-col h-[10rem] justify-around w-[100%] lg:w-auto'>
           <img className='w-[20rem]' src={logo} />
@@ -18,7 +18,7 @@ const Footer = () => {
         <div className='justify-between flex flex-col lg:flex-row text-[.9rem]'>
         <div className='w-[100%] lg:w-auto flex m-auto text-start'>
             <div className='flex flex-col  lg:w-[13rem] w-[100%]  justify-between'>
-              <p className='font-bold text-white'>CONTACT INFO</p>
+              <p className='font-bold text-gray-800'>CONTACT INFO</p>
               <p className='text-gray'>Address: </p>
               <p>Address </p>
               <p className='text-gray'>Phone: </p>
@@ -27,13 +27,13 @@ const Footer = () => {
               <p>info@mail.js</p>
             </div>
             <div className='flex  flex-col lg:w-[13rem] w-[100%]  justify-between'>
-              <p className='font-bold text-white'>ZXCZXC</p>
+              <p className='font-bold text-gray-800'>ZXCZXC</p>
               <p>Home</p>
               <p>New arrival</p>
               <p className=''>Mobiles</p>
             </div>
             <div className='flex  flex-col  lg:w-[13rem] w-[100%]  justify-between'>
-              <p className='font-bold text-white'>MY ACCOUNT</p>
+              <p className='font-bold text-gray-800'>MY ACCOUNT</p>
               <p className='text-gray'>Login </p>
               <p className='text-gray'>Order History</p>
               <p className='text-gray'>My Wishlist</p>

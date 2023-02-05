@@ -174,25 +174,31 @@ const Header = () => {
                 <Typography sx={{display: 'flex', alignItems: 'center', }} mx='2rem'>
                     <FavoriteBorderIcon sx={{color: 'gray', marginRight: '.2rem'}} />
                     <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'start', color: '#DAD0CF'}}>
-                        <Typography sx={{display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '.6rem', height: '.7rem', width: '.7rem', color: 'white', backgroundColor: 'orange', borderRadius: '50%'}}>
-                            {whislistItems?.length}
-                        </Typography>
-                        <Typography>
+                        <Link to='/dashboard/wishlist'>
+                            <Typography sx={{display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '.6rem', height: '.7rem', width: '.7rem', color: 'white', backgroundColor: 'orange', borderRadius: '50%'}}>
+                                {whislistItems?.length}
+                            </Typography>
+                            <Typography>
                             Wishlist
-                        </Typography>
+                            </Typography>
+                        </Link> 
                     </Box>
-                </Typography>  
+                </Typography> 
+                
                 <Typography sx={{display: 'flex', alignItems: 'center', }}>
                     <ShoppingCartOutlinedIcon sx={{color: 'gray', marginRight: '.2rem'}} />
                     <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'start', color: '#DAD0CF'}}>
-                        <Typography sx={{display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '.6rem', height: '.5rem', width: '.5rem', color: 'white', backgroundColor: 'orange', borderRadius: '50%'}}>
-                            0
-                        </Typography>
-                        <Typography>
-                            Wishlist
-                        </Typography>
+                        <Link to='/dashboard/cart'>
+                            <Typography sx={{display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '.6rem', height: '.5rem', width: '.5rem', color: 'white', backgroundColor: 'orange', borderRadius: '50%'}}>
+                                0
+                            </Typography>
+                            <Typography>
+                                Cart
+                            </Typography>
+                        </Link> 
                     </Box>
                 </Typography> 
+                
              </Box>
         </Box>    
         </Box>

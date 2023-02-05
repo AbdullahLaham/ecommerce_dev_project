@@ -10,7 +10,7 @@ export const fetchLatestProducts = () => async (dispatch) => {
 
 export const getCategories = () => async (dispatch) => {
     const {data: {data}} = await api.getCategories();
-    console.log('fff', data)
+    // console.log('fff', data)
     dispatch({type: CATEGORIES, payload: data});
 
 }
@@ -18,7 +18,7 @@ export const getCategories = () => async (dispatch) => {
 // shop page functions
 export const getShopPageProducts = (text) => async (dispatch) =>  {
     const {data} = await api.getShopPageProducts(text);
-    console.log('products', data);
+    // console.log('products', data);
     dispatch({type: ALL_PRODUCTS, payload: data?.data});
     const {filter_brand, filter_category} = data;
     // console.log('filter', filter_brand);
@@ -28,7 +28,7 @@ export const getShopPageProducts = (text) => async (dispatch) =>  {
 export const getHomePageSlider = (text) => async (dispatch) =>  {
     const {data: {data}} = await api.getHomePageSlider();
     dispatch({type: SLIDER_IMAGES, payload: data});
-    console.log('sidebar', data);
+    // console.log('sidebar', data);
 }
 
 // SliderImages
@@ -50,15 +50,15 @@ export const getFilteredProducts = () => async (dispatch) =>  {
 
 export const getProductsByCategory = (category) =>  async (dispatch) => {
     const {data} = await api.getProductsByCategories(category);
-    console.log('datafffff', data);
+    // console.log('datafffff', data);
     dispatch({type: CATEGORY_PRODUCTS, payload: data});
 }
 
 // fetch Product Details using its ID
 export const fetchProductDetails = (slug) => async (dispatch) => {
-    console.log('dddddddddddd')
+    // console.log('dddddddddddd')
     const {data: {data}} = await api.fetchProductDetails(slug);
-    console.log('hello', data);
+    // console.log('hello', data);
     dispatch({type: CURRENT_PRODUCT, payload: data[0]});
 }
 
@@ -74,7 +74,7 @@ export const changeLanguage = (language) => async (dispatch) => {
 // wishlist page functions ..
 
 export const fetchWishlistItems = () => async (dispatch) => {
-    const {data} = await api.fetchWishlistItems();
+    const {data: {data}} = await api.fetchWishlistItems();
     dispatch({type: WHISHLIST_ITEMS, payload: data});
 }
 

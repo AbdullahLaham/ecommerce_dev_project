@@ -1,7 +1,7 @@
 import * as api from '../api'
 import {LOGOUT, LOGIN, SIGNUP} from '../constants'
 export const loginUser = (user, navigate) => async (dispatch) => {
-    const {data} = await api.login(user)
+    const {data} = await api.login(user);
     console.log('current user', data);
     if (data) {
         navigate('/');
