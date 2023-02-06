@@ -14,9 +14,7 @@ const ProdDetails = () => {
     const {slug} = useParams();
     const { product } = useSelector((state) => state?.generalReducer);
     
-    if (product) {
-        const {name, small_description, description, original_price, selling_price, quantity, category, product_image, id} = product;
-    }
+    const {name, small_description, description, original_price, selling_price, quantity, category, product_image, id} = product?.name ? product : {};
     // const {image} = product_image ? product_image[0] : {};
     const [currentImage, setCurrentImage] = useState('');
     const [counter, setCounter] = useState(quantity);
