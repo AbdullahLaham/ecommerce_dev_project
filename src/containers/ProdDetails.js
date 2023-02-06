@@ -14,7 +14,7 @@ const ProdDetails = () => {
     const {slug} = useParams();
     const { product } = useSelector((state) => state?.generalReducer);
     
-    const {name, small_description, description, original_price, selling_price, quantity, category, product_image, id} = product?.name ? product : {};
+    // const {name, small_description, description, original_price, selling_price, quantity, category, product_image, id} = product?.name ? product : {};
     // const {image} = product_image ? product_image[0] : {};
     const [currentImage, setCurrentImage] = useState('');
     const [counter, setCounter] = useState(quantity);
@@ -38,7 +38,7 @@ const ProdDetails = () => {
     }, [slug]);
 
     useEffect(() => {
-        setCurrentImage(product_image[0]['image']);
+        setCurrentImage(product?.product_image[0]['image']);
         // setCounter(quantity)
     }, [product]);
 
@@ -72,10 +72,10 @@ const ProdDetails = () => {
                     </div>
                     <div class="col-lg-6 col-md-12 col-12 ">
                         <div class="product-info">
-                            <h2 class="title text-start">{name}</h2>
-                            <p class="category text-start"><CollectionsBookmarkOutlinedIcon /> {category?.name}: {small_description}</p>
-                            <h3 class="price text-start">${selling_price}<span>${original_price}</span></h3>
-                            <p class="info-text text-start">{description}</p>
+                            <h2 class="title text-start">{product?.name}</h2>
+                            <p class="category text-start"><CollectionsBookmarkOutlinedIcon /> {product?.category?.name}: {product?.small_description}</p>
+                            <h3 class="price text-start">${product?.selling_price}<span>${product?.original_price}</span></h3>
+                            <p class="info-text text-start">{product?.description}</p>
                             <div class="row">
                                 <div class="col-lg-4 col-md-4 col-12">
                                     <div class="form-group color-option">
