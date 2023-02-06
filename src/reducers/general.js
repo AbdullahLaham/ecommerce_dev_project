@@ -1,4 +1,4 @@
-import {  ADD_TO_CART, DELETE_FROM_CART, UPDATE_CART_ITEM, TRANSACTION, LATEST_PRODUCTS, CATEGORY_PRODUCTS, CURRENT_PRODUCT, CATEGORIES, ALL_PRODUCTS, GET_BRANDS, SLIDER_IMAGES, CURRENT_CATEGORY, WHISHLIST_ITEMS } from "../constants";
+import {  ADD_TO_CART, DELETE_FROM_CART, UPDATE_CART_ITEM, TRANSACTION, LATEST_PRODUCTS, CATEGORY_PRODUCTS, CURRENT_PRODUCT, CATEGORIES, ALL_PRODUCTS, GET_BRANDS, SLIDER_IMAGES, CURRENT_CATEGORY, WHISHLIST_ITEMS, START_LOADING, END_LOADING } from "../constants";
 const reducer = (state = { 
         cart: localStorage.getItem('cart')!== "undefined" ? JSON.parse(localStorage.getItem('cart')) : [],
         // transaction: null,
@@ -8,6 +8,7 @@ const reducer = (state = {
         categoryProducts: [],
         product: localStorage.getItem('product')!== "undefined" ? JSON.parse(localStorage.getItem('product')) : {},
         language: 'Arabic',
+        isLoading: false,
         brands: localStorage.getItem('brands')!== "undefined" ? JSON.parse(localStorage.getItem('brands')) : [] ,
         categories: localStorage.getItem('categories')!== "undefined" ? JSON.parse(localStorage.getItem('categories')) : [] ,
         numberOfPages: localStorage.getItem('numberOfPages')!== "undefined" ? JSON.parse(localStorage.getItem('numberOfPages')) : 1 ,
@@ -75,6 +76,12 @@ const reducer = (state = {
         // case LANGUAGE: {
         //     return {...state, language: action?.payload}
         // }
+        case START_LOADING: {
+            return { ...state, isLoading: true }
+        }
+        case END_LOADING: {
+            return { ...state, isLoading: false }
+        }
         case ALL_PRODUCTS: {
             
             return {...state, filteredProducts: action?.payload?.data, numberOfPages: action?.payload?.last_page}

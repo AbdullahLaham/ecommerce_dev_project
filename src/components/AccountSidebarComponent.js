@@ -22,6 +22,7 @@ const SidebarComponent = ({showAccountSidebar, setShowAccountSidebar}) => {
   const deleteCurrentUser = () => {
     dispatch(logoutUser(navigate));
     dispatch({type: LOGOUT});
+    setShowAccountSidebar(false)
   }
   
   useEffect(() => {
@@ -95,3 +96,8 @@ const SidebarComponent = ({showAccountSidebar, setShowAccountSidebar}) => {
 }
 
 export default SidebarComponent;
+
+
+
+
+

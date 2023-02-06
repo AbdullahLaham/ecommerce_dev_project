@@ -13,8 +13,9 @@ import './filter.css';
 import ShopSidebar from '../../components/ShopSidebar';
 import { CURRENT_CATEGORY } from '../../constants';
 import { useSnackbar } from 'notistack';
+import Spinner from '../../components/Spinner';
 const GridProducts = () => {
-    const {filteredProducts, brands, categories ,numberOfPages, currentCategory} = useSelector((state) => state?.generalReducer);
+    const {filteredProducts, brands, categories ,numberOfPages, currentCategory, isLoading} = useSelector((state) => state?.generalReducer);
     console.log(currentCategory, 'ffffffffffffffff')
     // console.log('ggggg', brands);
     const [selected, setSelected] = useState('grid');
@@ -26,7 +27,8 @@ const GridProducts = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [filterBrand, setFilterBrand] = useState([]);
     const [filterCategory, setFilterCategory] = useState(currentCategory);
-
+    // whislistItems
+    const {whislistItems} = useSelector((state) => state?.generalReducer);
     const dispatch = useDispatch();
     const updateFilterBrand = (id) => {
         if (!filterBrand?.includes(id)) {
@@ -95,7 +97,7 @@ const GridProducts = () => {
         } else {
             dispatch(getShopPageProducts(`${filterText}?sortPrice=${filterPrice}${filterBrandText}&page=${currentPage}`));
         }
-    }, [filterBrandText,filterCategory, currentPage, filterPrice, currentCategory]);
+    }, [filterBrandText,filterCategory, currentPage, filterPrice, currentCategory, whislistItems]);
 
     // useEffect(() => {
     //     dispatch(getShopPageBrand(`/filter-product`));
@@ -235,7 +237,9 @@ to here
 }
                         </div>
                     </div>
-                    <div class="tab-content" id="nav-tabContent">
+
+
+                    {!isLoading ? <div class="tab-content" id="nav-tabContent">
                         <div class="tab-pane fade show active" id="nav-grid" role="tabpanel"
                             aria-labelledby="nav-grid-tab">
                             <div class="row">
@@ -263,7 +267,11 @@ to here
                                      {/* End Pagination  */}
                                 </div>
                             </div>
-                        </div>
+
+                        </div>: <Spinner />}
+
+
+
                     </div>
                 </div>
             </div>

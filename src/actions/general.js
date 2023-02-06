@@ -1,7 +1,7 @@
 
 import { Language } from '@mui/icons-material';
 import * as api from '../api'
-import {CATEGORY_PRODUCTS, CATEGORIES, LATEST_PRODUCTS, CURRENT_PRODUCT, LANGUAGE, ADD_TO_CART, ALL_PRODUCTS, GET_BRANDS, SLIDER_IMAGES, WHISHLIST_ITEMS} from '../constants'
+import {CATEGORY_PRODUCTS, CATEGORIES, LATEST_PRODUCTS, CURRENT_PRODUCT, LANGUAGE, ADD_TO_CART, ALL_PRODUCTS, GET_BRANDS, SLIDER_IMAGES, WHISHLIST_ITEMS, START_LOADING, END_LOADING} from '../constants'
 
 export const fetchLatestProducts = () => async (dispatch) => {
     const {data: {data}} = await api.getLatestProducts();
@@ -17,12 +17,15 @@ export const getCategories = () => async (dispatch) => {
 
 // shop page functions
 export const getShopPageProducts = (text) => async (dispatch) =>  {
+    dispatch({type: START_LOADING});
+
     const {data} = await api.getShopPageProducts(text);
     console.log('productssssssssssssssssssssss', data);
     dispatch({type: ALL_PRODUCTS, payload: data?.data});
     const {filter_brand, filter_category} = data;
     // console.log('filter', filter_brand);
     dispatch({type: GET_BRANDS, payload: {filter_brand, filter_category}});
+    dispatch({type: END_LOADING});
 }
 
 export const getHomePageSlider = (text) => async (dispatch) =>  {

@@ -19,9 +19,12 @@ const CartComponent = ({product}) => {
 
 
   return (
-    <div className='flex w-[80%] justify-between mx-auto border border-gray-300 p-[.5rem] '>
+    <div className='flex w-[80%] justify-between items-center mx-auto border border-gray-300 p-[.5rem] '>
       <div className='flex gap-3 items-center'>
-        <img src={product.image} className='w-[5rem] bg-gray-300 p-[1rem]' />
+        <img src={`https://applabb.account-collection.com/${product?.product_image[0]['image']}`} className='w-[5rem] bg-gray-300 p-[1rem]' />
+        
+      </div>
+      <div className='flex flex-col lg, md:flex-row justify-between'>
         <p className='w-[10rem]'>{product?.name}</p>
         <div className='flex  '>
           <p className='p-[.3rem]  flex items-center- justify-center h-[2.5rem]  w-[2.3rem]  cursor-pointer select-none ' onClick={() => {setCounter(counter-1 < 1 ? 1 : counter-1); updateQuantity()} }>-</p>
@@ -29,8 +32,8 @@ const CartComponent = ({product}) => {
           <p className='p-[.3rem]  flex items-center- justify-center h-[2.5rem] w-[2.3rem]  cursor-pointer select-none ' onClick={() => {setCounter(counter+1 > product?.supply ? product?.supply : counter+1); updateQuantity()}}>+</p>
         </div>
       </div>
-      <div className='flex gap-6 items-center'>
-        <p className='text-green-600 text-xl'>{product?.price}</p>
+      <div className='flex gap-6 items-center flex-col-reverse lg, md:flex-row'>
+        <p className='text-green-600 text-xl'>{product?.selling_price}</p>
         <button className='text-red-600 font-bold text-xl cursor-pointer' style={{color: 'red', }} onClick={() => deleteFromCart(product)}>x</button>
       </div>
     </div>

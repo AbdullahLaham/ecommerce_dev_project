@@ -1,5 +1,5 @@
 import { Button, Rating } from '@mui/material';
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
 import '../containers/FilterProducts/filter.css';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
@@ -10,11 +10,16 @@ import { useNavigate } from "react-router-dom";
 import AddIcon from '@mui/icons-material/Add';
 import { useSnackbar } from 'notistack';
 import { addToWishlist, fetchWishlistItems } from '../actions/general';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 
 const GridProductsComp = ({product}) => {
     // console.log('listProd', product);
     const {name, selling_price, product_image, original_price , category, slug, id} = product;
+    // index in wishlist
+    const {whislistItems} = useSelector((state) => state?.generalReducer);
+    const index = whislistItems.findIndex((item) => item?.product?.id == id);
+
     const {image} = product_image[0]; 
     const navigate = useNavigate();
     const { enqueueSnackbar } = useSnackbar();
@@ -22,14 +27,14 @@ const GridProductsComp = ({product}) => {
    const dispatch = useDispatch();
 
     const addProductToWishist = () => {
-      dispatch(fetchWishlistItems());
+      // dispatch(fetchWishlistItems());
       dispatch(addToWishlist(id, enqueueSnackbar));
       
     }
     const addProductToCart = () => {
       
     }
-
+    const [selected, setSelected] = useState(false);
   return (
     <div class="col-lg-4 col-md-6 col-12">
         
@@ -41,7 +46,7 @@ const GridProductsComp = ({product}) => {
                   <img src={`https://applabb.account-collection.com/${image}`} className='' alt='' />
                   <div className='product-like'>
                     {/* <label>{count}</label> <br /> */}
-                    <FavoriteBorderIcon onClick={() => addProductToWishist()} />
+                    {index != -1 || selected ? <FavoriteIcon sx={{fill: 'red'}} /> : <FavoriteBorderIcon  sx={{fill: 'red'}} onClick={() => {addProductToWishist(id); setSelected(true);}} /> }
                   </div>
                 </div>
                 <div className='product-details'>

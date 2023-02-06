@@ -26,7 +26,8 @@ const ListProducts = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [filterBrand, setFilterBrand] = useState([]);
     const [filterCategory, setFilterCategory] = useState(currentCategory);
-
+     // whislistItems
+     const {whislistItems} = useSelector((state) => state?.generalReducer);
     const updateFilterBrand = (id) => {
         if (!filterBrand?.includes(id)) {
             setFilterBrand([...filterBrand, id]);
@@ -88,7 +89,7 @@ const ListProducts = () => {
         } else {
             dispatch(getShopPageProducts(`${filterText}?sortPrice=${filterPrice}${filterBrandText}&page=${currentPage}`));
         }
-    }, [filterBrandText,filterCategory, currentPage, filterPrice, currentCategory]);
+    }, [filterBrandText,filterCategory, currentPage, filterPrice, currentCategory, whislistItems]);
 
     // useEffect(() => {
     //     dispatch(getShopPageBrand(`/filter-product`));

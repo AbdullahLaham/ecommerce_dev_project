@@ -18,7 +18,7 @@ const Header = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     // categories data
-    const {categories, whislistItems} = useSelector((state) => state?.generalReducer);
+    const {categories, whislistItems, cart} = useSelector((state) => state?.generalReducer);
     // useEffect(() => {
     //     dispatch(changeLanguage());
     // }, [language]);
@@ -191,7 +191,7 @@ const Header = () => {
                     <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'start', color: '#DAD0CF'}}>
                         <Link to='/dashboard/cart'>
                             <Typography sx={{display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '.6rem', height: '.5rem', width: '.5rem', color: 'white', backgroundColor: 'orange', borderRadius: '50%'}}>
-                                0
+                                {cart?.length}
                             </Typography>
                             <Typography>
                                 Cart

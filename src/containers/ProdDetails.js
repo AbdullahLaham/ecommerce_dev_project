@@ -9,6 +9,7 @@ import './FilterProducts/filter.css'
 import { Rating } from '@mui/material';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { useSnackbar } from 'notistack'
+import { ADD_TO_CART } from '../constants'
 
 const ProdDetails = () => {
     const {slug} = useParams();
@@ -28,8 +29,8 @@ const ProdDetails = () => {
     }
     
     const addProductToCart = async () => {
-        dispatch();
-        navigate('/cart');
+        dispatch({type: ADD_TO_CART, payload: product});
+        navigate('dashboard/cart');
     }
         
     useEffect(() => {
@@ -111,7 +112,7 @@ const ProdDetails = () => {
                                 <div class="row align-items-end">
                                     <div class="col-lg-4 col-md-4 col-12">
                                         <div class="button cart-button">
-                                            <button class="btn" >Add to Cart</button>
+                                            <button class="btn" onClick={() => addProductToCart()}>Add to Cart</button>
                                         </div>
                                     </div>
                                     <div class="col-lg-4 col-md-4 col-12">

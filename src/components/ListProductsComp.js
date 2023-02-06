@@ -1,5 +1,5 @@
 import { Button, Rating } from '@mui/material';
-import React from 'react'
+import React, { useState } from 'react'
 import '../containers/FilterProducts/filter.css';
 import './flashDeals/localStyle.css';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
@@ -7,10 +7,11 @@ import { Link, useNavigate } from 'react-router-dom';
 // import './flashDeals/localStyle.css';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { addToWishlist, fetchWishlistItems } from '../actions/general';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useSnackbar } from 'notistack';
 import AddIcon from '@mui/icons-material/Add';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 
 const ListProductsComp = ({product}) => {
   const {name, selling_price, original_price, product_image, category, slug, id} = product;
@@ -28,7 +29,11 @@ const ListProductsComp = ({product}) => {
   const addProductToCart = () => {
       
   }
+  // index in wishlist
+  const {whislistItems} = useSelector((state) => state?.generalReducer);
+  const index = whislistItems.findIndex((item) => item?.product?.id == id);
 
+  const [selected, setSelected] = useState(false);
   return (
     <div class="col-lg-12 col-md-12 col-12 ">
       {/* <!-- Start Single Product --> */}
@@ -37,7 +42,7 @@ const ListProductsComp = ({product}) => {
             
               <div class="col-lg-4 col-md-4 col-12 ">
                 <div className='absolute top-0 right-[1rem]'> 
-                        <FavoriteBorderIcon onClick={() => addProductToWishist()} />
+                {index != -1 || selected  ? <FavoriteIcon sx={{fill: 'red'}} /> : <FavoriteBorderIcon  sx={{fill: 'red'}} onClick={() => {addProductToWishist(id); setSelected(true);}} /> }
                     </div>
                   <div class="product-image">
                     <img src={`https://applabb.account-collection.com/${image}`} className='min-h-[8rem] max-h-[6.5rem]' alt="#" />
