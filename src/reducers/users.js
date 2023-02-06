@@ -5,8 +5,8 @@ const reducer = (state={authData: localStorage.getItem('user') ? JSON.parse(loca
 
         case  SIGNUP, LOGIN: {
             localStorage.setItem('user', JSON.stringify(action?.payload?.user));
-            localStorage.setItem('token', action?.payload?.token.slice(3));
-            console.log('current token', action?.payload?.token.slice(3))
+            localStorage.setItem('token', action?.payload?.token);
+            console.log('current token', action?.payload?.token)
             return {...state, authData: action?.payload?.user}
         }
 
