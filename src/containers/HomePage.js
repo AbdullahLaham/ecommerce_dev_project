@@ -27,8 +27,8 @@ const HomePage = ({showAccountSidebar, setShowAccountSidebar}) => {
     <Box sx={{maxWidth: '100%', }} mx='auto' minWidth='100%' >
       <Box sx={{backgroundColor: '#F5F5F5', paddingTop: '1rem',}}>
         
-        {/* <SliderHome />
-        <TopCate /> */}
+        <SliderHome />
+        <TopCate />
         {/* <CategoriesBar categories={categories} /> */}
         <FlashDeals products={products} />
         <BottomNav />
