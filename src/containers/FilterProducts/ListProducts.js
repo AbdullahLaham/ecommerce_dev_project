@@ -76,9 +76,18 @@ const ListProducts = () => {
         
     }, [filterBrand, filterCategory]);
 
+
+    useEffect(() => {
+        dispatch({type: CURRENT_CATEGORY, payload: 0});
+    }, []);
+    
     useEffect(() => {
         console.log('filterText', `${filterText}?sortPrice=${filterPrice}${filterBrandText}${filterCategoryText}`)
-        dispatch(getShopPageProducts(`${filterText}?sortPrice=${filterPrice}${filterBrandText}&categoryInputs[0]=${currentCategory}&page=${currentPage}`));
+        if (currentCategory != 0) {
+            dispatch(getShopPageProducts(`${filterText}?sortPrice=${filterPrice}${filterBrandText}&categoryInputs[0]=${currentCategory}&page=${currentPage}`));
+        } else {
+            dispatch(getShopPageProducts(`${filterText}?sortPrice=${filterPrice}${filterBrandText}&page=${currentPage}`));
+        }
     }, [filterBrandText,filterCategory, currentPage, filterPrice, currentCategory]);
 
     // useEffect(() => {
