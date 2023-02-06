@@ -29,11 +29,11 @@ const CartPage = () => {
 
 
   return (
-    <div className='w-[100%] pt-[2rem] '>
+    <div className='ml-[2.5rem] w-[100%] pt-[2rem] '>
       
       {cart?.length > 0 ? (
         <div className='mx-auto'>
-        <p className='ml-[8.5rem] flex gap-1 items-center cursor-pointer mb-[.7rem]' onClick={() => navigate(-1)}><TbArrowNarrowLeft /> Return to the product details</p>
+        <p className=' flex gap-1 items-center cursor-pointer mb-[.7rem]' onClick={() => navigate(-1)}><TbArrowNarrowLeft /> Return to the product details</p>
         {cart?.length && cart?.map((item) => {
           return (
             <CartComponent product={item}/>

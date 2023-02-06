@@ -8,7 +8,7 @@ const reducer = (state={authData: localStorage.getItem('user') ? JSON.parse(loca
             localStorage.setItem('token', action?.payload?.token.slice(action?.payload?.token.indexOf('|')+1));
             localStorage.setItem('tokenNumber', action?.payload?.token.slice(0, action?.payload?.token.indexOf('|')));
             console.log('current token', action?.payload?.token.slice(2))
-            return {...state, authData: action?.payload?.user}
+            return {...state, authData: action?.payload}
         }
 
         case LOGOUT: {

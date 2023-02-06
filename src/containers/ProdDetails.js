@@ -30,7 +30,7 @@ const ProdDetails = () => {
     
     const addProductToCart = async () => {
         dispatch({type: ADD_TO_CART, payload: product});
-        navigate('dashboard/cart');
+        navigate('/dashboard/cart');
     }
         
     useEffect(() => {

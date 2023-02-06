@@ -21,7 +21,7 @@ const reducer = (state = {
     switch(action.type) {
         case  ADD_TO_CART: {
             let item = action.payload;
-            const index = state?.cart.findIndex((cartItem) => cartItem?._id == item?._id);
+            const index = state?.cart.findIndex((cartItem) => cartItem?.id == item?.id);
             console.log(index);
             let newCart;
             if (index >= 0) {
