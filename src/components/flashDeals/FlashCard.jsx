@@ -73,7 +73,7 @@ const FlashCard = ({products}) => {
   return (
     <>
       <Slider {...settings}>
-        {products.map((productItem) => {
+        {products?.map((productItem) => {
           const {name, original_price, selling_price, slug, product_image, id} = productItem;
           const current_product_image = product_image[0];
           const {image} = current_product_image;
