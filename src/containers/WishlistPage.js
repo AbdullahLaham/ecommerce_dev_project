@@ -21,6 +21,7 @@ const WishlistPage = () => {
   }
 
   const {whislistItems} = useSelector((state) => state?.generalReducer);
+  
    useEffect(() => {
     dispatch(fetchWishlistItems());
   } ,[whislistItems]);
