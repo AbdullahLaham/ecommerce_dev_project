@@ -9,7 +9,7 @@ import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import { useNavigate } from "react-router-dom";
 import AddIcon from '@mui/icons-material/Add';
 import { useSnackbar } from 'notistack';
-import { addToWishlist } from '../actions/general';
+import { addToWishlist, fetchWishlistItems } from '../actions/general';
 import { useDispatch } from 'react-redux';
 
 const GridProductsComp = ({product}) => {
@@ -22,7 +22,9 @@ const GridProductsComp = ({product}) => {
    const dispatch = useDispatch();
 
     const addProductToWishist = () => {
+      dispatch(fetchWishlistItems());
       dispatch(addToWishlist(id, enqueueSnackbar));
+      
     }
     const addProductToCart = () => {
       

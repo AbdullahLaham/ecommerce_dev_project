@@ -3,7 +3,7 @@ import { Navigate, useNavigate, useParams } from 'react-router-dom'
 import axios from 'axios'
 import Checkbox from '../components/Checkbox'
 import { useSelector, useDispatch } from 'react-redux'
-import {addToWishlist, fetchProductDetails} from '../actions/general';
+import {addToWishlist, fetchProductDetails, fetchWishlistItems} from '../actions/general';
 import CollectionsBookmarkOutlinedIcon from '@mui/icons-material/CollectionsBookmarkOutlined';
 import './FilterProducts/filter.css'
 import { Rating } from '@mui/material';
@@ -17,14 +17,13 @@ const ProdDetails = () => {
     // const {name, small_description, description, original_price, selling_price, quantity, category, product_image, id} = product?.name ? product : {};
     // const {image} = product_image ? product_image[0] : {};
     const [currentImage, setCurrentImage] = useState('');
-    const [counter, setCounter] = useState(quantity);
     
     // navigate
     const navigate = useNavigate();
     // // dispatch
     const dispatch = useDispatch();
     const updateQuantity = () => {
-        const newCartComponent = {...product, quantity: counter + 1}
+        // const newCartComponent = {...product, quantity: counter + 1}
         // dispatch({type: UPDATE_CART_ITEM, payload: newCartComponent});
     }
     
@@ -45,7 +44,8 @@ const ProdDetails = () => {
     const { enqueueSnackbar } = useSnackbar();
     
     const addProductToWishist = () => {
-        dispatch(addToWishlist(id, enqueueSnackbar));
+        dispatch(addToWishlist(product?.id, enqueueSnackbar));
+        dispatch(fetchWishlistItems());
     }
 
   return (
@@ -60,7 +60,7 @@ const ProdDetails = () => {
                                     <img src={`https://applabb.account-collection.com/${currentImage}`} id="current" alt="#" />
                                 </div>
                                 <div class="images">
-                                    {product_image && product_image?.map((img) => {
+                                    {product?.product_image && product?.product_image?.map((img) => {
                                         return (
                                             // <img className='w-[3.5rem] h-[3.5rem] md:w-[8rem] md:h-[8rem]  shadow-lg shadow-gray-400 p-[.3rem] mr-[.1rem] cursor-pointer prounded-[11px]' src={`https://applabb.account-collection.com/${img?.image}`}  />
                                             <img src={`https://applabb.account-collection.com/${img?.image}`} onClick={() => setCurrentImage(img?.image)} class="img" alt="#" />

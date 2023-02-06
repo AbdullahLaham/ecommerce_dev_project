@@ -6,7 +6,7 @@ import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import { Link, useNavigate } from 'react-router-dom';
 // import './flashDeals/localStyle.css';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import { addToWishlist } from '../actions/general';
+import { addToWishlist, fetchWishlistItems } from '../actions/general';
 import { useDispatch } from 'react-redux';
 import { useSnackbar } from 'notistack';
 import AddIcon from '@mui/icons-material/Add';
@@ -22,6 +22,7 @@ const ListProductsComp = ({product}) => {
    const { enqueueSnackbar } = useSnackbar();
 
   const addProductToWishist = () => {
+    dispatch(fetchWishlistItems());
     dispatch(addToWishlist(id, enqueueSnackbar));
   }
   const addProductToCart = () => {

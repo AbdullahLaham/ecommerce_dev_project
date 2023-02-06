@@ -1,7 +1,7 @@
 import { Button, Rating, useMediaQuery } from '@mui/material';
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { addToWishlist, getShopPageBrand, getShopPageProducts } from '../../actions/general';
+import { addToWishlist, fetchWishlistItems, getShopPageBrand, getShopPageProducts } from '../../actions/general';
 import GridProductsComp from '../../components/GridProductsComp';
 import GridViewIcon from '@mui/icons-material/GridView';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
@@ -41,6 +41,7 @@ const GridProducts = () => {
 
     const addProductToWishist = (id) => {
         dispatch(addToWishlist(id, enqueueSnackbar));
+        dispatch(fetchWishlistItems());
     }
 
     const updateFilterCategory = (id) => {

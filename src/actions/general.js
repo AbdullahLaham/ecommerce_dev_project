@@ -87,7 +87,7 @@ export const addToWishlist = (id, enqueueSnackbar) => async (dispatch) => {
         // enqueueSnackbar('Already added to wishlist', {variant: 'error',});
     }
     console.log('res', data);
-    dispatch(fetchWishlistItems());
+    
     // dispatch({type: WHISHLIST_ITEMS, payload: data});
 }
 
