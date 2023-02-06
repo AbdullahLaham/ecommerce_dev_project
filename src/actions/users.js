@@ -16,3 +16,11 @@ export const signupUser = (user, navigate) => async (dispatch) => {
     }
     dispatch({type: SIGNUP, payload: data});
 }
+export const logoutUser = (navigate) => async (dispatch) => {
+    const {data} = await api.logoutUser();
+    console.log(data);
+    if (data) {
+        navigate('/login', {replace: true});
+    }
+    dispatch({type: LOGOUT});
+}

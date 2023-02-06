@@ -10,7 +10,7 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { useNavigate } from "react-router-dom";
 import "./localStyle.css"
 import { useDispatch } from "react-redux";
-import { addToWishlist } from "../../actions/general";
+import { addToWishlist, fetchWishlistItems } from "../../actions/general";
 import { ADD_TO_CART } from "../../constants";
 import { useSnackbar } from "notistack";
 
@@ -56,6 +56,7 @@ const FlashCard = ({products}) => {
   }
   const { enqueueSnackbar } = useSnackbar();
   const addProductToWishist = (id) => {
+    dispatch(fetchWishlistItems());
     dispatch(addToWishlist(id, enqueueSnackbar));
   }
 

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useState } from 'react';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, Outlet } from 'react-router-dom';
+import { Link, Outlet, useNavigate } from 'react-router-dom';
 import { LOGOUT } from '../constants';
 import CloseIcon from '@mui/icons-material/Close';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
@@ -10,13 +10,16 @@ import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlin
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import { useMediaQuery } from '@mui/material';
+import { logoutUser } from '../actions/users';
 
 const Dashboard = () => {
   const [selected, setSelected] = useState(1);
   // dispatch
   const dispatch = useDispatch();
-
+  // navigate
+  const navigate = useNavigate();
   const deleteCurrentUser = () => {
+    dispatch(logoutUser(navigate));
     dispatch({type: LOGOUT});
   }
 

@@ -91,3 +91,14 @@ export const deleteFromWishlist = async (id, enqueueSnackbar) => {
     
 }
 
+
+export const logoutUser = async () => {
+    const res = await API.delete(`/auth/tokens/${localStorage.getItem('tokenNumber')}`, {
+        headers: {
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+        },
+    });
+    console.log('res', res);
+    return res;
+}
+

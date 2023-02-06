@@ -2,13 +2,14 @@ import React, { useEffect } from 'react'
 import { useState } from 'react';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { LOGOUT } from '../constants';
 import CloseIcon from '@mui/icons-material/Close';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
+import { logoutUser } from '../actions/users';
 
 const SidebarComponent = ({showAccountSidebar, setShowAccountSidebar}) => {
   // const {authData} = useSelector((state) => state?.userReducer);
@@ -16,7 +17,10 @@ const SidebarComponent = ({showAccountSidebar, setShowAccountSidebar}) => {
   console.log('heloooooooooooooo', showAccountSidebar)
   // dispatch
   const dispatch = useDispatch();
+  // navigate
+  const navigate = useNavigate();
   const deleteCurrentUser = () => {
+    dispatch(logoutUser(navigate));
     dispatch({type: LOGOUT});
   }
   
