@@ -41,7 +41,7 @@ const Header = () => {
             vertical: 'bottom',
             horizontal: 'right',
           }}
-          
+
           transformOrigin={{
             vertical: 'top',
             horizontal: 'right',
@@ -151,7 +151,7 @@ const Header = () => {
                 onClose={handleClose}
             >
                 {
-                    categories.map((item) => {
+                    categories?.map((item) => {
                         return (
                             <MenuItem onClick={() => handleClose(item?.id)} disableRipple>
                                 {item?.name}
