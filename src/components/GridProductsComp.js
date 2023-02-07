@@ -18,7 +18,7 @@ const GridProductsComp = ({product}) => {
     const {name, selling_price, product_image, original_price , category, slug, id} = product;
     // index in wishlist
     const {whislistItems} = useSelector((state) => state?.generalReducer);
-    const index = whislistItems?.findIndex((item) => item?.product?.id == id);
+    const index = whislistItems?.length ? whislistItems?.findIndex((item) => item?.product?.id == id) : -1;
 
     const {image} = product_image[0]; 
     const navigate = useNavigate();
