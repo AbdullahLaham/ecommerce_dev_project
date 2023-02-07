@@ -31,7 +31,7 @@ const ListProductsComp = ({product}) => {
   }
   // index in wishlist
   const {whislistItems} = useSelector((state) => state?.generalReducer);
-  const index = whislistItems.findIndex((item) => item?.product?.id == id);
+  const index = whislistItems?.findIndex((item) => item?.product?.id == id);
 
   const [selected, setSelected] = useState(false);
   return (

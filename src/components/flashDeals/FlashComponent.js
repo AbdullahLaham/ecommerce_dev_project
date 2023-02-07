@@ -16,7 +16,7 @@ const FlashComponent = ({productItem}) => {
     const {name, original_price, selling_price, slug, product_image, id} = productItem;
     const current_product_image = product_image[0];
     const {image} = current_product_image;
-    const index = whislistItems.findIndex((item) => item?.product?.id == id);
+    const index = whislistItems?.findIndex((item) => item?.product?.id == id);
 
     // navigate
     const navigate = useNavigate();
