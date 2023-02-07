@@ -60,7 +60,7 @@ const SidebarComponent = ({showAccountSidebar, setShowAccountSidebar}) => {
   ];
 
   return (
-    <div className={`w-[85%] h-[100vh] max-h-[100vh] z-20 absolute top-0  bg-white flex-col justify-between backdrop-blur	 ${showAccountSidebar ? 'left-0 right-0 boxshadow-style flex' : '-left-[100%] hidden'} ease-in-out delay-150`}>
+    <div className={`w-[85%] h-[100vh] max-h-[100vh] z-20 fixed top-0  bg-white flex-col justify-between backdrop-blur	 ${showAccountSidebar ? 'left-0 boxshadow-style flex' : '-left-[100%]'} ease-in-out delay-150`}>
       <div>
         <div className='flex flex-col items-start gap-2 mb-[0] bg-orange-500 min-w-[100%] h-[11rem] p-[1rem]'>
               <img className='w-[4.5rem] h-[4.5rem]  rounded-full object-cover' src={authData?.profile_photo_url}  />
