@@ -9,7 +9,10 @@ import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { CURRENT_CATEGORY } from '../constants';
-
+import MenuComp from './headerAccountMenue/Menu';
+import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
+import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
+import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 const Header = () => {
     const [language, setLanguage] = useState('Arabic');
     const [currency, setCurrency] = useState();
@@ -17,8 +20,13 @@ const Header = () => {
     const [anchorEl, setAnchorEl] = useState(null);
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    // authData
+    const {authData} = useSelector((state) => state.userReducer);
+
     // categories data
     const {categories, whislistItems, cart} = useSelector((state) => state?.generalReducer);
+    const [showMenu, setShowMenu] = useState(false);
     // useEffect(() => {
     //     dispatch(changeLanguage());
     // }, [language]);
@@ -26,13 +34,16 @@ const Header = () => {
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
+        
     };
-    const handleClose = (categoryId) => {
+    const handleClose = () => {
         setAnchorEl(null);
+        
+    };
+    const changeCategory = (categoryId) => {
         dispatch({type: CURRENT_CATEGORY, payload: categoryId});
         navigate('/grid');
-    };
-
+    }
     const isMobile = useMediaQuery("(min-width: 800px)");
     const StyledMenu = styled((props) => (
         <Menu
@@ -113,19 +124,28 @@ const Header = () => {
                 </Select>
             </Box>
             
-            <Box sx={{display: 'flex', color: '#B4AEAD',}}>
-                <Typography sx={{ borderRight: '1px solid #B4AEAD', paddingX: '.5rem', height: '100%'}} >
-                    059....
-                </Typography>
-                <Typography sx={{borderRight: '1px solid #B4AEAD', paddingX: '.5rem', height: '100%' }} >
-                    Login
-                </Typography>
-                <Typography sx={{ paddingX: '.5rem' , height: '100%'}} >
-                    Register
-                </Typography>
-            </Box>
+            {authData?.email ? (
+                <div>
+                    <div onClick={() => setShowMenu(!showMenu)} className='flex items-center gap-2 cursor-pointer' ><img src={authData?.profile_photo_url}  className='w-[2.2rem] h-[2.2rem] rounded-full object-cover text-xl'  /> <p className='select-none'>{authData?.name}</p></div>   
+                    {showMenu && <MenuComp showMenu={showMenu} setShowMenu={setShowMenu} />}
+                </div>
+            ) : (
+                <Box sx={{display: 'flex', color: '#B4AEAD',}}>
+                    <Typography sx={{ borderRight: '1px solid #B4AEAD', paddingX: '.5rem', height: '100%'}} >
+                        059....
+                    </Typography>
+                    <Typography sx={{borderRight: '1px solid #B4AEAD', paddingX: '.5rem', height: '100%' }} >
+                        Login
+                    </Typography>
+                    <Typography sx={{ paddingX: '.5rem' , height: '100%'}} >
+                        Register
+                    </Typography>
+                </Box>
+            )}  
+
+          
         </Box>
-        <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid #DED8D7', }} py='.3rem' width='100%' pl='5rem'>
+        <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid #DED8D7', }} py='.3rem' width='89%' m='auto' pl='5rem'>
         <Typography>Laraver Ecommerce</Typography>
         
         <Box sx={{display: 'flex', }} width='80%'>
@@ -153,7 +173,7 @@ const Header = () => {
                 {
                     categories?.map((item) => {
                         return (
-                            <MenuItem onClick={() => handleClose(item?.id)} disableRipple>
+                            <MenuItem onClick={() => changeCategory(item?.id)} disableRipple>
                                 {item?.name}
                             </MenuItem>
                         )

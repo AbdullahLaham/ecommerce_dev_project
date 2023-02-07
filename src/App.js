@@ -25,12 +25,14 @@ import ProfilePage from './containers/ProfilePage';
 function App() {
   const [showAccountSidebar, setShowAccountSidebar] = useState(false);
   const isMobile = useMediaQuery("(max-width: 800px)");
+
   useEffect(() => {
     window.scrollTo({
       top: 0,
       behavior: "smooth"
     });
-  }, [showAccountSidebar])
+  }, [showAccountSidebar]);
+  
   return (
     <div className="App w-[100%] min-w-[100%] max-w-[100%]  relative">
       <Header />

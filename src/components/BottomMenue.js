@@ -12,6 +12,7 @@ import {BsBag, BsPersonCircle} from 'react-icons/bs';
 
 
 import { Box, useMediaQuery } from '@mui/material';
+import { useSelector } from 'react-redux';
 const nav = [
     {
         name: 'Categories',
@@ -37,7 +38,7 @@ const nav = [
 const BottomMenue = ({showAccountSidebar, setShowAccountSidebar}) => {
     const [selected, setSelected] = useState('Home');
     const isMobile = useMediaQuery("(min-width: 800px)");
-    
+    const {authData} = useSelector((state) => state?.userReducer);
   return (
     !isMobile && <div className='fixed z-10 bottom-0 left-0 right-0 bg-white w-[100%] mx-auto max-w-[99%] h-[4.5rem] flex items-center justify-between px-[.4rem]'>
         {/* {
@@ -70,11 +71,12 @@ const BottomMenue = ({showAccountSidebar, setShowAccountSidebar}) => {
         </div>
 
         <div className={`flex flex-col items-center relative text-gray-600 ${'Account' == selected ? 'mb-[1rem]' : ''}`}>
-                <p onClick={() => {setShowAccountSidebar(true);}} className={`text-[1.6rem] ${'Account' == selected ? 'p-[.2rem] bg-orange-500 text-white rounded-[50%] ' : ''}`}><BsPersonCircle /></p>
+                <p onClick={() => {setShowAccountSidebar(true);}} className={`text-[1.6rem] ${'Account' == selected ? 'p-[.2rem] bg-orange-500 text-white rounded-[50%] ' : ''}`}> {authData?.email ? <img className='w-[2.2rem] h-[2.2rem] rounded-full object-cover text-xl'  src={authData?.profile_photo_url} /> : <BsPersonCircle />}</p>
                 <p className='text-[.7rem]'>Account</p>
         </div>
     </div>
   )
 }
+
 
 export default BottomMenue;

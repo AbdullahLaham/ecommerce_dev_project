@@ -205,7 +205,7 @@ button {
   position: absolute;
   top: 0;
   left: 0;
-  background: #e94560;
+  background: rgb(3, 201, 3);
   padding: 3px 10px;
   font-size: 12px;
   border-radius: 50px;
@@ -235,11 +235,16 @@ button {
   justify-content: space-between;
   color: #e94560;
 }
+.product .controls {
+  display: flex;
+  justify-content: end;
+  color: #e94560;
+}
 .product .price h4 {
   color: #e94560;
   font-size: 1.4rem;
 }
-.price button {
+.price button, .controls button {
   background: none;
   color: #e94560;
   font-size: 20px;
@@ -249,7 +254,7 @@ button {
   height: 35px;
   border-radius: 5px;
 }
-.price button:hover {
+.price button:hover, .controls button:hover {
   cursor: pointer;
   background-color: #e94560;
   color: #fff;

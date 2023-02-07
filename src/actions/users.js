@@ -7,6 +7,7 @@ export const loginUser = (user, navigate) => async (dispatch) => {
         navigate('/');
     }
     dispatch({type: LOGIN, payload: data});
+    window.location.reload();
 }
 export const signupUser = (user, navigate) => async (dispatch) => {
     const {data} = await api.signup(user)

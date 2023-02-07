@@ -39,7 +39,7 @@ const FlashComponent = ({productItem}) => {
     <div className='box'>
         <div className='product mtop'>
         <div className='img'>
-            <span className='discount'>{original_price}% Off</span>
+            <span className='discount'>In Stock</span>
             <img src={`https://applabb.account-collection.com/${image}`} className='' alt='' />
             <div className='product-like'>
                 <label>0</label> <br />

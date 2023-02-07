@@ -38,7 +38,7 @@ const reducer = (state = {
         }
         case DELETE_FROM_CART: {
             let item = action.payload;
-            const newCart = state.cart.filter((prod) => prod?._id !== item?._id);
+            const newCart = state.cart.filter((prod) => prod?.id !== item?.id);
             localStorage.setItem('cart', JSON.stringify(newCart));
             return {...state, cart: newCart}
         }

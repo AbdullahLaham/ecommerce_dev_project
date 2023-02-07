@@ -41,7 +41,7 @@ const WishlistPage = () => {
                 <div className='product mtop'>
                   <div className='img'>
                     <span className='discount'>{original_price}% Off</span>
-                    <img src={`https://applabb.account-collection.com/${image}`} className='w-[12rem] ' alt='' />
+                    <img src={`https://applabb.account-collection.com/${image}`} className='lg:w-[12rem] md:w-[15rem] w-[100%] ' alt='' />
                     {/* <div className='product-like'>
                       <label>{count}</label> <br />
                       <FavoriteBorderIcon sx={{color: 'red',}} onClick={() => addProductToWishist(id)} />
@@ -59,9 +59,9 @@ const WishlistPage = () => {
                       */}
                       
                     </div>
-                    <div className='flex price'>
-                      <button onClick={() => navigate(`/product/${slug}`)}><AddIcon /></button>
-                      <button onClick={() => deleteItemFromWishlist(item?.id)}><DeleteOutlinedIcon /></button>
+                    <div className='flex items-center justify-end controls'>
+                      <button className='' onClick={() => navigate(`/product/${slug}`)}><AddIcon /></button>
+                      <button className='' onClick={() => deleteItemFromWishlist(item?.id)}><DeleteOutlinedIcon /></button>
                     </div>
                   </div>
                 </div>
