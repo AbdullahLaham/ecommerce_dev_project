@@ -12,9 +12,11 @@ import { useSnackbar } from 'notistack';
 import AddIcon from '@mui/icons-material/Add';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import { ADD_TO_CART } from '../constants';
 
 const ListProductsComp = ({product}) => {
   const {name, selling_price, original_price, product_image, category, slug, id} = product;
+  const {  cart, whislistItems } = useSelector((state) => state?.generalReducer);
   const {image} = product_image[0];
    // navigate
    const navigate = useNavigate();
@@ -26,13 +28,19 @@ const ListProductsComp = ({product}) => {
     dispatch(fetchWishlistItems());
     dispatch(addToWishlist(id, enqueueSnackbar));
   }
+
   const addProductToCart = () => {
-      
-  }
+    const index = cart.findIndex((cartItem) => cartItem?.id == product?.id);
+        dispatch({type: ADD_TO_CART, payload: product});
+        if (index != -1) {
+            enqueueSnackbar('Product added to cart succesfully', {variant: 'success',});
+        } else {
+            enqueueSnackbar('Product quantity in cart increased 1', {variant: 'success',});
+        }
+}
   // index in wishlist
-  const {whislistItems} = useSelector((state) => state?.generalReducer);
   const index = whislistItems?.length ? whislistItems?.findIndex((item) => item?.product?.id == id) : -1;
-  
+
   const [selected, setSelected] = useState(false);
   return (
     <div class="col-lg-12 col-md-12 col-12 ">

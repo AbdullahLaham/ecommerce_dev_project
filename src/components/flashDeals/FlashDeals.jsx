@@ -8,9 +8,9 @@ const FlashDeals = ({products}) => {
     <>
       <section className='flash'>
         <div className='container'>
-          <div className='heading f_flex'>
+          <div className='heading flex items-center '>
             <BoltIcon />
-            <p className="text-red-500 ">Flash Delas</p>
+            <p className="text-red-500 text-2xl ">Latest Products</p>
           </div>
           <FlashCard products={products} />
         </div>

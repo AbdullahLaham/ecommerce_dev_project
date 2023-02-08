@@ -9,10 +9,13 @@ import { addToWishlist, fetchWishlistItems } from "../../actions/general";
 import { ADD_TO_CART } from "../../constants";
 import { useSnackbar } from "notistack";
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
+
+
 
 const FlashComponent = ({productItem}) => {
 
-    const {whislistItems} = useSelector((state) => state?.generalReducer);
+    const {whislistItems, cart} = useSelector((state) => state?.generalReducer);
     const {name, original_price, selling_price, slug, product_image, id} = productItem;
     const current_product_image = product_image[0];
     const {image} = current_product_image;
@@ -25,14 +28,23 @@ const FlashComponent = ({productItem}) => {
     const isNonMobile = useMediaQuery("(min-width: 800px)");
     const isDisktop = useMediaQuery("(min-width: 1000px)");
     
-    // add to cart function 
-    const addToCart = (product) => {
-        dispatch({type: ADD_TO_CART, payload: product});
-    }
+    
+
     const { enqueueSnackbar } = useSnackbar();
+
     const addProductToWishist = (id) => {
         dispatch(fetchWishlistItems());
         dispatch(addToWishlist(id, enqueueSnackbar));
+    }
+    // add to cart function 
+    const addProductToCart = () => {
+        const index = cart.findIndex((cartItem) => cartItem?.id == productItem?.id);
+        dispatch({type: ADD_TO_CART, payload: productItem});
+        if (index >= 0) {
+            enqueueSnackbar('Product added to cart succesfully', {variant: 'success',});
+        } else {
+            enqueueSnackbar('Product quantity in cart increased 1', {variant: 'success',});
+        }
     }
     const [selected, setSelected] = useState(false);
   return (
@@ -56,7 +68,11 @@ const FlashComponent = ({productItem}) => {
             {/* step : 3  
                 if hami le button ma click garryo bahne 
             */}
-            <button onClick={() => navigate(`/product/${slug}`)}><AddIcon /></button>
+            
+            </div>
+            <div className='flex items-center justify-end controls'>
+                <button onClick={() => navigate(`/product/${slug}`)}><VisibilityOutlinedIcon /></button>
+                <button onClick={() => addProductToCart()}><AddIcon /></button>
             </div>
         </div>
         </div>
@@ -64,4 +80,4 @@ const FlashComponent = ({productItem}) => {
   )
 }
 
-export default FlashComponent
+export default FlashComponent;

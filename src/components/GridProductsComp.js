@@ -12,12 +12,13 @@ import { useSnackbar } from 'notistack';
 import { addToWishlist, fetchWishlistItems } from '../actions/general';
 import { useDispatch, useSelector } from 'react-redux';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import { ADD_TO_CART } from '../constants';
 
 const GridProductsComp = ({product}) => {
     // console.log('listProd', product);
     const {name, selling_price, product_image, original_price , category, slug, id} = product;
     // index in wishlist
-    const {whislistItems} = useSelector((state) => state?.generalReducer);
+    const {whislistItems, cart} = useSelector((state) => state?.generalReducer);
     const index = whislistItems?.length ? whislistItems?.findIndex((item) => item?.product?.id == id) : -1;
 
     const {image} = product_image[0]; 
@@ -32,7 +33,13 @@ const GridProductsComp = ({product}) => {
       
     }
     const addProductToCart = () => {
-      
+      const index = cart.findIndex((cartItem) => cartItem?.id == product?.id);
+      dispatch({type: ADD_TO_CART, payload: product});
+      if (index != -1) {
+          enqueueSnackbar('Product added to cart succesfully', {variant: 'success',});
+      } else {
+          enqueueSnackbar('Product quantity in cart increased 1', {variant: 'success',});
+      }
     }
     const [selected, setSelected] = useState(false);
   return (

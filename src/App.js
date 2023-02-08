@@ -20,12 +20,26 @@ import { useMediaQuery } from '@mui/material';
 import Dashboard from './containers/Dashboard';
 import { SnackbarProvider } from 'notistack';
 import ProfilePage from './containers/ProfilePage';
+// import DeviceDetector from "device-detector-js";
+import UserAgent from 'user-agents';
 
 
 function App() {
   const [showAccountSidebar, setShowAccountSidebar] = useState(false);
-  const isMobile = useMediaQuery("(max-width: 800px)");
+  // the category for the shop page
+  const [filterCategory, setFilterCategory] = useState();
 
+  const isMobile = useMediaQuery("(max-width: 800px)");
+  // const deviceDetector = new DeviceDetector();
+  
+  // the type of the device
+  const userAgent = new UserAgent();
+  console.log(userAgent.toString());
+  console.log(JSON.stringify(userAgent.data, null, 2));
+
+  useEffect(() => {
+
+  }, [])
   useEffect(() => {
     window.scrollTo({
       top: 0,
@@ -35,12 +49,12 @@ function App() {
   
   return (
     <div className="App w-[100%] min-w-[100%] max-w-[100%]  relative">
-      <Header />
+      <Header filterCategory={filterCategory} setFilterCategory={setFilterCategory} />
       {isMobile && <AccountSidebarComponent showAccountSidebar={showAccountSidebar} setShowAccountSidebar={setShowAccountSidebar} />}
       <Routes>
-        <Route path='/' element={<HomePage showAccountSidebar={showAccountSidebar} setShowAccountSidebar={setShowAccountSidebar} />} />
-        <Route path='/list' element={<ListProducts />} />
-        <Route path='/grid' element={<GridProducts />} />
+        <Route path='/' element={<HomePage showAccountSidebar={showAccountSidebar} setShowAccountSidebar={setShowAccountSidebar}   />} />
+        <Route path='/list' element={<ListProducts  />} />
+        <Route path='/grid' element={<GridProducts filterCategory={filterCategory} setFilterCategory={setFilterCategory} />} />
         <Route path='/product/:slug' element={<ProdDetails />} />
         <Route path='/login' element={<LoginPage />} />
         <Route path='/register' element={<SignupPage />} />

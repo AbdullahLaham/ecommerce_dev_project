@@ -24,24 +24,20 @@ const SignupPage = () => {
       confirmPassword: yup.string().required('confirmPassword is required').oneOf([yup.ref("password"), null], "Passwords must match"),
     });
     const onSubmit = async (values) => {
-      
      try {
           const user = { 
             name: values.name, 
             email: values.email,
             password: values.password,
-            city: values.city, 
-            country: values.country, 
-            occupation: values.occupation, 
-            phoneNumber: values.phoneNumber,
-            image: selectedImage,
+            device_name: values.device_name,
         };
         console.log(user);
         dispatch(signupUser(user, navigate));
-     } catch (error) {
-        console.log(error);
-     }
+      } catch (error) {
+         console.log(error);
+      }
 }
+
 
     const formik = useFormik({
       initialValues: {
@@ -49,10 +45,7 @@ const SignupPage = () => {
           email: '',
           password: '',
           confirmPassword: '',
-          city: "",
-          country: "",
-          occupation: "",
-          phoneNumber: "",
+          device_name: "",
       },
       validateOnBlur: true,
       onSubmit,
@@ -81,7 +74,6 @@ const SignupPage = () => {
       <div className='w-[40%] h-[100vh] flex flex-col justify-center items-start p-[1rem] ml-[7rem] mt-[3rem]'>
         <p className='font-semibold text-2xl text-start title ml-[10px]'>SIGNUP </p>
         <form onSubmit={formik.handleSubmit} className='flex flex-col' >
-            {stip == 1 && (
                 <>
                     <div className=' my-[.4rem] h-[4rem]'><input name="name" type='text' placeholder='Your Full name' onChange={formik.handleChange} value={formik.values.name} className='p-[1rem] my-[.9rem] w-[28rem] border-none outline-none max-h-[100%] h-[100%] field block '  /></div>
                     {formik.touched.name && formik?.errors?.name}
@@ -91,35 +83,9 @@ const SignupPage = () => {
                     {formik.touched.password && formik?.errors?.password}
                     <div className=' my-[.4rem] h-[4rem]'><input name="confirmPassword" type='password' placeholder='Confirm Password' onChange={formik.handleChange} value={formik.values.confirmPassword} className='p-[1rem] my-[.9rem] w-[28rem] border-none outline-none max-h-[100%] h-[100%] field block '  /></div>
                     {formik.touched.confirmPassword && formik?.errors?.confirmPassword}
-                    <button onClick={() => setStip(2)} className='flex items-center mt-[2rem] '><p>Next</p> <p  className=' flex items-center  bg-orange-400 rounded-full text-white text-right justify-end p-[.1rem] ml-[.5rem] hover:ml-[.8rem] transition-all duration-150' ><FaLongArrowAltRight className='block  ' /></p></button>                    
+                    <div className=' my-[.4rem] h-[4rem]'><input name="device_name" type='text' placeholder='Your Full device name' onChange={formik.handleChange} value={formik.values.device_name} className='p-[1rem] my-[.9rem] w-[28rem] border-none outline-none max-h-[100%] h-[100%] field block '  /></div>
+                    <button type='submit' className='flex items-center mt-[2rem] '><p>Register</p> <p  className=' flex items-center  bg-orange-400 rounded-full text-white text-right justify-end p-[.1rem] ml-[.5rem] hover:ml-[.8rem] transition-all duration-150' ><FaLongArrowAltRight className='block  ' /></p></button>                    
                 </>
-            )}
-            {stip == 2 && (
-                <>
-                    <div className=' my-[.4rem] h-[4rem]'><input name="city" type='text' placeholder='Your City' onChange={formik.handleChange} value={formik.values.city} className='p-[1rem] my-[.9rem] w-[28rem] border-none outline-none max-h-[100%] h-[100%] field block '  /></div>
-                    {formik.touched.city && formik?.errors?.city}
-                    <div className=' my-[.4rem] h-[4rem]'>
-                        <select  name="country" type='text' placeholder='Your Country' onChange={formik.handleChange} value={formik.values.country} className='p-[1rem] my-[.9rem] w-[28rem] border-none outline-none max-h-[100%] h-[100%] field block ' >
-                            {countries.map((country) => {
-                                return (<option value={country.code} >{country.name} {country.code}</option>)
-                            })}
-                        </select>
-                    </div>
-                    {formik.touched.country && formik?.errors?.country}
-                    <div className=' my-[.4rem] h-[4rem]'><input name="occupation" type='text' placeholder='your career' onChange={formik.handleChange} value={formik.values.occupation} className='p-[1rem] my-[.9rem] w-[28rem] border-none outline-none max-h-[100%] h-[100%] field block '  /></div>
-                    {formik.touched.occupation && formik?.errors?.occupation}
-                    <div className=' my-[.4rem] h-[4rem]'><input name="phoneNumber" type='text' placeholder='Phone Number' onChange={formik.handleChange} value={formik.values.phoneNumber} className='p-[1rem] my-[.9rem] w-[28rem] border-none outline-none max-h-[100%] h-[100%] field block '  /></div>
-                    {formik.touched.phoneNumber && formik?.errors?.phoneNumber}
-                    <div className=' my-[.4rem] h-[4rem]'>
-                        <input className='p-[1rem] my-[.9rem] w-[28rem] border-none outline-none max-h-[100%] h-[100%] field block  ' type='file' onChange={(e) => addImageToUser(e.target.files[0])} />
-                    </div>
-                    <div className='flex items-center justify-between w-[100%] '>
-                        <button onClick={() => setStip(1)} className='flex items-center mt-[2rem] '><p>Back</p> <p  className=' flex items-center  bg-orange-400 rounded-full text-white text-right justify-end p-[.1rem] ml-[.5rem] hover:ml-[.8rem] transition-all duration-150' ><FaLongArrowAltLeft className='block  ' /></p></button>
-                        <button type='submit' className='flex items-center mt-[2rem] '><p>SIGNUP</p> <p  className=' flex items-center  bg-orange-400 rounded-full text-white text-right justify-end p-[.1rem] ml-[.5rem] hover:ml-[.8rem] transition-all duration-150' ><FaLongArrowAltRight className='block  ' /></p></button>
-                    </div>                    
-                </>
-            )}
-        
         </form>
         <p className='mt-[1rem]'>Dont have account ? <Link to='/login'>lOGIN</Link></p>
       </div>

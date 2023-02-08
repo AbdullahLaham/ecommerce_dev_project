@@ -7,16 +7,19 @@ API.interceptors.request.use((req) => {
         req.headers.authorization = `Bearer ${localStorage.getItem('token')}`
     }
     return req;
-})
+});
+
  // user functions
 export const signup = async (user) => {
-    const res = await API.post('/management/signupUser', user);
+    const res = await API.post('/register/tokens', user);
     return res;
 }
+
 export const login = async (user) => {
     const res = await API.post('/auth/tokens', user);
     return res;
 }
+
 // system functions
 export const getLatestProducts = async () => {
     const res = await API.get('/products');
@@ -101,4 +104,6 @@ export const logoutUser = async () => {
     console.log('res', res);
     return res;
 }
+
+
 

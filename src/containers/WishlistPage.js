@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import { useSnackbar } from 'notistack';
+import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 
 const WishlistPage = () => {
   // dispatch
@@ -60,7 +61,7 @@ const WishlistPage = () => {
                       
                     </div>
                     <div className='flex items-center justify-end controls'>
-                      <button className='' onClick={() => navigate(`/product/${slug}`)}><AddIcon /></button>
+                      <button className='' onClick={() => navigate(`/product/${slug}`)}><VisibilityOutlinedIcon /></button>
                       <button className='' onClick={() => deleteItemFromWishlist(item?.id)}><DeleteOutlinedIcon /></button>
                     </div>
                   </div>

@@ -3,7 +3,7 @@ import { useState } from 'react';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import { LOGOUT } from '../constants';
+import { LOGOUT, PAGE_SELECTED } from '../constants';
 import CloseIcon from '@mui/icons-material/Close';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
@@ -20,13 +20,15 @@ const SidebarComponent = ({showAccountSidebar, setShowAccountSidebar}) => {
   // navigate
   const navigate = useNavigate();
   const {authData} = useSelector((state) => state?.userReducer);
-
+  const {page_selected} = useSelector((state) => state?.generalReducer);
   const deleteCurrentUser = () => {
     dispatch(logoutUser(navigate));
     dispatch({type: LOGOUT});
     setShowAccountSidebar(false)
   }
-  
+  const changePageSelected = (name) => {
+    dispatch({type: PAGE_SELECTED, payload: name});
+  }
   useEffect(() => {
     window.scrollTo({
       top: 0,
@@ -71,9 +73,9 @@ const SidebarComponent = ({showAccountSidebar, setShowAccountSidebar}) => {
             </div>      
           <div className='flex flex-col justify-between items-start w-[50rem] m-[2rem] text-2xl font-bold '>
             {headerItems.map((item, i) => {
-              return <Link className='flex items-center gap-3 text-[1.5rem]' to={item?.link}>
+              return <Link className='flex items-center gap-3 text-[1.5rem]' to={item?.link} onClick={() => changePageSelected(item?.name)}>
                 <p className=' text-gray-600 text-[1.5rem]'>{item?.icon}</p>
-                <p onClick={() => setSelected(i)} className={`my-[.5rem] text-gray-500  text-[.9rem] ${selected == i ? 'text-red-500 cursor-pointer' : 'cursor-pointer'}`}>
+                <p onClick={() => setSelected(i)} className={`my-[.5rem] text-gray-500  text-[.9rem] ${page_selected == item?.name ? 'text-red-500 cursor-pointer' : 'cursor-pointer'}`}>
                   {item.name}
                 </p>
 

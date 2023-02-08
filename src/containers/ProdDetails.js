@@ -13,7 +13,7 @@ import { ADD_TO_CART } from '../constants'
 
 const ProdDetails = () => {
     const {slug} = useParams();
-    const { product } = useSelector((state) => state?.generalReducer);
+    const { product, cart } = useSelector((state) => state?.generalReducer);
     
     // const {name, small_description, description, original_price, selling_price, quantity, category, product_image, id} = product?.name ? product : {};
     // const {image} = product_image ? product_image[0] : {};
@@ -28,9 +28,14 @@ const ProdDetails = () => {
         // dispatch({type: UPDATE_CART_ITEM, payload: newCartComponent});
     }
     
-    const addProductToCart = async () => {
+    const addProductToCart = () => {
+        const index = cart.findIndex((cartItem) => cartItem?.id == product?.id);
         dispatch({type: ADD_TO_CART, payload: product});
-        navigate('/dashboard/cart');
+        if (index != -1) {
+            enqueueSnackbar('Product added to cart succesfully', {variant: 'success',});
+        } else {
+            enqueueSnackbar('Product quantity in cart increased 1', {variant: 'success',});
+        }
     }
         
     useEffect(() => {

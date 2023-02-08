@@ -14,7 +14,7 @@ import ShopSidebar from '../../components/ShopSidebar';
 import { CURRENT_CATEGORY } from '../../constants';
 import { useSnackbar } from 'notistack';
 import Spinner from '../../components/Spinner';
-const GridProducts = () => {
+const GridProducts = ({filterCategory, setFilterCategory}) => {
     const {filteredProducts, brands, categories ,numberOfPages, currentCategory, isLoading} = useSelector((state) => state?.generalReducer);
     console.log(currentCategory, 'ffffffffffffffff')
     // console.log('ggggg', brands);
@@ -26,7 +26,7 @@ const GridProducts = () => {
     const [filterText, setFilterText] = useState(`/filter-product`);
     const [currentPage, setCurrentPage] = useState(1);
     const [filterBrand, setFilterBrand] = useState([]);
-    const [filterCategory, setFilterCategory] = useState(currentCategory);
+    // const [filterCategory, setFilterCategory] = useState(currentCategory);
     // whislistItems
     const {whislistItems} = useSelector((state) => state?.generalReducer);
     const dispatch = useDispatch();
@@ -79,25 +79,19 @@ const GridProducts = () => {
         filterBrand?.map((brand, i) => {
             setFilterBrandText(`${filterBrandText}&brandInputs[${i}]=${brand}`);
         });
-
+        if (filterCategory)
+            setFilterCategoryText(`&categoryInputs[0]=${filterCategory}`);
+        
         // filterCategory?.map((category, i) => {
         //     setFilterCategoryText(`${filterCategoryText}&categoryInputs[${i}]=${category}`);
         // });
         
     }, [filterBrand, filterCategory]);
 
-
-    useEffect(() => {
-        dispatch({type: CURRENT_CATEGORY, payload: 0});
-    }, []);
     useEffect(() => {
         console.log('filterText', `${filterText}?sortPrice=${filterPrice}${filterBrandText}${filterCategoryText}`)
-        if (currentCategory != 0) {
-            dispatch(getShopPageProducts(`${filterText}?sortPrice=${filterPrice}${filterBrandText}&categoryInputs[0]=${currentCategory}&page=${currentPage}`));
-        } else {
-            dispatch(getShopPageProducts(`${filterText}?sortPrice=${filterPrice}${filterBrandText}&page=${currentPage}`));
-        }
-    }, [filterBrandText,filterCategory, currentPage, filterPrice, currentCategory, whislistItems]);
+        dispatch(getShopPageProducts(`${filterText}?sortPrice=${filterPrice}${filterBrandText}${filterCategoryText}&page=${currentPage}`));
+    }, [filterBrandText,filterCategoryText, currentPage, filterPrice, currentCategory, whislistItems]);
 
     // useEffect(() => {
     //     dispatch(getShopPageBrand(`/filter-product`));

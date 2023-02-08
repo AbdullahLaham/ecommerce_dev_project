@@ -13,7 +13,7 @@ import MenuComp from './headerAccountMenue/Menu';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
-const Header = () => {
+const Header = ({filterCategory, setFilterCategory}) => {
     const [language, setLanguage] = useState('Arabic');
     const [currency, setCurrency] = useState();
     const [selected, setSelected] = useState('home') 
@@ -34,16 +34,19 @@ const Header = () => {
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
-        
     };
+
     const handleClose = () => {
         setAnchorEl(null);
         
     };
+
     const changeCategory = (categoryId) => {
-        dispatch({type: CURRENT_CATEGORY, payload: categoryId});
+        // dispatch({type: CURRENT_CATEGORY, payload: categoryId});
+        setFilterCategory(categoryId);
         navigate('/grid');
     }
+
     const isMobile = useMediaQuery("(min-width: 800px)");
     const StyledMenu = styled((props) => (
         <Menu

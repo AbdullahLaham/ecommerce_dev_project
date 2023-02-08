@@ -3,7 +3,7 @@ import { useState } from 'react';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, Outlet, useNavigate } from 'react-router-dom';
-import { LOGOUT } from '../constants';
+import { LOGOUT, PAGE_SELECTED } from '../constants';
 import CloseIcon from '@mui/icons-material/Close';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
@@ -20,9 +20,14 @@ const Dashboard = () => {
   const navigate = useNavigate();
 
   const {authData} = useSelector((state) => state?.userReducer);
+  const {page_selected} = useSelector((state) => state?.generalReducer);
   const deleteCurrentUser = () => {
     dispatch(logoutUser(navigate));
     dispatch({type: LOGOUT});
+  }
+
+  const changePageSelected = (name) => {
+    dispatch({type: PAGE_SELECTED, payload: name});
   }
 
   const isMobile = useMediaQuery("(max-width: 800px)");
@@ -65,9 +70,9 @@ const Dashboard = () => {
             </div>      
               <div className='flex flex-col justify-between items-start w-[50rem] m-[2rem] text-2xl font-bold '>
                 {headerItems.map((item, i) => {
-                  return <Link className='flex items-center gap-3 text-[1.5rem]' to={item?.link}>
+                  return <Link className='flex items-center gap-3 text-[1.5rem]' onClick={() => changePageSelected(item?.name)} to={item?.link}>
                     <p className=' text-gray-600 text-[1.2rem]'>{item?.icon}</p>
-                    <p onClick={() => setSelected(i)} className={`my-[.5rem] text-gray-500  text-[.9rem] ${selected == i ? 'text-red-500 cursor-pointer' : 'cursor-pointer'}`}>
+                    <p onClick={() => setSelected(i)} className={`my-[.5rem] text-gray-500  text-[.9rem] ${page_selected == item?.name ? 'text-red-500 cursor-pointer' : 'cursor-pointer'}`}>
                       {item.name}
                     </p>
   

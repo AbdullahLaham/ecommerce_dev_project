@@ -12,6 +12,7 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.2.6",
+    "device-detector-js": "^3.0.3",
     "formik": "^2.2.9",
     "install": "^0.13.0",
     "notistack": "^2.0.8",
@@ -27,6 +28,7 @@
     "redux-thunk": "^2.4.2",
     "slick-carousel": "^1.8.1",
     "swiper": "^8.4.6",
+    "user-agents": "^1.0.1285",
     "web-vitals": "^2.1.4",
     "yup": "^0.32.11"
   },
