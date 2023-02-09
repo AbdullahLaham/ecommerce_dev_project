@@ -52,22 +52,22 @@ const ListProductsComp = ({product}) => {
                 <div className='absolute top-0 right-[1rem]'> 
                 {index != -1 || selected  ? <FavoriteIcon sx={{fill: 'red'}} /> : <FavoriteBorderIcon  sx={{fill: 'red'}} onClick={() => {addProductToWishist(id); setSelected(true);}} /> }
                     </div>
-                  <div class="product-image">
-                    <img src={`https://applabb.account-collection.com/${image}`} className='min-h-[8rem] max-h-[6.5rem]' alt="#" />
-                    
-                      
+                  <div class="h-[100%] ">
+                    <img src={`https://applabb.account-collection.com/${image}`} className='min-h-[85%] max-h-[85%] block m-auto' alt="#" />
                   </div>
               </div>
               <div class="col-lg-8 col-md-8 col-12">
                   <div class="product-info text-start">
-                      <span class="category">{category?.name}</span>
-                      <h4 class="title">
-                          <a href="product-grids.html">{name}</a>
-                      </h4>
-                      <ul class="review text-start">
+                      <div className=''>
+                        <span class="category text-[1.2rem]">{category?.name}</span>
+                        <h4 class="title">
+                            <p>{name}</p>
+                        </h4>
+                      </div>
+                      <div class="review text-start">
                           <Rating value={4} readonly  />
-                          <li><span>4.0 Review(s)</span></li>
-                      </ul>
+                          <span>4.0 Review(s)</span>
+                      </div>
                       <div class="price text-start">
                           <span>${selling_price}</span>
                           <span class="discount-price">${original_price}</span>

@@ -1,6 +1,6 @@
 import {  ADD_TO_CART, DELETE_FROM_CART, UPDATE_CART_ITEM, TRANSACTION, LATEST_PRODUCTS, CATEGORY_PRODUCTS, CURRENT_PRODUCT, CATEGORIES, ALL_PRODUCTS, GET_BRANDS, SLIDER_IMAGES, CURRENT_CATEGORY, WHISHLIST_ITEMS, START_LOADING, END_LOADING, PAGE_SELECTED } from "../constants";
 const reducer = (state = { 
-        cart: localStorage.getItem('cart')!== "undefined" ? JSON.parse(localStorage.getItem('cart')) : [],
+        cart: (localStorage.getItem('cart')!== "undefined" && localStorage.getItem('cart')) ? JSON.parse(localStorage.getItem('cart')) : [],
         // transaction: null,
         products: localStorage.getItem('products')!== "undefined" ? JSON.parse(localStorage.getItem('products')) : [],
         filteredProducts: localStorage.getItem('filteredProducts')!== undefined ? JSON.parse(localStorage.getItem('filteredProducts')) : [],
@@ -17,6 +17,7 @@ const reducer = (state = {
         whislistItems: localStorage.getItem('whislistItems') ? JSON.parse(localStorage.getItem('whislistItems')) : [],
         page_selected: localStorage.getItem('page_selected')!== "undefined" ? localStorage.getItem('page_selected') : '',
     },
+
     action
     ) => {
     switch(action.type) {
@@ -29,7 +30,7 @@ const reducer = (state = {
                 const myCart = state?.cart;
                 const itemm = myCart[index];
                 let newCartItem = {...(state?.cart[index]), qty: (itemm?.qty) + 1 }
-                newCart = state?.cart.map((product) => product?._id == item?._id ? newCartItem : product);
+                newCart = state?.cart.map((product) => product?.id == item?.id ? newCartItem : product);
             } else {
                 newCart = [...state?.cart, {...item, qty: 1}];
             }
@@ -37,15 +38,17 @@ const reducer = (state = {
             localStorage.setItem('cart', JSON.stringify(newCart))
             return {...state, cart: newCart}
         }
+
         case DELETE_FROM_CART: {
             let item = action.payload;
             const newCart = state.cart.filter((prod) => prod?.id !== item?.id);
             localStorage.setItem('cart', JSON.stringify(newCart));
             return {...state, cart: newCart}
         }
+        
         case UPDATE_CART_ITEM: {
             let item = action.payload;
-            const newCart = state.cart.map((prod) => prod._id == item._id ?  item : prod              
+            const newCart = state.cart.map((prod) => prod.id == item.id ?  item : prod              
             );
             localStorage.setItem('cart', JSON.stringify(newCart));
             return {...state, cart: newCart}

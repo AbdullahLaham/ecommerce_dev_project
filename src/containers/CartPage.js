@@ -39,6 +39,7 @@ const CartPage = () => {
             <CartComponent product={item}/>
           )
         })}
+        
         <hr className='my-[1rem]' />
         <Link to='/payment' className='w-[80%] mx-auto mb-[1rem] flex justify-end'><button className=' rounded-md bg-orange-600 text-[#fff] p-[.5rem] hover:bg-opacity-[.8] cursor-pointer' onClick={() => addProductsToTheCart()}>Go To Payment</button></Link>
       </div>

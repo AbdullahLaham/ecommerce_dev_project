@@ -13,9 +13,9 @@ import ShopSidebar from '../../components/ShopSidebar';
 import { CURRENT_CATEGORY } from '../../constants';
 import { useSnackbar } from 'notistack';
 
-const ListProducts = () => {
+const ListProducts = ({filterCategory, setFilterCategory}) => {
     const {filteredProducts, brands, categories ,numberOfPages, currentCategory} = useSelector((state) => state?.generalReducer);
-    console.log(brands, 'ffffffffffffffff')
+    console.log(brands, 'ffffffffffffffff');
     // console.log('ggggg', brands);
     const [selected, setSelected] = useState('list');
     const [showSidebar, setShowSidebar] = useState(false);
@@ -25,7 +25,7 @@ const ListProducts = () => {
     const [filterText, setFilterText] = useState(`/filter-product`);
     const [currentPage, setCurrentPage] = useState(1);
     const [filterBrand, setFilterBrand] = useState([]);
-    const [filterCategory, setFilterCategory] = useState(currentCategory);
+    // const [filterCategory, setFilterCategory] = useState(currentCategory);
      // whislistItems
      const {whislistItems} = useSelector((state) => state?.generalReducer);
     const updateFilterBrand = (id) => {
@@ -38,10 +38,16 @@ const ListProducts = () => {
             setFilterBrand(newBrand)
         }
     }
-    const updateFilterCategory = (id) => {
-        dispatch({type: CURRENT_CATEGORY, payload: id});
-        console.log(id, currentCategory);
 
+    const updateFilterCategory = (id) => {
+        // dispatch({type: CURRENT_CATEGORY, payload: id});
+        // console.log(id, currentCategory);
+
+        // setFilterCategory([]);
+        setFilterBrand([]);
+        setFilterBrandText('');
+        setFilterCategory([id]);
+        
         // if (!filterCategory?.includes(id)) {
             
         //     setFilterCategory([...filterCategory, id]);
@@ -61,42 +67,42 @@ const ListProducts = () => {
     const navigate = useNavigate();
     // dispatch
     const dispatch = useDispatch();
-
+    
     useEffect(() => {
         // let uniqueBrands = [...new Set(filterBrand)];
         setFilterBrandText('');
-        setFilterCategoryText('');
+        // setFilterCategoryText('');
         
         filterBrand?.map((brand, i) => {
             setFilterBrandText(`${filterBrandText}&brandInputs[${i}]=${brand}`);
         });
-
+        
+        filterCategory?.map((categ, i) => {
+            setFilterCategoryText(`&categoryInputs[0]=${categ}`);
+        });
         // filterCategory?.map((category, i) => {
         //     setFilterCategoryText(`${filterCategoryText}&categoryInputs[${i}]=${category}`);
         // });
         
     }, [filterBrand, filterCategory]);
 
+    // useEffect(() => {
+    //     console.log('filterText', `${filterText}?sortPrice=${filterPrice}${filterBrandText}${filterCategoryText}`)
+    //     if (currentCategory != 0) {
+    //         dispatch(getShopPageProducts(`${filterText}?sortPrice=${filterPrice}${filterBrandText}&categoryInputs[0]=${currentCategory}&page=${currentPage}`));
+    //     } else {
+    //         dispatch(getShopPageProducts(`${filterText}?sortPrice=${filterPrice}${filterBrandText}&page=${currentPage}`));
+    //     }
+    // }, [filterBrandText,filterCategory, currentPage, filterPrice, whislistItems]);
 
-    useEffect(() => {
-        dispatch({type: CURRENT_CATEGORY, payload: 0});
-    }, []);
-    
     useEffect(() => {
         console.log('filterText', `${filterText}?sortPrice=${filterPrice}${filterBrandText}${filterCategoryText}`)
-        if (currentCategory != 0) {
-            dispatch(getShopPageProducts(`${filterText}?sortPrice=${filterPrice}${filterBrandText}&categoryInputs[0]=${currentCategory}&page=${currentPage}`));
-        } else {
-            dispatch(getShopPageProducts(`${filterText}?sortPrice=${filterPrice}${filterBrandText}&page=${currentPage}`));
-        }
-    }, [filterBrandText,filterCategory, currentPage, filterPrice, currentCategory, whislistItems]);
+        dispatch(getShopPageProducts(`${filterText}?sortPrice=${filterPrice}${filterBrandText}${filterCategoryText}&page=${currentPage}`));
+    }, [filterBrandText,filterCategoryText, currentPage, filterPrice, whislistItems]);
 
-    // useEffect(() => {
-    //     dispatch(getShopPageBrand(`/filter-product`));
-    // }, []);
     const isNonMobile = useMediaQuery("(min-width: 980px)");
   return (
-    <section class="product-grids section" >
+    <section class="product-grids section w-[100%] max-w-[100%] overflow-x-hidden" >
         <ShopSidebar showSidebar={showSidebar} setShowSidebar={setShowSidebar} filterPrice={filterPrice} setFilterPrice={setFilterPrice} filterBrandText={filterBrandText} 
         setFilterBrandText={setFilterBrandText} filterText={filterText} setFilterText={setFilterText} currentPage={currentPage} setCurrentPage={setCurrentPage}
         filterBrand={filterBrand} setFilterBrand={setFilterBrand} filterCategory={filterCategory} setFilterCategory={setFilterCategory}

@@ -4,7 +4,7 @@ import * as api from '../api'
 import {CATEGORY_PRODUCTS, CATEGORIES, LATEST_PRODUCTS, CURRENT_PRODUCT, LANGUAGE, ADD_TO_CART, ALL_PRODUCTS, GET_BRANDS, SLIDER_IMAGES, WHISHLIST_ITEMS, START_LOADING, END_LOADING} from '../constants'
 
 export const fetchLatestProducts = () => async (dispatch) => {
-    const {data: {data}} = await api.getLatestProducts();
+    const {data: {data: {data}}} = await api.getLatestProducts();
     dispatch({type: LATEST_PRODUCTS, payload: data});
 }
 
@@ -61,8 +61,8 @@ export const getProductsByCategory = (category) =>  async (dispatch) => {
 export const fetchProductDetails = (slug) => async (dispatch) => {
     // console.log('dddddddddddd')
     const {data: {data}} = await api.fetchProductDetails(slug);
-    // console.log('hello', data);
-    dispatch({type: CURRENT_PRODUCT, payload: data[0]});
+    console.log('hellooooooooo', data);
+    dispatch({type: CURRENT_PRODUCT, payload: data});
 }
 
 export const createTransaction = (orderData) => async (dispatch) => {
@@ -90,7 +90,7 @@ export const addToWishlist = (id, enqueueSnackbar) => async (dispatch) => {
         // enqueueSnackbar('Already added to wishlist', {variant: 'error',});
     }
     console.log('res', data);
-    
+    dispatch(fetchWishlistItems());
     // dispatch({type: WHISHLIST_ITEMS, payload: data});
 }
 
@@ -101,5 +101,19 @@ export const deleteFromWishlist = (id, enqueueSnackbar) => async (dispatch) => {
         // enqueueSnackbar('Product deleted from wishlist Succesfully', {variant: 'success',});
     }
 }
-// cart page functions 
+// product details page functions 
+
+
+export const fetchLatestReviews = () => async (dispatch) => {
+    const {data} = await api.fetchLatestReviews();
+    if (data) {
+    }
+}
+
+
+export const LeaveProductReview = (review, enqueueSnackbar) => async (dispatch) => {
+    const {data} = await api.LeaveProductReview(review, enqueueSnackbar);
+    if (data) {
+    }
+}
 

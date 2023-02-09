@@ -22,7 +22,7 @@ export const login = async (user) => {
 
 // system functions
 export const getLatestProducts = async () => {
-    const res = await API.get('/products');
+    const res = await API.get('/filter-product');
     return res;
 }
 export const getShopPageProducts = async (text) => {
@@ -75,7 +75,7 @@ export const addToWishlist = async (id, enqueueSnackbar) => {
         return res;
 
     }).catch((err) => {
-        enqueueSnackbar('Already added to wishlist', {variant: 'error',});
+        enqueueSnackbar(`${err?.data?.message}`, {variant: 'error',});
     })
     // console.log('res', res);
 }
@@ -106,4 +106,19 @@ export const logoutUser = async () => {
 }
 
 
+
+// product details functions
+
+
+export const fetchLatestReviews = async () => {
+    const res = await API.get('');
+    return res;
+}
+
+
+export const LeaveProductReview = async (review, enqueueSnackbar) => {
+    const {data} = await LeaveProductReview(review, enqueueSnackbar);
+    if (data) {
+    }
+}
 

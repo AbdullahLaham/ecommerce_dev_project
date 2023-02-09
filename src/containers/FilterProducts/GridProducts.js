@@ -27,6 +27,7 @@ const GridProducts = ({filterCategory, setFilterCategory}) => {
     const [currentPage, setCurrentPage] = useState(1);
     const [filterBrand, setFilterBrand] = useState([]);
     // const [filterCategory, setFilterCategory] = useState(currentCategory);
+
     // whislistItems
     const {whislistItems} = useSelector((state) => state?.generalReducer);
     const dispatch = useDispatch();
@@ -47,8 +48,11 @@ const GridProducts = ({filterCategory, setFilterCategory}) => {
     }
 
     const updateFilterCategory = (id) => {
-        dispatch({type: CURRENT_CATEGORY, payload: id});
-        console.log(id, currentCategory)
+
+        // setFilterCategory([]);
+        setFilterBrand([]);
+        setFilterBrandText('');
+        setFilterCategory([id]);
         // if (!filterCategory?.includes(id)) {
             
         //     setFilterCategory([...filterCategory, id]);
@@ -74,13 +78,16 @@ const GridProducts = ({filterCategory, setFilterCategory}) => {
     useEffect(() => {
         // let uniqueBrands = [...new Set(filterBrand)];
         setFilterBrandText('');
-        setFilterCategoryText('');
+        // setFilterCategoryText('');
 
         filterBrand?.map((brand, i) => {
             setFilterBrandText(`${filterBrandText}&brandInputs[${i}]=${brand}`);
         });
-        if (filterCategory)
-            setFilterCategoryText(`&categoryInputs[0]=${filterCategory}`);
+        
+        filterCategory?.map((categ, i) => {
+            setFilterCategoryText(`&categoryInputs[0]=${categ}`);
+        });
+
         
         // filterCategory?.map((category, i) => {
         //     setFilterCategoryText(`${filterCategoryText}&categoryInputs[${i}]=${category}`);
@@ -91,7 +98,7 @@ const GridProducts = ({filterCategory, setFilterCategory}) => {
     useEffect(() => {
         console.log('filterText', `${filterText}?sortPrice=${filterPrice}${filterBrandText}${filterCategoryText}`)
         dispatch(getShopPageProducts(`${filterText}?sortPrice=${filterPrice}${filterBrandText}${filterCategoryText}&page=${currentPage}`));
-    }, [filterBrandText,filterCategoryText, currentPage, filterPrice, currentCategory, whislistItems]);
+    }, [filterBrandText,filterCategoryText, currentPage, filterPrice, whislistItems]);
 
     // useEffect(() => {
     //     dispatch(getShopPageBrand(`/filter-product`));
@@ -193,6 +200,8 @@ to here
                     {/* <!-- End Single Widget --> */}
                 </div>
                 {/* <!-- End Product Sidebar --> */}
+
+                
             </div>}
             <div class="col-lg-9 col-12">
                 <div class="product-grids-head">

@@ -43,7 +43,7 @@ const Header = ({filterCategory, setFilterCategory}) => {
 
     const changeCategory = (categoryId) => {
         // dispatch({type: CURRENT_CATEGORY, payload: categoryId});
-        setFilterCategory(categoryId);
+        setFilterCategory([categoryId]);
         navigate('/grid');
     }
 
@@ -128,8 +128,8 @@ const Header = ({filterCategory, setFilterCategory}) => {
             </Box>
             
             {authData?.email ? (
-                <div>
-                    <div onClick={() => setShowMenu(!showMenu)} className='flex items-center gap-2 cursor-pointer' ><img src={authData?.profile_photo_url}  className='w-[2.2rem] h-[2.2rem] rounded-full object-cover text-xl'  /> <p className='select-none'>{authData?.name}</p></div>   
+                <div className=''>
+                    <div onClick={() => setShowMenu(!showMenu)} className='flex  gap-2 cursor-pointer' ><img src={authData?.profile_photo_url}  className='w-[2.2rem] h-[2.2rem] rounded-full object-cover text-xl block'  /> <p className='select-none block'>{authData?.name}</p></div>   
                     {showMenu && <MenuComp showMenu={showMenu} setShowMenu={setShowMenu} />}
                 </div>
             ) : (

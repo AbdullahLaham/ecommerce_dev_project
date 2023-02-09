@@ -41,9 +41,9 @@ const FlashComponent = ({productItem}) => {
         const index = cart.findIndex((cartItem) => cartItem?.id == productItem?.id);
         dispatch({type: ADD_TO_CART, payload: productItem});
         if (index >= 0) {
-            enqueueSnackbar('Product added to cart succesfully', {variant: 'success',});
-        } else {
             enqueueSnackbar('Product quantity in cart increased 1', {variant: 'success',});
+        } else {
+            enqueueSnackbar('Product added to cart succesfully', {variant: 'success',});
         }
     }
     const [selected, setSelected] = useState(false);

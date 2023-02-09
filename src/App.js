@@ -27,15 +27,15 @@ import UserAgent from 'user-agents';
 function App() {
   const [showAccountSidebar, setShowAccountSidebar] = useState(false);
   // the category for the shop page
-  const [filterCategory, setFilterCategory] = useState();
+  const [filterCategory, setFilterCategory] = useState([]);
 
   const isMobile = useMediaQuery("(max-width: 800px)");
   // const deviceDetector = new DeviceDetector();
   
   // the type of the device
-  const userAgent = new UserAgent();
-  console.log(userAgent.toString());
-  console.log(JSON.stringify(userAgent.data, null, 2));
+  // const userAgent = new UserAgent();
+  // console.log(userAgent.toString());
+  // console.log(JSON.stringify(userAgent.data, null, 2));
 
   useEffect(() => {
 
@@ -53,7 +53,7 @@ function App() {
       {isMobile && <AccountSidebarComponent showAccountSidebar={showAccountSidebar} setShowAccountSidebar={setShowAccountSidebar} />}
       <Routes>
         <Route path='/' element={<HomePage showAccountSidebar={showAccountSidebar} setShowAccountSidebar={setShowAccountSidebar}   />} />
-        <Route path='/list' element={<ListProducts  />} />
+        <Route path='/list' element={<ListProducts filterCategory={filterCategory} setFilterCategory={setFilterCategory}  />} />
         <Route path='/grid' element={<GridProducts filterCategory={filterCategory} setFilterCategory={setFilterCategory} />} />
         <Route path='/product/:slug' element={<ProdDetails />} />
         <Route path='/login' element={<LoginPage />} />

@@ -1,30 +1,19 @@
-import React from 'react'
-
+import React from 'react';
+import '../containers/FilterProducts/filter.css';
+import CloseIcon from '@mui/icons-material/Close';
+import { Rating } from '@mui/material';
 const LeaveReviewComp = () => {
   return (
-    <div class="modal fade review-modal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog">
+    <div >
+        <div class=" max-w-[50%] mx-auto">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Leave a Review</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+                <div class="flex items-center justify-between ">
+                    <h5 >Leave a Review</h5>
+                    <button><CloseIcon /></button>
                 </div>
+
                 <div class="modal-body">
-                    <div class="row">
-                        <div class="col-sm-6" >
-                            <div class="form-group" >
-                                <label for="review-name" >Your Name</label>
-                                <input class="form-control" type="text" id="review-name" required />
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label for="review-email">Your Email</label>
-                                <input class="form-control" type="email" id="review-email" required />
-                            </div>
-                        </div>
-                    </div>
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
@@ -35,13 +24,8 @@ const LeaveReviewComp = () => {
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label for="review-rating">Rating</label>
-                                <select class="form-control" id="review-rating">
-                                    <option>5 Stars</option>
-                                    <option>4 Stars</option>
-                                    <option>3 Stars</option>
-                                    <option>2 Stars</option>
-                                    <option>1 Star</option>
-                                </select>
+                                <Rating  />
+                                
                             </div>
                         </div>
                     </div>

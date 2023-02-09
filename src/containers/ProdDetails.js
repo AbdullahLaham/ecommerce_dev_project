@@ -14,22 +14,24 @@ import { ADD_TO_CART } from '../constants'
 const ProdDetails = () => {
     const {slug} = useParams();
     const { product, cart } = useSelector((state) => state?.generalReducer);
-    
+    console.log('cart', cart);
     // const {name, small_description, description, original_price, selling_price, quantity, category, product_image, id} = product?.name ? product : {};
     // const {image} = product_image ? product_image[0] : {};
     const [currentImage, setCurrentImage] = useState('');
     
     // navigate
     const navigate = useNavigate();
+    
     // // dispatch
     const dispatch = useDispatch();
+
     const updateQuantity = () => {
         // const newCartComponent = {...product, quantity: counter + 1}
         // dispatch({type: UPDATE_CART_ITEM, payload: newCartComponent});
     }
     
     const addProductToCart = () => {
-        const index = cart.findIndex((cartItem) => cartItem?.id == product?.id);
+        const index = cart?.findIndex((cartItem) => cartItem?.id == product?.id);
         dispatch({type: ADD_TO_CART, payload: product});
         if (index != -1) {
             enqueueSnackbar('Product added to cart succesfully', {variant: 'success',});
@@ -38,12 +40,13 @@ const ProdDetails = () => {
         }
     }
         
+
     useEffect(() => {
        dispatch(fetchProductDetails(slug));
     }, [slug]);
 
     useEffect(() => {
-        setCurrentImage(product?.product_image[0]['image']);
+        setCurrentImage(product?.image[0]['image']);
         // setCounter(quantity)
     }, [product]);
 
@@ -58,12 +61,12 @@ const ProdDetails = () => {
     <section class="item-details section">
         <div class="container">
             <div class="top-area">
-                <div class="row align-items-center">
+                <div class="row align-items-center justify-between">
                     <div class="col-lg-6 col-md-12 col-12">
                         <div class="product-images">
                             <main id="gallery">
                                 <div class="main-img">
-                                    <img src={`https://applabb.account-collection.com/${currentImage}`} id="current" alt="#" />
+                                    <img className='max-w-[30rem]' src={`https://applabb.account-collection.com/${currentImage}`} id="current" alt="#" />
                                 </div>
                                 <div class="images">
                                     {product?.product_image && product?.product_image?.map((img) => {
@@ -118,11 +121,6 @@ const ProdDetails = () => {
                                     <div class="col-lg-4 col-md-4 col-12">
                                         <div class="button cart-button">
                                             <button class="btn" onClick={() => addProductToCart()}>Add to Cart</button>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col-md-4 col-12">
-                                        <div class="wish-button">
-                                            <button class="btn"><i class="lni lni-reload"></i> Compare</button>
                                         </div>
                                     </div>
                                     <div class="col-lg-4 col-md-4 col-12">
@@ -192,53 +190,14 @@ const ProdDetails = () => {
                                             tempor...</p>
                                     </div>
                                 </div>
-                                {/* <!-- End Single Review -->
-                                <!-- Start Single Review --> */}
-                                <div class="single-review">
-                                    <img src="https://via.placeholder.com/150x150" alt="#" />
-                                    <div class="review-info">
-                                        <h4>My husband love his new...
-                                            <span>Alex Jaza
-                                            </span>
-                                        </h4>
-                                        <ul class="stars">
-                                            <li><i class="lni lni-star-filled"></i></li>
-                                            <li><i class="lni lni-star-filled"></i></li>
-                                            <li><i class="lni lni-star-filled"></i></li>
-                                            <li><i class="lni lni-star-filled"></i></li>
-                                            <li><i class="lni lni-star"></i></li>
-                                        </ul>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                            tempor...</p>
-                                    </div>
+                                
                                 </div>
-                                {/* <!-- End Single Review -->
-                                <!-- Start Single Review --> */}
-                                <div class="single-review">
-                                    <img src="https://via.placeholder.com/150x150" alt="#" />
-                                    <div class="review-info">
-                                        <h4>I love the built quality...
-                                            <span>Jacob Hammond
-                                            </span>
-                                        </h4>
-                                        <ul class="stars">
-                                            <li><i class="lni lni-star-filled"></i></li>
-                                            <li><i class="lni lni-star-filled"></i></li>
-                                            <li><i class="lni lni-star-filled"></i></li>
-                                            <li><i class="lni lni-star-filled"></i></li>
-                                            <li><i class="lni lni-star-filled"></i></li>
-                                        </ul>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                            tempor...</p>
-                                    </div>
-                                </div>
-                                {/* <!-- End Single Review --> */}
+                            
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
     </section>
   )
 }
