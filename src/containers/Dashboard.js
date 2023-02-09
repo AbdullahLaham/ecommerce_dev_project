@@ -59,7 +59,7 @@ const Dashboard = () => {
   return (
     <div className='min-w-[100%]  flex '>
         {!isMobile && (
-          <div className={`h-[80vh] max-h-[100%] ml-[5rem] md:w-[27%] lg:w-[18%] z-20  bg-white flex-col justify-between delay-150 border-r border-gray-300 sticky left-0 top-0`}>
+          <div className={`h-[85vh] max-h-[100%] ml-[5rem] md:w-[28%] lg:w-[18%] z-20  bg-white flex-col justify-between delay-150 border-r border-gray-300 sticky left-0 top-0`}>
           <div>
             <div className='flex flex-col items-center gap-2 mb-[0] bg-orange-500 min-w-[100%] h-[11rem] p-[1rem]'>
                   <img className='w-[4.5rem] h-[4.5rem]  rounded-full object-cover' src={authData?.profile_photo_url}  />
@@ -67,10 +67,11 @@ const Dashboard = () => {
                     <Link to='/profile' className=' text-center flex justify-center border-gray-200 py-[.5rem] text-white font-semibold'>{authData?.name}</Link>
                     <p className='font-semibold flex justify-center text-gray-300'>{authData?.email}</p>
                   </div>
-            </div>      
-              <div className='flex flex-col justify-between items-start w-[50rem] m-[2rem] text-2xl font-bold '>
+            </div>  
+
+            <div className='flex flex-col justify-between items-start w-[50rem] m-[2rem] text-2xl font-bold '>
                 {headerItems.map((item, i) => {
-                  return <Link className='flex items-center gap-3 text-[1.5rem]' onClick={() => changePageSelected(item?.name)} to={item?.link}>
+                  return <Link className=' flex items-center gap-3 text-[1.5rem]' onClick={() => changePageSelected(item?.name)} to={item?.link}>
                     <p className=' text-gray-600 text-[1.2rem]'>{item?.icon}</p>
                     <p onClick={() => setSelected(i)} className={`my-[.5rem] text-gray-500  text-[.9rem] ${page_selected == item?.name ? 'text-red-500 cursor-pointer' : 'cursor-pointer'}`}>
                       {item.name}
@@ -79,8 +80,9 @@ const Dashboard = () => {
                     </Link>
                 })}
             </div>
+
           </div>
-          <div className='flex items-center justify-between p-[.5rem] text-gray-400 border-t  border-b py-[1rem] border-gray-300 mt-[6.2rem]'>
+          <div className='flex items-center justify-between p-[.5rem] text-gray-400 border-t  border-b py-[1rem] border-gray-300 mt-[4.8rem]'>
             <div className='flex items-center'>
               <LogoutIcon />
               <Link to='/login' onClick={() => deleteCurrentUser()} className='text-gray-400'>LogOut</Link>

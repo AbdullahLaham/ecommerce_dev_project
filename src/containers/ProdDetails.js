@@ -3,10 +3,10 @@ import { Navigate, useNavigate, useParams } from 'react-router-dom'
 import axios from 'axios'
 import Checkbox from '../components/Checkbox'
 import { useSelector, useDispatch } from 'react-redux'
-import {addToWishlist, fetchProductDetails, fetchWishlistItems} from '../actions/general';
+import {addToWishlist, fetchProductDetails, fetchProductReviews, fetchWishlistItems, LeaveProductReview} from '../actions/general';
 import CollectionsBookmarkOutlinedIcon from '@mui/icons-material/CollectionsBookmarkOutlined';
 import './FilterProducts/filter.css'
-import { Rating } from '@mui/material';
+import { Rating, TextField } from '@mui/material';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { useSnackbar } from 'notistack'
 import { ADD_TO_CART } from '../constants'
@@ -18,16 +18,24 @@ const ProdDetails = () => {
     // const {name, small_description, description, original_price, selling_price, quantity, category, product_image, id} = product?.name ? product : {};
     // const {image} = product_image ? product_image[0] : {};
     const [currentImage, setCurrentImage] = useState('');
-    
+    const [ratingValue, setRatingValue] = useState(0);
+    const [userComment, setUserComment] = useState('');
     // navigate
     const navigate = useNavigate();
-    
+    // enqueueSnackbar
+    const { enqueueSnackbar } = useSnackbar();
     // // dispatch
     const dispatch = useDispatch();
 
-    const updateQuantity = () => {
-        // const newCartComponent = {...product, quantity: counter + 1}
-        // dispatch({type: UPDATE_CART_ITEM, payload: newCartComponent});
+    const ReviewProduct = () => {
+        const review = {
+            rating: ratingValue,
+            comment: userComment,
+            product_id: product?.id,
+        }
+        dispatch(LeaveProductReview(review, enqueueSnackbar));
+        setUserComment('');
+        console.log('review', review);
     }
     
     const addProductToCart = () => {
@@ -43,6 +51,7 @@ const ProdDetails = () => {
 
     useEffect(() => {
        dispatch(fetchProductDetails(slug));
+       dispatch(fetchProductReviews(product?.id));
     }, [slug]);
 
     useEffect(() => {
@@ -50,7 +59,7 @@ const ProdDetails = () => {
         // setCounter(quantity)
     }, [product]);
 
-    const { enqueueSnackbar } = useSnackbar();
+    
     
     const addProductToWishist = () => {
         dispatch(addToWishlist(product?.id, enqueueSnackbar));
@@ -140,31 +149,35 @@ const ProdDetails = () => {
                         <div class="single-block give-review">
                             <h4>4.5 (Overall)</h4>
                             <div className='flex items-center'>
-                                <span className='block mr-[.5rem]'>5 stars - 38</span>
+                                <span className='block mr-[.5rem] flex flex-start w-[7rem]'>5 stars - 38</span>
                                 <Rating value={5} readOnly />
                             </div>
                             <div className='flex items-center'>
-                                <span className='block mr-[.5rem]'>4 stars - 10</span>
-                                <Rating value={5} readOnly />
+                                <span className='block mr-[.5rem] flex flex-start w-[7rem]'>4 stars - 10</span>
+                                <Rating value={4} readOnly />
                             </div>
                             <div className='flex items-center'>
-                                <span className='block mr-[.5rem]'>3 stars - 3</span>
-                                <Rating value={5} readOnly />
+                                <span className='block mr-[.5rem] flex flex-start w-[7rem]'>3 stars - 3</span>
+                                <Rating value={3} readOnly />
                             </div>
                             <div className='flex items-center'>
-                                <span className='block mr-[.5rem]'>2 stars - 1</span>
-                                <Rating value={5} readOnly />
+                                <span className='block mr-[.5rem] flex flex-start w-[7rem]'>2 stars - 1</span>
+                                <Rating value={2} readOnly />
                             </div>
                             <div className='flex items-center'>
-                                <span className='block mr-[.5rem]'>1 stars - 0</span>
-                                <Rating value={5} readOnly />
+                                <span className='block mr-[.5rem] flex flex-start w-[7rem]'>1 stars - 0</span>
+                                <Rating value={1} readOnly />
                             </div>
-                            
+                            <hr />
                             {/* <!-- Button trigger modal --> */}
-                            <button type="button" class="btn review-btn" data-bs-toggle="modal"
-                                data-bs-target="#exampleModal">
+                            <p className='my-[.7rem] text-start text-xl text-[#FFA500] font-bold'>Add your Review </p>
+                            <p className='my-[.7rem] text-start text-[1.1rem] flex items-center gap-3 text-[#FFA500] font-bold'>Your Rating <Rating  value={ratingValue} onChange={(event, newValue) => {setRatingValue(newValue);}}/></p>
+                            <TextField sx={{width: '100%', }} label="Your Comment" variant="outlined" value={userComment} onChange={(e) => setUserComment(e.target.value)}/>
+    
+                            <button type="button" class="btn review-btn" onClick={() => ReviewProduct()}>
                                 Leave a Review
                             </button>
+
                         </div>
                     </div>
                     <div class="col-lg-8 col-12">
@@ -172,25 +185,22 @@ const ProdDetails = () => {
                             <div class="reviews">
                                 <h4 class="title">Latest Reviews</h4>
                                 {/* <!-- Start Single Review --> */}
-                                <div class="single-review">
-                                    <img src="https://via.placeholder.com/150x150" alt="#" />
-                                    <div class="review-info">
-                                        <h4>Awesome quality for the price
-                                            <span>Jacob Hammond
-                                            </span>
-                                        </h4>
-                                        <ul class="stars">
-                                            <li><i class="lni lni-star-filled"></i></li>
-                                            <li><i class="lni lni-star-filled"></i></li>
-                                            <li><i class="lni lni-star-filled"></i></li>
-                                            <li><i class="lni lni-star-filled"></i></li>
-                                            <li><i class="lni lni-star-filled"></i></li>
-                                        </ul>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                            tempor...</p>
-                                    </div>
-                                </div>
                                 
+                                {product?.review?.reviewBody?.map((review) => {
+                                    return (
+                                        <div class="single-review relative ">
+                                            <img src="https://via.placeholder.com/150x150" alt="#" />
+                                            <div class="review-info">
+                                                <p className='absolute top-0 left-[.5rem] text-gray-500 '>Abdullah Allaham</p>
+                                                <h4>{review?.comment}
+                                                </h4>
+                                                <ul class="stars">
+                                                    <Rating value={review?.Rating} readOnly />
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    )
+                                })}
                                 </div>
                             
                             </div>

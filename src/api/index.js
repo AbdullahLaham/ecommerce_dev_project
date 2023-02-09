@@ -22,7 +22,7 @@ export const login = async (user) => {
 
 // system functions
 export const getLatestProducts = async () => {
-    const res = await API.get('/filter-product');
+    const res = await API.get('/products');
     return res;
 }
 export const getShopPageProducts = async (text) => {
@@ -110,15 +110,25 @@ export const logoutUser = async () => {
 // product details functions
 
 
-export const fetchLatestReviews = async () => {
-    const res = await API.get('');
-    return res;
-}
 
 
 export const LeaveProductReview = async (review, enqueueSnackbar) => {
-    const {data} = await LeaveProductReview(review, enqueueSnackbar);
-    if (data) {
-    }
+    await API.post(`/add-review`, {
+        headers: {
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+        },
+        review,
+    })
+    .then((res) => {
+        enqueueSnackbar('Review Added Succesfully', {variant: 'success',});
+    })
+    .catch((error) => {
+        enqueueSnackbar('Already added comment to this product', {variant: 'error',});
+    });
 }
 
+
+export const fetchProductReviews = async (product_id) => {
+    const res = await API.get(`/show-review?product_id[0]=${product_id}`);
+    return res;
+}

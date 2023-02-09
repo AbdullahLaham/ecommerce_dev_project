@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { deleteFromWishlist, fetchWishlistItems } from '../actions/general';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
@@ -15,16 +15,17 @@ const WishlistPage = () => {
   // navigate
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
- 
+  const [isdelete, setDelete] = useState(false);
 
   const deleteItemFromWishlist = (id) => {
     dispatch(deleteFromWishlist(id, enqueueSnackbar));
   }
 
   const {whislistItems} = useSelector((state) => state?.generalReducer);
+
    useEffect(() => {
     dispatch(fetchWishlistItems());
-  } ,[whislistItems]);
+  } ,[isdelete]);
   
   console.log('dd', whislistItems);
 
@@ -62,7 +63,7 @@ const WishlistPage = () => {
                     </div>
                     <div className='flex items-center justify-end controls'>
                       <button className='' onClick={() => navigate(`/product/${slug}`)}><VisibilityOutlinedIcon /></button>
-                      <button className='' onClick={() => deleteItemFromWishlist(item?.id)}><DeleteOutlinedIcon /></button>
+                      <button className='' onClick={() =>{ deleteItemFromWishlist(item?.id); setDelete(true)}}><DeleteOutlinedIcon /></button>
                     </div>
                   </div>
                 </div>

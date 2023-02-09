@@ -1,4 +1,4 @@
-import {  ADD_TO_CART, DELETE_FROM_CART, UPDATE_CART_ITEM, TRANSACTION, LATEST_PRODUCTS, CATEGORY_PRODUCTS, CURRENT_PRODUCT, CATEGORIES, ALL_PRODUCTS, GET_BRANDS, SLIDER_IMAGES, CURRENT_CATEGORY, WHISHLIST_ITEMS, START_LOADING, END_LOADING, PAGE_SELECTED } from "../constants";
+import {  ADD_TO_CART, DELETE_FROM_CART, UPDATE_CART_ITEM, TRANSACTION, LATEST_PRODUCTS, CATEGORY_PRODUCTS, CURRENT_PRODUCT, CATEGORIES, ALL_PRODUCTS, GET_BRANDS, SLIDER_IMAGES, CURRENT_CATEGORY, WHISHLIST_ITEMS, START_LOADING, END_LOADING, PAGE_SELECTED, PRODUCT_REVIEWS } from "../constants";
 const reducer = (state = { 
         cart: (localStorage.getItem('cart')!== "undefined" && localStorage.getItem('cart')) ? JSON.parse(localStorage.getItem('cart')) : [],
         // transaction: null,
@@ -16,6 +16,8 @@ const reducer = (state = {
         currentCategory: localStorage.getItem('currentCategory')!== "undefined" ? localStorage.getItem('currentCategory') : -1,
         whislistItems: localStorage.getItem('whislistItems') ? JSON.parse(localStorage.getItem('whislistItems')) : [],
         page_selected: localStorage.getItem('page_selected')!== "undefined" ? localStorage.getItem('page_selected') : '',
+        product_reviews: localStorage.getItem('product_reviews') ? JSON.parse(localStorage.getItem('product_reviews')) : [],
+            
     },
 
     action
@@ -117,7 +119,12 @@ const reducer = (state = {
             localStorage.setItem('page_selected', action?.payload);
             return {...state, page_selected: action?.payload}
         }
-
+        // PRODUCT_REVIEWS
+        case PRODUCT_REVIEWS: {
+            localStorage.setItem('product_reviews', action?.payload);
+            return {...state, product_reviews: action?.payload}
+        }
+        
         default: {
             return state;
         }

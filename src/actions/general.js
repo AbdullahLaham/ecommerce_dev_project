@@ -1,10 +1,12 @@
 
 import { Language } from '@mui/icons-material';
 import * as api from '../api'
-import {CATEGORY_PRODUCTS, CATEGORIES, LATEST_PRODUCTS, CURRENT_PRODUCT, LANGUAGE, ADD_TO_CART, ALL_PRODUCTS, GET_BRANDS, SLIDER_IMAGES, WHISHLIST_ITEMS, START_LOADING, END_LOADING} from '../constants'
+import {CATEGORY_PRODUCTS, CATEGORIES, LATEST_PRODUCTS, CURRENT_PRODUCT, LANGUAGE, ADD_TO_CART, ALL_PRODUCTS, GET_BRANDS, SLIDER_IMAGES, WHISHLIST_ITEMS, START_LOADING, END_LOADING, PRODUCT_REVIEWS} from '../constants'
 
 export const fetchLatestProducts = () => async (dispatch) => {
-    const {data: {data: {data}}} = await api.getLatestProducts();
+    console.log('ffffffffffff');
+    const {data: {data}} = await api.getLatestProducts();
+    console.log('ffffffffffff', data)
     dispatch({type: LATEST_PRODUCTS, payload: data});
 }
 
@@ -77,9 +79,14 @@ export const changeLanguage = (language) => async (dispatch) => {
 // wishlist page functions ..
 
 export const fetchWishlistItems = () => async (dispatch) => {
-    const {data: {data}} = await api.fetchWishlistItems();
-    dispatch({type: WHISHLIST_ITEMS, payload: data});
+    await api.fetchWishlistItems()
+    .then((res) => dispatch({type: WHISHLIST_ITEMS, payload: res?.data?.data}))
+    .catch((error) => dispatch({type: WHISHLIST_ITEMS, payload: []}));
+
+    
+    // const {data: {data}} = 
 }
+
 
 export const addToWishlist = (id, enqueueSnackbar) => async (dispatch) => {
     
@@ -96,24 +103,29 @@ export const addToWishlist = (id, enqueueSnackbar) => async (dispatch) => {
 
 
 export const deleteFromWishlist = (id, enqueueSnackbar) => async (dispatch) => {
-    const {data} = await api.deleteFromWishlist(id, enqueueSnackbar);
-    if (data) {
-        // enqueueSnackbar('Product deleted from wishlist Succesfully', {variant: 'success',});
-    }
+    await api.deleteFromWishlist(id, enqueueSnackbar)
+    .then((res) => console.log(res))
+    .catch((error) => dispatch({type: WHISHLIST_ITEMS, payload: []}))
+    dispatch(fetchWishlistItems());
 }
 // product details page functions 
 
 
-export const fetchLatestReviews = () => async (dispatch) => {
-    const {data} = await api.fetchLatestReviews();
-    if (data) {
-    }
-}
+// export const fetchLatestReviews = () => async (dispatch) => {
+//     const {data} = await api.fetchLatestReviews();
+//     if (data) {
+//     }
+// }
 
 
 export const LeaveProductReview = (review, enqueueSnackbar) => async (dispatch) => {
     const {data} = await api.LeaveProductReview(review, enqueueSnackbar);
-    if (data) {
-    }
 }
 
+
+export const fetchProductReviews  = (product_id) => async (dispatch) => {
+    
+    const {data} = await api.fetchProductReviews(product_id);
+    console.log('reviews', data);
+    dispatch({type: PRODUCT_REVIEWS, payload: data});
+}

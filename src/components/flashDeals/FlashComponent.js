@@ -16,9 +16,7 @@ import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 const FlashComponent = ({productItem}) => {
 
     const {whislistItems, cart} = useSelector((state) => state?.generalReducer);
-    const {name, original_price, selling_price, slug, product_image, id} = productItem;
-    const current_product_image = product_image[0];
-    const {image} = current_product_image;
+    const {name, original_price, selling_price, slug, image, id} = productItem;
     const index = whislistItems?.length ? whislistItems?.findIndex((item) => item?.product?.id == id) : -1;
 
     // navigate
@@ -52,9 +50,9 @@ const FlashComponent = ({productItem}) => {
         <div className='product mtop'>
         <div className='img'>
             <span className='discount'>In Stock</span>
-            <img src={`https://applabb.account-collection.com/${image}`} className='' alt='' />
+            <img src={`https://applabb.account-collection.com/${image && image[0]['image']}`} className='' alt='' />
             <div className='product-like'>
-                <label>0</label> <br />
+                <label>{(selected) ?  productItem?.countWishList + 1  : productItem?.countWishList}</label> <br />
                 {index != -1 || selected ? <FavoriteIcon sx={{fill: 'red'}} /> : <FavoriteBorderIcon  sx={{fill: 'red'}} onClick={() => {addProductToWishist(id); setSelected(true);}} /> }
             </div>
         </div>

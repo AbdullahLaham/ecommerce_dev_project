@@ -48,20 +48,9 @@ const GridProducts = ({filterCategory, setFilterCategory}) => {
     }
 
     const updateFilterCategory = (id) => {
-
-        // setFilterCategory([]);
         setFilterBrand([]);
         setFilterBrandText('');
         setFilterCategory([id]);
-        // if (!filterCategory?.includes(id)) {
-            
-        //     setFilterCategory([...filterCategory, id]);
-        // }
-        // else {  
-        //     let newCategory = filterCategory.filter((categ) => categ != id);
-        //     console.log('dddddd',filterCategory, newCategory)
-        //     setFilterCategory(newCategory);
-        // }
     }
 
     const updateFilterPrice = (id) => {
