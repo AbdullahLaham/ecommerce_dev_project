@@ -37,7 +37,15 @@ const FlashComponent = ({productItem}) => {
     // add to cart function 
     const addProductToCart = () => {
         const index = cart.findIndex((cartItem) => cartItem?.id == productItem?.id);
-        dispatch({type: ADD_TO_CART, payload: productItem});
+        const cartProduct = {
+            id,
+            name: name,
+            image: image[0]['image'],
+            original_price,
+            selling_price,
+          }
+          console.log(cartProduct, 'cartProduct');
+          dispatch({type: ADD_TO_CART, payload: cartProduct});
         if (index >= 0) {
             enqueueSnackbar('Product quantity in cart increased 1', {variant: 'success',});
         } else {

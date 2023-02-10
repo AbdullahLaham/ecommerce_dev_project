@@ -31,12 +31,20 @@ const ListProductsComp = ({product}) => {
 
   const addProductToCart = () => {
     const index = cart.findIndex((cartItem) => cartItem?.id == product?.id);
-        dispatch({type: ADD_TO_CART, payload: product});
-        if (index != -1) {
-            enqueueSnackbar('Product added to cart succesfully', {variant: 'success',});
-        } else {
-            enqueueSnackbar('Product quantity in cart increased 1', {variant: 'success',});
-        }
+    const cartProduct = {
+      id: product?.id,
+      name: product?.name,
+      image,
+      original_price,
+      selling_price,
+    }
+    console.log(cartProduct, 'cartProduct');
+    dispatch({type: ADD_TO_CART, payload: cartProduct});
+    if (index != -1) {
+        enqueueSnackbar('Product added to cart succesfully', {variant: 'success',});
+    } else {
+        enqueueSnackbar('Product quantity in cart increased 1', {variant: 'success',});
+    }
 }
   // index in wishlist
   const index = whislistItems?.length ? whislistItems?.findIndex((item) => item?.product?.id == id) : -1;

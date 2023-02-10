@@ -29,7 +29,7 @@ const ListProducts = ({filterCategory, setFilterCategory}) => {
      // whislistItems
      const {whislistItems} = useSelector((state) => state?.generalReducer);
     const updateFilterBrand = (id) => {
-        if (!filterBrand?.includes(id)) {
+        if (!filterBrand?.includes(`${id}`)) {
             setFilterBrand([...filterBrand, id]);
         }
         else {
@@ -183,7 +183,7 @@ const ListProducts = ({filterCategory, setFilterCategory}) => {
                             {brands?.map((b) => {
                                 return (
                                     <div class="form-check">
-                                        <input className='mr-[.5rem]' type="checkbox" value={b?.id} name="brandInput[]" onChange={(e) => updateFilterBrand(e.target.value)} />
+                                        <input className='mr-[.5rem]' checked={filterBrand.includes(`${b?.id}`) ? 'checked' : ''} type="checkbox" value={b?.id} name="brandInput[]" onChange={(e) => updateFilterBrand(e.target.value)} />
                                         <label class="form-check-label" for="flexCheckDefault22">
                                             {b?.name} ({b?.id})
                                         </label>

@@ -26,14 +26,17 @@ const GridProducts = ({filterCategory, setFilterCategory}) => {
     const [filterText, setFilterText] = useState(`/filter-product`);
     const [currentPage, setCurrentPage] = useState(1);
     const [filterBrand, setFilterBrand] = useState([]);
+    const [selectedBrand, setSelectedBrand] = useState([]);
+
     // const [filterCategory, setFilterCategory] = useState(currentCategory);
 
     // whislistItems
     const {whislistItems} = useSelector((state) => state?.generalReducer);
     const dispatch = useDispatch();
     const updateFilterBrand = (id) => {
-        if (!filterBrand?.includes(id)) {
+        if (!filterBrand?.includes(`${id}`)) {
             setFilterBrand([...filterBrand, id]);
+            // setSelectedBrand
         }
         else {
             let newBrand = filterBrand.filter((brand) => brand != id);
@@ -52,7 +55,7 @@ const GridProducts = ({filterCategory, setFilterCategory}) => {
         setFilterBrandText('');
         setFilterCategory([id]);
     }
-
+    
     const updateFilterPrice = (id) => {
 
     }
@@ -178,7 +181,7 @@ to here
                         {brands?.map((b) => {
                             return (
                                 <div class="form-check">
-                                    <input className='mr-[.5rem]' type="checkbox" value={b?.id} name="brandInput[]" onChange={(e) => updateFilterBrand(e.target.value)} />
+                                    <input className='mr-[.5rem]' checked={filterBrand.includes(`${b?.id}`) ? 'checked' : ''} type="checkbox" value={b?.id} name="brandInput[]" onChange={(e) => updateFilterBrand(e.target.value)} />
                                     <label class="form-check-label" for="flexCheckDefault22">
                                         {b?.name} ({b?.id})
                                     </label>

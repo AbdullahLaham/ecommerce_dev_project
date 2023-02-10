@@ -23,7 +23,7 @@ const CartComponent = ({product}) => {
   return (
     <div className='flex lg, md:w-[80%] w-[95%] justify-between items-center mx-auto border border-gray-300 p-[.5rem] '>
       <div className='flex gap-3 items-center'>
-        <img src={`https://applabb.account-collection.com/${product?.product_image[0]['image']}`} className='w-[5rem] bg-gray-300 m-[.5rem]' />
+        <img src={`https://applabb.account-collection.com/${product?.image}`} className='w-[5rem] bg-gray-300 m-[.5rem]' />
         
       </div>
       <div className='flex flex-col lg, md:flex-row justify-between items-center'>

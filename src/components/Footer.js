@@ -6,8 +6,8 @@ import apple from '../images/Available_on_the_App_Store_logo.png'
 const Footer = () => {
   return (
     <>
-      <div className='flex justify-center py-[1rem] border-t-2 border-b-2 border-t-gray-300 border-b-gray-300  bg-gray-100 text-gray-800 relative'>
-      <div className='flex flex-col lg:flex-row justify-between w-[85%]'>
+      <div className='flex justify-center py-[1rem] border-t-2 border-b-2 border-t-gray-300 border-b-gray-300  bg-gray-100 text-gray-800 relative h-[16rem]'>
+      <div className='flex flex-col lg:flex-row justify-between w-[85%] h-[100%] max-h-[100%]'>
         <div className='flex flex-col h-[10rem] justify-around w-[100%] lg:w-auto'>
           <img className='w-[20rem]' src={logo} />
           <div className='w-[20rem] flex items-center h-[2rem]'><InputBase sx={{height: '100%', backgroundColor: 'white', borderRadius: '.2rem', padding: '1rem'}} my='.5rem' placeholder='Your Email Address' /> <Button sx={{color: 'white', backgroundColor: 'orange', height: '100%'}}>Subscribe</Button></div>
@@ -15,9 +15,9 @@ const Footer = () => {
         </div>
 
 
-        <div className='justify-between flex flex-col lg:flex-row text-[.9rem]'>
-        <div className='w-[100%] lg:w-auto flex m-auto text-start'>
-            <div className='flex flex-col  lg:w-[13rem] w-[100%]  justify-between'>
+        <div className='justify-between flex flex-col lg:flex-row text-[.9rem] h-[100%] max-h-[100%]'>
+        <div className='w-[100%] lg:w-auto flex m-auto text-start h-[100%] max-h-[100%]'>
+            <div className='flex flex-col  lg:w-[13rem] w-[100%]  justify-between h-[100%] max-h-[100%]'>
               <p className='font-bold text-gray-800'>CONTACT INFO</p>
               <p className='text-gray'>Address: </p>
               <p>Address </p>
@@ -26,13 +26,13 @@ const Footer = () => {
               <p className='text-gray'>Email: </p>
               <p>info@mail.js</p>
             </div>
-            <div className='flex  flex-col lg:w-[13rem] w-[100%]  justify-between'>
+            <div className='flex  flex-col lg:w-[13rem] w-[100%]  justify-between h-[100%] max-h-[100%]'>
               <p className='font-bold text-gray-800'>ZXCZXC</p>
               <p>Home</p>
               <p>New arrival</p>
               <p className=''>Mobiles</p>
             </div>
-            <div className='flex  flex-col  lg:w-[13rem] w-[100%]  justify-between'>
+            <div className='flex  flex-col  lg:w-[13rem] w-[100%]  justify-between h-[100%] max-h-[100%]'>
               <p className='font-bold text-gray-800'>MY ACCOUNT</p>
               <p className='text-gray'>Login </p>
               <p className='text-gray'>Order History</p>
