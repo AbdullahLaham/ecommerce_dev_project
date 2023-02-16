@@ -24,7 +24,7 @@ const Header = ({filterCategory, setFilterCategory}) => {
     // authData
     const {authData} = useSelector((state) => state.userReducer);
 
-    console.log('authData', authData)
+    console.log('authData', authData);
     // categories data
     const {categories, whislistItems, cart} = useSelector((state) => state?.generalReducer);
     const [showMenu, setShowMenu] = useState(false);
@@ -229,8 +229,9 @@ const Header = ({filterCategory, setFilterCategory}) => {
         </Box>
         <div className='flex items-center justify-center mt-[.5rem]'  >
             <Typography  sx={{marginRight: '1rem', fontWeight: `${selected == 'home' ? 'bold' : 'normal'}`}}><Link to='/'  marginRight='1rem'>Home</Link></Typography>
-            <Typography sx={{fontWeight: `${selected == 'shop' ? 'bold' : 'normal'}`, fontWeight: 'bold'}}><Link to='/grid'>Shop</Link></Typography>
-        
+            <Typography onClicick={() => { navigate('/grid'); }} sx={{fontWeight: `${selected == 'shop' ? 'bold' : 'normal'}`, fontWeight: 'bold'}}>
+                <Link to='/grid'>Shop</Link>
+            </Typography>      
         </div>
 
     </div> : 

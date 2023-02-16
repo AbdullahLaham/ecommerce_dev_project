@@ -109,6 +109,7 @@ const GridProducts = ({filterCategory, setFilterCategory}) => {
 
     // const {category = 'all', query = 'all', price = 'all', rating = 'all', sort = 'default'} = searchParams;
 
+
     const [state , setState] = useState({category : 'all', brand : 'all', query : 'all', price : 'all', rating : 'all', sort : 'default'});
     const {category, query , price , rating , sort, brand} = state;
 
@@ -209,7 +210,7 @@ to here
                                 return (
                                     <div class="form-check">
                                         {/* <input class="form-check-input" id={`input${i}`} type="checkbox" value={} name="brandInput[]"   /> */}
-                                        <label className='cursor-pointer' for={`input${i}`} onClick={() => setState({...state, category: b?.id})}>
+                                        <label className='cursor-pointer' for={`input${i}`} onClick={() => setState({...state, category: b?.id})} >
                                             {b?.name} ({b?.id})
                                         </label>
                                     </div>
@@ -258,6 +259,7 @@ to here
                     </div>
                     {/* <!-- End Single Widget -->
                     <!-- Start Single Widget --> */}
+{/* 
                     <div class="single-widget condition">
                         <h3>Filter by Brand</h3>
                         {brands?.map((b) => {
@@ -270,7 +272,8 @@ to here
                                 </div>
                             )
                         })}
-                    </div>
+                    </div> */}
+
                     {/* <!-- End Single Widget --> */}
                 </div>
                 {/* <!-- End Product Sidebar --> */}

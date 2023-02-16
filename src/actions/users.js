@@ -1,5 +1,6 @@
 import * as api from '../api'
 import {LOGOUT, LOGIN, SIGNUP} from '../constants'
+
 export const loginUser = (user, navigate) => async (dispatch) => {
     const {data} = await api.login(user);
     console.log('current user', data);
@@ -7,7 +8,7 @@ export const loginUser = (user, navigate) => async (dispatch) => {
         navigate('/');
     }
     dispatch({type: LOGIN, payload: data});
-    // window.location.reload();
+    window.location.reload();
 }
 
 
@@ -28,5 +29,5 @@ export const signupUser = (user, navigate) => async (dispatch) => {
         navigate('/');
     }
     dispatch({type: SIGNUP, payload: data});
-    // window.location.reload();
+    window.location.reload();
 }

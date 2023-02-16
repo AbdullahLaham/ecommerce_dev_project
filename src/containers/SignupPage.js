@@ -10,13 +10,15 @@ import { useField } from "formik";
 // import login from './images/login.png'
 import { countries } from '../data';
 import { signupUser } from '../actions/users';
+import { useMediaQuery } from '@mui/material';
 
 const SignupPage = () => {
     const navigate = useNavigate();
     const [stip, setStip] = useState(1);
     const [selectedImage, setSelectedImage] = useState();
     const dispatch = useDispatch();
-    
+    const isMobile = useMediaQuery("(max-width: 800px)");
+
     const PASSWORD_REGEX = '^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})';
     // .matches(PASSWORD_REGEX, 'please enter a strong password')
     const validationSchema = yup.object({
@@ -24,7 +26,7 @@ const SignupPage = () => {
       password: yup.string().required('password is required'),
       confirmPassword: yup.string().required('confirmPassword is required').oneOf([yup.ref("password"), null], "Passwords must match"),
     });
-    
+
     const onSubmit = async (values) => {
      try {
           const user = { 
@@ -64,15 +66,16 @@ const SignupPage = () => {
         }
       }  
   return (
+    
     <div className='w-[80%] m-auto flex bg-gray-100 h-[100vh]  max-h-[100vh] overflow-y-hidden'>
-      <div className='w-[37%] p-[3rem] flex justify-center items-start  bg-gradient-to-b from-orange-500 via-orange-600 to-orange-700 h-[100vh]'>
-        <div className='flex flex-col justify-between h-[30rem] mt-[4.5rem] '>
-            {/* <img className='w-[12rem]' src={logo} /> */}
+      {!isMobile && <div className='w-[37%] p-[3rem] flex justify-center items-start  bg-gradient-to-b from-orange-500 via-orange-600 to-orange-700 h-[100%]'>
+        <div className='flex flex-col justify-between  mt-[4.5rem] '>
+            <img className='w-[12rem]' src='./images/login.png' />
             <p className='text-[#fff] font-bold text-2xl my-[1.5rem]'>Welcome Back!</p>
-            <p className='text-gray-300 font-bold text-1xl opacity-[.8]'>Signup to new account and start your shopping NOW!</p>
+            <p className='text-gray-300 font-bold text-1xl opacity-[.8]'>Login to your account and start your shopping NOW!</p>
             {/* <img src={login} /> */}
         </div>
-      </div>
+      </div>}
       <div className='w-[40%] h-[100vh] flex flex-col justify-center items-start p-[1rem] ml-[7rem] mt-[3rem]'>
         <p className='font-semibold text-2xl text-start title ml-[10px]'>SIGNUP </p>
         <form onSubmit={formik.handleSubmit} className='flex flex-col' >

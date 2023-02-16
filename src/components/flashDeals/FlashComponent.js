@@ -37,6 +37,7 @@ const FlashComponent = ({productItem}) => {
     // add to cart function 
     const addProductToCart = () => {
         const index = cart.findIndex((cartItem) => cartItem?.id == productItem?.id);
+
         const cartProduct = {
             id,
             name: name,
@@ -44,6 +45,7 @@ const FlashComponent = ({productItem}) => {
             original_price,
             selling_price,
           }
+
           console.log(cartProduct, 'cartProduct');
           dispatch({type: ADD_TO_CART, payload: cartProduct});
         if (index >= 0) {
@@ -76,7 +78,7 @@ const FlashComponent = ({productItem}) => {
             */}
             
             </div>
-            <div className='flex items-center justify-end controls'>
+            <div className='flex gap-2 items-center justify-end controls'>
                 <button onClick={() => navigate(`/product/${slug}`)}><VisibilityOutlinedIcon /></button>
                 <button onClick={() => addProductToCart()}><AddIcon /></button>
             </div>

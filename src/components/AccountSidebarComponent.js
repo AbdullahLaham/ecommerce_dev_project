@@ -73,17 +73,17 @@ const SidebarComponent = ({showAccountSidebar, setShowAccountSidebar}) => {
                 <p className='font-semibold text-white'>{authData?.email}</p>
               </div>
             </div>      
-          <div className='flex flex-col justify-between items-start w-[50rem] m-[2rem] text-2xl font-bold '>
-            {headerItems.map((item, i) => {
-              return <Link className='flex items-center gap-3 text-[1.5rem]' to={item?.link} onClick={() => changePageSelected(item?.name)}>
-                <p className=' text-gray-600 text-[1.5rem]'>{item?.icon}</p>
-                <p onClick={() => setSelected(i)} className={`my-[.5rem] text-gray-500  text-[.9rem] ${page_selected == item?.name ? 'text-red-500 cursor-pointer' : 'cursor-pointer'}`}>
-                  {item.name}
-                </p>
-
-                </Link>
-            })}
-        </div>
+            <div className='flex flex-col justify-between items-start  m-[.3rem] text-2xl '>
+                {headerItems.map((item, i) => {
+                  return <Link className={` flex items-center   gap-2 mb-0 pl-[.8rem] ${page_selected == item?.name ? 'bg-red-200 w-[100%] rounded-[.2rem] text-red-500' : ''}`} onClick={() => changePageSelected(item?.name)} to={item?.link}>
+                    <p className={` text-gray-600 text-[.3rem]  ${page_selected == item?.name ? 'text-red-500' : ''} `}>{item?.icon}</p>
+                    <p onClick={() => setSelected(i)} className={`my-[.5rem] text-gray-500  text-[.7rem] ${page_selected == item?.name ? 'text-red-500 font-semibold cursor-pointer bg-red-200' : 'cursor-pointer'}`}>
+                      {item.name}
+                    </p>
+  
+                    </Link>
+                })}
+            </div>
       </div>
       {/* <div className='flex gap-2 border-b items-center py-[.5rem] text-gray-400 m-[2rem]'>
         <select className='bg-gray-200 border-none outline-none h-[3rem] w-[7rem]'>

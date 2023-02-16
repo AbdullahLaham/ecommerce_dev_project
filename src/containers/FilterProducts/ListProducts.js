@@ -7,6 +7,7 @@ import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import { useNavigate } from 'react-router-dom';
+import * as api from '../../api';
 import './filter.css';
 import { Button, useMediaQuery } from '@mui/material';
 import ShopSidebar from '../../components/ShopSidebar';
@@ -14,9 +15,12 @@ import { CURRENT_CATEGORY } from '../../constants';
 import { useSnackbar } from 'notistack';
 
 const ListProducts = ({filterCategory, setFilterCategory}) => {
-    const {filteredProducts, brands, categories ,numberOfPages, currentCategory} = useSelector((state) => state?.generalReducer);
+    
+    const { brands, categories ,numberOfPages, currentCategory} = useSelector((state) => state?.generalReducer);
     console.log(brands, 'ffffffffffffffff');
     // console.log('ggggg', brands);
+    
+    const [filteredProducts, setFilteredProducts] = useState([]);
     const [selected, setSelected] = useState('list');
     const [showSidebar, setShowSidebar] = useState(false);
     const [filterPrice, setFilterPrice] = useState('low');
@@ -68,23 +72,24 @@ const ListProducts = ({filterCategory, setFilterCategory}) => {
     // dispatch
     const dispatch = useDispatch();
     
-    useEffect(() => {
-        // let uniqueBrands = [...new Set(filterBrand)];
-        setFilterBrandText('');
-        // setFilterCategoryText('');
+    // useEffect(() => {
+    //     // let uniqueBrands = [...new Set(filterBrand)];
+    //     setFilterBrandText('');
+    //     // setFilterCategoryText('');
         
-        filterBrand?.map((brand, i) => {
-            setFilterBrandText(`${filterBrandText}&brandInputs[${i}]=${brand}`);
-        });
+    //     filterBrand?.map((brand, i) => {
+    //         setFilterBrandText(`${filterBrandText}&brandInputs[${i}]=${brand}`);
+    //     });
         
-        filterCategory?.map((categ, i) => {
-            setFilterCategoryText(`&categoryInputs[0]=${categ}`);
-        });
-        // filterCategory?.map((category, i) => {
-        //     setFilterCategoryText(`${filterCategoryText}&categoryInputs[${i}]=${category}`);
-        // });
+    //     filterCategory?.map((categ, i) => {
+    //         setFilterCategoryText(`&categoryInputs[0]=${categ}`);
+    //     });
+    //     // filterCategory?.map((category, i) => {
+    //     //     setFilterCategoryText(`${filterCategoryText}&categoryInputs[${i}]=${category}`);
+    //     // });
         
-    }, [filterBrand, filterCategory]);
+    // }, [filterBrand, filterCategory]);
+
 
     // useEffect(() => {
     //     console.log('filterText', `${filterText}?sortPrice=${filterPrice}${filterBrandText}${filterCategoryText}`)
@@ -95,10 +100,78 @@ const ListProducts = ({filterCategory, setFilterCategory}) => {
     //     }
     // }, [filterBrandText,filterCategory, currentPage, filterPrice, whislistItems]);
 
+
+
+    // useEffect(() => {
+    //     console.log('filterText', `${filterText}?sortPrice=${filterPrice}${filterBrandText}${filterCategoryText}`)
+    //     dispatch(getShopPageProducts(`${filterText}?sortPrice=${filterPrice}${filterBrandText}${filterCategoryText}&page=${currentPage}`));
+    // }, [filterBrandText,filterCategoryText, currentPage, filterPrice, whislistItems]);
+
+
+
+
+    const [state , setState] = useState({category : 'all', brand : 'all', query : 'all', price : 'all', rating : 'all', sort : 'default'});
+    const {category, query , price , rating , sort, brand} = state;
+    
     useEffect(() => {
-        console.log('filterText', `${filterText}?sortPrice=${filterPrice}${filterBrandText}${filterCategoryText}`)
-        dispatch(getShopPageProducts(`${filterText}?sortPrice=${filterPrice}${filterBrandText}${filterCategoryText}&page=${currentPage}`));
-    }, [filterBrandText,filterCategoryText, currentPage, filterPrice, whislistItems]);
+        const fetchData = async () => {
+            try {
+                let query1 = '/filter-product';
+                if (category !== 'all') {
+                    // state?.brand == 'all';
+                    setState({...state, brand: 'all',})
+                    query1 += `?categoryInputs[0]=${category}`
+                }
+
+                if (brand !== 'all') {
+                    query1 += `&brandInputs[0]=${brand}`
+                }
+                
+                // if (query !== 'all') {
+                //     query1 += `&& name match ${query}`
+                // }
+
+                // if (price !== 'all') {
+                //     const minPrice = Number(price.split('-')[0]);
+                //     const maxPrice = Number(price.split('-')[1]);
+                //     query1 += `&& price >= ${minPrice} && price <= ${maxPrice}`;
+
+                // }
+
+                // if (rating !== 'all') {
+                //     query1 += `&& rating >= ${Number(rating)}`
+                // }
+
+
+                let order = '';
+                // if (sort !== 'default') {
+                //     query1 += `&&sortPrice=${sort}`
+                //     // if (sort == 'lowest') order = '| order(price asc)';
+                //     // if (sort == 'highest') order = '| order(price desc)';
+                //     // if (sort == 'toprated') order = '| order(rating desc)';
+                // }
+                // query1 += `] ${order}`;
+
+
+                
+                // setState({loading: true,});
+
+                const {data: {data: {data}}} = await api.getShopPageProducts(query1);
+                console.log('yyyyyyyyyyyyyyy', data)
+                setFilteredProducts(data);
+                dispatch(getShopPageProducts(query1));
+                // setState({loading: false, products});
+            } catch(err) {
+                // setState({error: err.message, loading: false,})
+            }
+        }
+
+        fetchData();
+    }, [category, brand, price, query, rating, sort]);
+
+
+
+
 
     const isNonMobile = useMediaQuery("(min-width: 980px)");
   return (
@@ -128,7 +201,7 @@ const ListProducts = ({filterCategory, setFilterCategory}) => {
                                 return (
                                     <div class="form-check">
                                         {/* <input class="form-check-input" id={`input${i}`} type="checkbox" value={} name="brandInput[]"   /> */}
-                                        <label className='cursor-pointer' for={`input${i}`} onClick={() => updateFilterCategory(b?.id)}>
+                                        <label className='cursor-pointer' for={`input${i}`}  onClick={() => setState({...state, category: b?.id})} >
                                             {b?.name} ({b?.id})
                                         </label>
                                     </div>
@@ -177,13 +250,14 @@ const ListProducts = ({filterCategory, setFilterCategory}) => {
                         </div>
                         {/* <!-- End Single Widget -->
                         <!-- Start Single Widget --> */}
-                        <div class="single-widget condition">
+
+                        {/* <div class="single-widget condition">
                             <h3>Filter by Brand</h3>
                            
                             {brands?.map((b) => {
                                 return (
                                     <div class="form-check">
-                                        <input className='mr-[.5rem]' checked={filterBrand.includes(`${b?.id}`) ? 'checked' : ''} type="checkbox" value={b?.id} name="brandInput[]" onChange={(e) => updateFilterBrand(e.target.value)} />
+                                        <input className='mr-[.5rem]' checked={filterBrand.includes(`${b?.id}`) ? 'checked' : ''} type="checkbox" value={b?.id} name="brandInput[]" onClick={(e) => setState({...state, brand: e?.target?.value})}  />
                                         <label class="form-check-label" for="flexCheckDefault22">
                                             {b?.name} ({b?.id})
                                         </label>
@@ -191,7 +265,9 @@ const ListProducts = ({filterCategory, setFilterCategory}) => {
                                 )
                             })}
                             
-                        </div>
+                        </div> */}
+
+
                         {/* <!-- End Single Widget --> */}
                     </div>
                     {/* <!-- End Product Sidebar --> */}
