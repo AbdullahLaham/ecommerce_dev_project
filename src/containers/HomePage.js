@@ -32,7 +32,6 @@ const HomePage = ({showAccountSidebar, setShowAccountSidebar}) => {
         {/* <CategoriesBar categories={categories} /> */}
         <FlashDeals products={products} />
         <BottomNav />
-        
       </Box>
       
       

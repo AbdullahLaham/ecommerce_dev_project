@@ -7,8 +7,9 @@ export const loginUser = (user, navigate) => async (dispatch) => {
         navigate('/');
     }
     dispatch({type: LOGIN, payload: data});
-    window.location.reload();
+    // window.location.reload();
 }
+
 
 export const logoutUser = (navigate) => async (dispatch) => {
     const {data} = await api.logoutUser();
@@ -19,12 +20,13 @@ export const logoutUser = (navigate) => async (dispatch) => {
     dispatch({type: LOGOUT});
 }
 
+
 export const signupUser = (user, navigate) => async (dispatch) => {
     const {data} = await api.signup(user);
-    console.log(data);
+    console.log('current user' ,data);
     if (data) {
         navigate('/');
     }
     dispatch({type: SIGNUP, payload: data});
-    window.location.reload();
+    // window.location.reload();
 }

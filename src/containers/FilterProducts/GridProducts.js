@@ -56,6 +56,7 @@ const GridProducts = ({filterCategory, setFilterCategory}) => {
         setFilterCategory([id]);
     }
     
+    
     const updateFilterPrice = (id) => {
 
     }

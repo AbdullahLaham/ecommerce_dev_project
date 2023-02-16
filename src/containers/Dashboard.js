@@ -9,6 +9,7 @@ import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
+import MarkUnreadChatAltOutlinedIcon from '@mui/icons-material/MarkUnreadChatAltOutlined';
 import { useMediaQuery } from '@mui/material';
 import { logoutUser } from '../actions/users';
 
@@ -52,7 +53,11 @@ const Dashboard = () => {
       icon: <ShoppingCartOutlinedIcon sx={{fontSize: '1.5rem',}} />,
       link: '/dashboard/cart',
     },
-
+    {
+      name: 'Chat With Admin',
+      icon: <MarkUnreadChatAltOutlinedIcon sx={{fontSize: '1.5rem',}} />,
+      link: '/dashboard/chat',
+    }
   
   ];
 
@@ -71,7 +76,7 @@ const Dashboard = () => {
 
             <div className='flex flex-col justify-between items-start w-[50rem] m-[2rem] text-2xl font-bold '>
                 {headerItems.map((item, i) => {
-                  return <Link className=' flex items-center gap-3 text-[1.5rem]' onClick={() => changePageSelected(item?.name)} to={item?.link}>
+                  return <Link className=' flex items-center justify-center  gap-3 text-[1.5rem]' onClick={() => changePageSelected(item?.name)} to={item?.link}>
                     <p className=' text-gray-600 text-[1.2rem]'>{item?.icon}</p>
                     <p onClick={() => setSelected(i)} className={`my-[.5rem] text-gray-500  text-[.9rem] ${page_selected == item?.name ? 'text-red-500 cursor-pointer' : 'cursor-pointer'}`}>
                       {item.name}

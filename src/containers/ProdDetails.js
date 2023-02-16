@@ -13,7 +13,7 @@ import { ADD_TO_CART } from '../constants'
 
 const ProdDetails = () => {
     const {slug} = useParams();
-    const { product, cart } = useSelector((state) => state?.generalReducer);
+    const { product, cart, product_reviews } = useSelector((state) => state?.generalReducer);
     console.log('cart', cart);
     // const {name, small_description, description, original_price, selling_price, quantity, category, product_image, id} = product?.name ? product : {};
     // const {image} = product_image ? product_image[0] : {};
@@ -56,7 +56,9 @@ const ProdDetails = () => {
         }
     }
         
-
+    useEffect(() => {
+        window.scrollTo(0,0);
+    }, [])
     useEffect(() => {
        dispatch(fetchProductDetails(slug));
        dispatch(fetchProductReviews(product?.id));
@@ -194,12 +196,12 @@ const ProdDetails = () => {
                                 <h4 class="title">Latest Reviews</h4>
                                 {/* <!-- Start Single Review --> */}
                                 
-                                {product?.review?.reviewBody?.map((review) => {
+                                {product_reviews?.map((review) => {
                                     return (
                                         <div class="single-review relative ">
-                                            <img src="https://via.placeholder.com/150x150" alt="#" />
+                                            <img src={review?.review_user?.profile_photo_url} alt="#" />
                                             <div class="review-info">
-                                                <p className='absolute top-0 left-[.5rem] text-gray-500 '>Abdullah Allaham</p>
+                                                <p className='absolute top-0 left-[.5rem] text-gray-500 '>{review?.review_user?.name}</p>
                                                 <h4>{review?.comment}
                                                 </h4>
                                                 <ul class="stars">

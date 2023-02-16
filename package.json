@@ -20,6 +20,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.7.1",
+    "react-input-emoji": "^4.3.0",
     "react-loader-spinner": "^5.3.4",
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.8.0",
@@ -28,6 +29,7 @@
     "redux-thunk": "^2.4.2",
     "slick-carousel": "^1.8.1",
     "swiper": "^8.4.6",
+    "timeago.js": "^4.0.2",
     "user-agents": "^1.0.1285",
     "web-vitals": "^2.1.4",
     "yup": "^0.32.11"

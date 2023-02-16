@@ -96,115 +96,131 @@ h1 {
     font-size: calc(1.375rem + 1.5vw)
 }
 
+
+
+
+
+
+
+
 @media (min-width:1200px) {
 
-    .h1,
-    h1 {
-        font-size: 2.5rem
-    }
+  .h1,
+  h1 {
+      font-size: 2.5rem
+  }
 }
 
 .h2,
 h2 {
-    font-size: calc(1.325rem + .9vw)
+  font-size: calc(1.325rem + .9vw)
 }
 
 @media (min-width:1200px) {
 
-    .h2,
-    h2 {
-        font-size: 2rem
-    }
+  .h2,
+  h2 {
+      font-size: 2rem
+  }
 }
 
 .h3,
 h3 {
-    font-size: calc(1.3rem + .6vw)
+  font-size: calc(1.3rem + .6vw)
 }
 
 @media (min-width:1200px) {
 
-    .h3,
-    h3 {
-        font-size: 1.75rem
-    }
+  .h3,
+  h3 {
+      font-size: 1.75rem
+  }
 }
 
 .h4,
 h4 {
-    font-size: calc(1.275rem + .3vw)
+  font-size: calc(1.275rem + .3vw)
 }
 
 @media (min-width:1200px) {
 
-    .h4,
-    h4 {
-        font-size: 1.5rem
-    }
+  .h4,
+  h4 {
+      font-size: 1.5rem
+  }
 }
 
 .h5,
 h5 {
-    font-size: 1.25rem
+  font-size: 1.25rem
 }
 
 .h6,
 h6 {
-    font-size: 1rem
+  font-size: 1rem
 }
 
-p {
-    margin-top: 0;
-    margin-bottom: 1rem
-}
 
 abbr[data-bs-original-title],
 abbr[title] {
-    text-decoration: underline;
-    -webkit-text-decoration: underline dotted;
-    text-decoration: underline dotted;
-    cursor: help;
-    -webkit-text-decoration-skip-ink: none;
-    text-decoration-skip-ink: none
+  text-decoration: underline;
+  -webkit-text-decoration: underline dotted;
+  text-decoration: underline dotted;
+  cursor: help;
+  -webkit-text-decoration-skip-ink: none;
+  text-decoration-skip-ink: none
 }
 
 address {
-    margin-bottom: 1rem;
-    font-style: normal;
-    line-height: inherit
+  margin-bottom: 1rem;
+  font-style: normal;
+  line-height: inherit
 }
 
 ol,
 ul {
-    padding-left: 2rem
+  padding-left: 2rem
 }
 
 dl,
 ol,
 ul {
-    margin-top: 0;
-    margin-bottom: 1rem
+  margin-top: 0;
+  margin-bottom: 1rem
 }
 
 ol ol,
 ol ul,
 ul ol,
 ul ul {
-    margin-bottom: 0
+  margin-bottom: 0
 }
 
 dt {
-    font-weight: 700
+  font-weight: 700
 }
 
 dd {
-    margin-bottom: .5rem;
-    margin-left: 0
+  margin-bottom: .5rem;
+  margin-left: 0
 }
 
 blockquote {
-    margin: 0 0 1rem
+  margin: 0 0 1rem
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 b,
 strong {

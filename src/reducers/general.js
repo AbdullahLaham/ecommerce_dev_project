@@ -16,8 +16,7 @@ const reducer = (state = {
         currentCategory: localStorage.getItem('currentCategory')!== "undefined" ? localStorage.getItem('currentCategory') : -1,
         whislistItems: localStorage.getItem('whislistItems') ? JSON.parse(localStorage.getItem('whislistItems')) : [],
         page_selected: localStorage.getItem('page_selected')!== "undefined" ? localStorage.getItem('page_selected') : '',
-        product_reviews: localStorage.getItem('product_reviews') ? JSON.parse(localStorage.getItem('product_reviews')) : [],
-            
+        product_reviews: localStorage.getItem('product_reviews') ? JSON.parse(localStorage.getItem('product_reviews')) : [],           
     },
 
     action
@@ -121,7 +120,7 @@ const reducer = (state = {
         }
         // PRODUCT_REVIEWS
         case PRODUCT_REVIEWS: {
-            localStorage.setItem('product_reviews', action?.payload);
+            localStorage.setItem('product_reviews', JSON.stringify(action?.payload));
             return {...state, product_reviews: action?.payload}
         }
         

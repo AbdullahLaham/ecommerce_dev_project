@@ -42,7 +42,7 @@ const BottomMenue = ({showAccountSidebar, setShowAccountSidebar}) => {
 
     const navigate = useNavigate();
   return (
-    !isMobile && <div className='fixed z-10 bottom-0 left-0 right-0 bg-white w-[100%] mx-auto max-w-[99%] h-[4.5rem] flex items-center justify-between px-[.4rem]'>
+    !isMobile && <div className='fixed z-10 bottom-0 left-0 right-0 bg-white w-[100%] mx-auto max-w-[99%] h-[4.5rem] max-h-[4.5rem] flex items-center justify-between px-[.4rem]'>
         {/* {
     .8   nav.map((item) => {
                 return <div className={`flex flex-col items-center relative text-gray-600 ${item.name == selected ? 'mb-[1rem]' : ''}`}>
@@ -53,26 +53,26 @@ const BottomMenue = ({showAccountSidebar, setShowAccountSidebar}) => {
         } */}
 
 
-        <div className={`flex flex-col items-center relative text-gray-600 ${'Categories' == selected ? 'mb-[1rem]' : ''}`}>
-                <p onClick={() => {setSelected('Categories'); navigate('/dashboard/wishlist')}} className={`text-[1.6rem] ${'Categories' == selected ? 'p-[.5rem] bg-orange-500 text-white rounded-[50%] ' : ''}`}><FavoriteBorderIcon  /></p>
+        <div className={`flex flex-col items-center justify-center h-[100%] max-h-[100%] min-h-[100%]  relative text-gray-600 ${'Wishlist' == selected ? 'mb-[1rem]' : ''}`}>
+                <p onClick={() => {setSelected('Wishlist'); navigate('/dashboard/wishlist')}} className={`text-[1.6rem]  ${'Categories' == selected ? 'p-[.2rem] bg-orange-500 text-white rounded-[50%] ' : ''}`}><FavoriteBorderIcon  /></p>
                 <p className='text-[.7rem]'>Wishlist</p>
         </div>
 
-        <div className={`flex flex-col items-center relative text-gray-600 ${'Cart' == selected ? 'mb-[1rem]' : ''}`}>
+        <div className={`flex flex-col items-center justify-center h-[100%] max-h-[100%] min-h-[100%]  relative text-gray-600 ${'Cart' == selected ? 'mb-[1rem]' : ''}`}>
                 <p onClick={() => {setSelected('Cart'); navigate('/dashboard/cart')}} className={`text-[1.6rem] ${'Cart' == selected ? 'p-[.2rem] bg-orange-500 text-white rounded-[50%] ' : ''}`}><BsBag /></p>
                 <p className='text-[.7rem]'>Cart</p>
         </div>
 
-        <div className={`flex flex-col items-center relative text-gray-600 ${'Home' == selected ? 'mb-[1rem]' : ''}`}>
+        <div className={`flex flex-col items-center justify-center h-[100%] max-h-[100%] min-h-[100%]  relative text-gray-600 ${'Home' == selected ? 'mb-[1rem]' : ''}`}>
                 <p onClick={() => {setSelected('Home'); navigate('/')}} className={`text-[1.6rem] ${'Home' == selected ? 'p-[.2rem] bg-orange-500 text-white rounded-[50%] ' : ''}`}><AiOutlineHome  /></p>
                 <p className='text-[.7rem]'>Home</p>
         </div>
-        <div className={`flex flex-col items-center relative text-gray-600 ${'Notification' == selected ? 'mb-[1rem]' : ''}`}>
+        <div className={`flex flex-col items-center justify-center h-[100%] max-h-[100%] min-h-[100%]  relative text-gray-600 ${'Notification' == selected ? 'mb-[1rem]' : ''}`}>
                 <p onClick={() => {setSelected('Notification')}} className={`text-[1.6rem] ${'Notification' == selected ? 'p-[.2rem] bg-orange-500 text-white rounded-[50%] ' : ''}`}><IoIosNotificationsOutline  /></p>
                 <p className='text-[.7rem]'>Notices</p>
         </div>
 
-        <div className={`flex flex-col items-center relative text-gray-600 ${'Account' == selected ? 'mb-[1rem]' : ''}`}>
+        <div className={`flex flex-col items-center justify-center h-[100%] max-h-[100%] min-h-[100%]  relative text-gray-600 ${'Account' == selected ? 'mb-[1rem]' : ''}`}>
                 <p onClick={() => {setShowAccountSidebar(true); navigate('/dashboard/profile')}} className={`text-[1.6rem] ${'Account' == selected ? 'p-[.2rem] bg-orange-500 text-white rounded-[50%] ' : ''}`}> {authData?.email ? <img className='w-[2.2rem] h-[2.2rem] rounded-full object-cover text-xl'  src={authData?.profile_photo_url} /> : <BsPersonCircle />}</p>
                 <p className='text-[.7rem]'>Account</p>
         </div>

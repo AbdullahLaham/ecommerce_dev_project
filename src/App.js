@@ -22,6 +22,8 @@ import { SnackbarProvider } from 'notistack';
 import ProfilePage from './containers/ProfilePage';
 // import DeviceDetector from "device-detector-js";
 import UserAgent from 'user-agents';
+import ChatPanel from './containers/ChatPanel';
+import Chat from './containers/Chat/Chat';
 
 
 function App() {
@@ -62,8 +64,9 @@ function App() {
           <Route path='cart' element={<CartPage />} />
           <Route path='wishlist' element={<WishlistPage />} />
           <Route path='profile' element={<ProfilePage />} />
+          
         </Route>
-
+        <Route path='/chat' element={<Chat />} />
         {/* <Route path='/shop' element={<GridProducts />} /> */}
       </Routes>
       <Footer />

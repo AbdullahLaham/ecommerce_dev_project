@@ -123,9 +123,19 @@ export const LeaveProductReview = (review, enqueueSnackbar) => async (dispatch) 
 }
 
 
+
 export const fetchProductReviews  = (product_id) => async (dispatch) => {
     
-    const {data} = await api.fetchProductReviews(product_id);
+    const {data: {data}} = await api.fetchProductReviews(product_id);
     console.log('reviews', data);
     dispatch({type: PRODUCT_REVIEWS, payload: data});
 }
+
+
+export const fetchChatUsers  = () => async (dispatch) => {
+    const {data} = await api.fetchChatUsers();
+    console.log('chats', data);
+    dispatch({type: PRODUCT_REVIEWS, payload: data});
+}
+
+

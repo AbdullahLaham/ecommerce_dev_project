@@ -32,15 +32,16 @@ const LoginPage = () => {
     // dispatch(loginRequest());
     console.log('email', values.email, values.password);
     try {
-      // const user = {
-      //   email: values.email,
-      //   password: values.password,
-      // }
       const user = {
-        email: 'mahmoud.albatran.20@gmail.com',
-        password: 'password',
+        email: values.email,
+        password: values.password,
         device_name: 'mah',
       }
+      // const user = {
+      //   email: 'mahmoud.albatran.20@gmail.com',
+      //   password: 'password',
+      //   device_name: 'mah',
+      // }
       
       dispatch(loginUser(user, navigate));
       

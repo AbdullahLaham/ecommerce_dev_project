@@ -1,6 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({ baseURL: 'https://applabb.account-collection.com/api/' });
+const MallAPI = axios.create({ baseURL: 'https://applabb.account-collection.com/malltoallmanager/api/' });
 
 API.interceptors.request.use((req) => {
     if (localStorage.getItem('token')) {
@@ -9,16 +10,19 @@ API.interceptors.request.use((req) => {
     return req;
 });
 
+
+
  // user functions
 export const signup = async (user) => {
-    const res = await API.post('/register/tokens', user);
+    const res = await MallAPI.post('/register/tokens', user);
     return res;
 }
 
 export const login = async (user) => {
-    const res = await API.post('/auth/tokens', user);
+    const res = await MallAPI.post('/auth/tokens', user);
     return res;
 }
+
 
 // system functions
 export const getLatestProducts = async () => {
@@ -129,6 +133,12 @@ export const LeaveProductReview = async (review, enqueueSnackbar) => {
 
 
 export const fetchProductReviews = async (product_id) => {
-    const res = await API.get(`/show-review?product_id[0]=${product_id}`);
+    const res = await API.get(`/show-review/${product_id}`);
     return res;
 }
+
+export const fetchChatUsers = async () => {
+    const res = await API.get(`/show-review/`);
+    return res;
+}
+

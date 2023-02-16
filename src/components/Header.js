@@ -95,9 +95,9 @@ const Header = ({filterCategory, setFilterCategory}) => {
         },
       }));
   return (
-    isMobile ? <div className='max-w-[100%]  top-0 left-0 right-0' >
+    isMobile ? <div className='max-w-[100%] pt-0 -mt-[.7rem] ' >
         {/* First header line  */}
-        <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid #DED8D7'}} mx='5rem'>
+        <Box sx={{display: 'flex', alignItems: 'center', paddingTop: 0, marginTop: 0, justifyContent: 'space-between', borderBottom: '1px solid #DED8D7'}} mx='5rem' >
             <Box sx={{display: 'flex', width: '10%',}}>
                 <InputLabel id="hhh">Age</InputLabel>
                 <Select
@@ -129,7 +129,7 @@ const Header = ({filterCategory, setFilterCategory}) => {
             
             {authData?.email ? (
                 <div className=''>
-                    <div onClick={() => setShowMenu(!showMenu)} className='flex  gap-2 cursor-pointer' ><img src={authData?.profile_photo_url}  className='w-[2.2rem] h-[2.2rem] rounded-full object-cover text-xl block'  /> <p className='select-none block'>{authData?.name}</p></div>   
+                    <div onClick={() => setShowMenu(!showMenu)} className='flex  gap-2 cursor-pointer items-center' ><img src={authData?.profile_photo_url}  className='w-[2.2rem] h-[2.2rem] rounded-full object-cover text-xl block'  /> <p className='select-none block'>{authData?.name}</p></div>   
                     {showMenu && <MenuComp showMenu={showMenu} setShowMenu={setShowMenu} />}
                 </div>
             ) : (
@@ -226,10 +226,12 @@ const Header = ({filterCategory, setFilterCategory}) => {
              </Box>
         </Box>    
         </Box>
-        <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'center'}} mt='.5rem' >
-            <Typography onClick={() => setSelected('home')} sx={{marginRight: '1rem', fontWeight: `${selected == 'home' ? 'bold' : 'normal'}`}}><Link to='/'  marginRight='1rem'>Home</Link></Typography>
-            <Link onClick={() => setSelected('shop')} to='/grid' sx={{fontWeight: `${selected == 'shop' ? 'bold' : 'normal'}`, fontWeight: 'bold'}}>Shop</Link>
-        </Box>
+        <div className='flex items-center justify-center mt-[.5rem]'  >
+            <Typography  sx={{marginRight: '1rem', fontWeight: `${selected == 'home' ? 'bold' : 'normal'}`}}><Link to='/'  marginRight='1rem'>Home</Link></Typography>
+            <Typography sx={{fontWeight: `${selected == 'shop' ? 'bold' : 'normal'}`, fontWeight: 'bold'}}><Link to='/grid'>Shop</Link></Typography>
+        
+        </div>
+
     </div> : 
     // is Mobile screen
 
@@ -303,7 +305,7 @@ const Header = ({filterCategory, setFilterCategory}) => {
         </Box>
         <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'center'}} mt='.5rem' >
             <Typography onClick={() => setSelected('home')} sx={{marginRight: '1rem', fontWeight: `${selected == 'home' ? 'bold' : 'normal'}`}}><Link to='/'  marginRight='1rem'>Home</Link></Typography>
-            <Link onClick={() => setSelected('shop')} to='/grid' sx={{fontWeight: `${selected == 'shop' ? 'bold' : 'normal'}`, fontWeight: 'bold'}}>Shop</Link>
+            <Link onClick={() => {setSelected('shop'); navigate('/grid')}} to='/grid' sx={{fontWeight: `${selected == 'shop' ? 'bold' : 'normal'}`, fontWeight: 'bold'}}>Shop</Link>
         </Box>
     </Box>
   )
