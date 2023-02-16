@@ -35,28 +35,28 @@ const Dashboard = () => {
   const headerItems = [
     {
       name: 'Dashboard',
-      icon: <HomeOutlinedIcon sx={{fontSize: '1.5rem',}} />,
+      icon: <HomeOutlinedIcon sx={{fontSize: '1.2rem',}} />,
       link: '/dashboard'
     },
     {
       name: 'Wishlist',
-      icon: <FavoriteBorderOutlinedIcon sx={{fontSize: '1.5rem',}} />,
+      icon: <FavoriteBorderOutlinedIcon sx={{fontSize: '1.2rem',}} />,
       link: '/dashboard/wishlist'
     },
     {
       name: 'Manage Profile',
-      icon: <PersonOutlineOutlinedIcon sx={{fontSize: '1.5rem',}} />,
+      icon: <PersonOutlineOutlinedIcon sx={{fontSize: '1.2rem',}} />,
       link: '/dashboard/profile',
     },
     {
       name: 'Your Cart',
-      icon: <ShoppingCartOutlinedIcon sx={{fontSize: '1.5rem',}} />,
+      icon: <ShoppingCartOutlinedIcon sx={{fontSize: '1.2rem',}} />,
       link: '/dashboard/cart',
     },
     {
       name: 'Chat With Admin',
-      icon: <MarkUnreadChatAltOutlinedIcon sx={{fontSize: '1.5rem',}} />,
-      link: '/dashboard/chat',
+      icon: <MarkUnreadChatAltOutlinedIcon sx={{fontSize: '1.2rem',}} />,
+      link: '/chat',
     }
   
   ];
@@ -64,21 +64,21 @@ const Dashboard = () => {
   return (
     <div className='min-w-[100%]  flex '>
         {!isMobile && (
-          <div className={`h-[85vh] max-h-[100%] ml-[5rem] md:w-[28%] lg:w-[18%] z-20  bg-white flex-col justify-between delay-150 border-r border-gray-300 sticky left-0 top-0`}>
-          <div>
-            <div className='flex flex-col items-center gap-2 mb-[0] bg-orange-500 min-w-[100%] h-[11rem] p-[1rem]'>
+          <div className={`h-[85vh] max-h-[100%] ml-[5rem] md:w-[30%] lg:w-[18%] z-20  bg-white flex-col justify-between delay-150 border-r border-gray-300 sticky left-0 top-0`}>
+          <div className='h-[65vh]'>
+            <div className='flex flex-col items-center gap-1 mb-[0] bg-orange-500 min-w-[100%] h-[11rem] p-[1rem]'>
                   <img className='w-[4.5rem] h-[4.5rem]  rounded-full object-cover' src={authData?.profile_photo_url}  />
-                  <div className='text-center'>
-                    <Link to='/profile' className=' text-center flex justify-center border-gray-200 py-[.5rem] text-white font-semibold'>{authData?.name}</Link>
-                    <p className='font-semibold flex justify-center text-gray-300'>{authData?.email}</p>
+                  <div className='text-start text-white'>
+                    <Link to='/dashboard/profile' className=' text-start flex justify-start  py-[.5rem] text-white font-semibold'>{authData?.name}</Link>
+                    <p className='flex justify-start opacity-[.6] -mt-[.6rem]'>{authData?.email}</p>
                   </div>
             </div>  
 
-            <div className='flex flex-col justify-between items-start w-[50rem] m-[2rem] text-2xl font-bold '>
+            <div className='flex flex-col justify-between items-start  m-[.3rem] text-2xl '>
                 {headerItems.map((item, i) => {
-                  return <Link className=' flex items-center justify-center  gap-3 text-[1.5rem]' onClick={() => changePageSelected(item?.name)} to={item?.link}>
-                    <p className=' text-gray-600 text-[1.2rem]'>{item?.icon}</p>
-                    <p onClick={() => setSelected(i)} className={`my-[.5rem] text-gray-500  text-[.9rem] ${page_selected == item?.name ? 'text-red-500 cursor-pointer' : 'cursor-pointer'}`}>
+                  return <Link className={` flex items-center   gap-2 mb-0 pl-[.8rem] ${page_selected == item?.name ? 'bg-red-200 w-[100%] rounded-[.2rem] text-red-500' : ''}`} onClick={() => changePageSelected(item?.name)} to={item?.link}>
+                    <p className={` text-gray-600 text-[.3rem]  ${page_selected == item?.name ? 'text-red-500' : ''} `}>{item?.icon}</p>
+                    <p onClick={() => setSelected(i)} className={`my-[.5rem] text-gray-500  text-[.7rem] ${page_selected == item?.name ? 'text-red-500 font-semibold cursor-pointer bg-red-200' : 'cursor-pointer'}`}>
                       {item.name}
                     </p>
   
@@ -95,7 +95,10 @@ const Dashboard = () => {
           </div>
         </div>
         )}
-      <Outlet />
+
+      <div className='min-h-[80vh] w-[70%] '>
+        <Outlet />
+      </div>
       {/* end of sidebar */}
     </div>
   )

@@ -107,13 +107,6 @@ const GridProducts = ({filterCategory, setFilterCategory}) => {
     // }, [filterBrandText,filterCategoryText, currentPage, filterPrice, whislistItems]);
 
 
-
-
-
-
-
-
-
     // const {category = 'all', query = 'all', price = 'all', rating = 'all', sort = 'default'} = searchParams;
 
     const [state , setState] = useState({category : 'all', brand : 'all', query : 'all', price : 'all', rating : 'all', sort : 'default'});
@@ -176,13 +169,7 @@ const GridProducts = ({filterCategory, setFilterCategory}) => {
         }
 
         fetchData();
-    }, [category, price, query, rating, sort]);
-
-
-
-
-
-
+    }, [category, brand, price, query, rating, sort]);
 
 
 
@@ -190,6 +177,7 @@ const GridProducts = ({filterCategory, setFilterCategory}) => {
     //     dispatch(getShopPageBrand(`/filter-product`));
     // }, []);
     const isNonMobile = useMediaQuery("(min-width: 980px)");
+
   return (
     <>  
     <section class="product-grids section overflow-x-hidden">
