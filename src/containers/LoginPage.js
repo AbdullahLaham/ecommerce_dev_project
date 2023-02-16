@@ -82,7 +82,7 @@ const LoginPage = () => {
             {formik.touched.password && formik?.errors?.password}
             <button type='submit' className='flex items-center mt-[2rem] '><p>Login</p> <p  className=' flex items-center  bg-orange-400 rounded-full text-white text-right justify-end p-[.1rem] ml-[.5rem] hover:ml-[.8rem] transition-all duration-150' ><FaLongArrowAltRight className='block  ' /></p></button>
         </form>
-        <p className='mt-[8rem] w-[100%] '>Dont have account ? <Link to='/signup'>Signup</Link></p>
+        <p className='mt-[8rem] w-[100%] '>Dont have account ? <Link to='/register'>Signup</Link></p>
       </div>
       
     </div>

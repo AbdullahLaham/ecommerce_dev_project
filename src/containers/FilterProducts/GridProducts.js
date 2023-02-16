@@ -7,17 +7,23 @@ import GridViewIcon from '@mui/icons-material/GridView';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
-import { useNavigate } from 'react-router-dom';
-
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import * as api from '../../api'
 import './filter.css';
 import ShopSidebar from '../../components/ShopSidebar';
 import { CURRENT_CATEGORY } from '../../constants';
 import { useSnackbar } from 'notistack';
 import Spinner from '../../components/Spinner';
 const GridProducts = ({filterCategory, setFilterCategory}) => {
-    const {filteredProducts, brands, categories ,numberOfPages, currentCategory, isLoading} = useSelector((state) => state?.generalReducer);
+    const { brands, categories ,numberOfPages, currentCategory, isLoading} = useSelector((state) => state?.generalReducer);
     console.log(currentCategory, 'ffffffffffffffff')
+    // navigate
+    const navigate = useNavigate();
+    const [searchParams, setSearchParams] = useSearchParams({});
+
     // console.log('ggggg', brands);
+
+    const [filteredProducts, setFilteredProducts] = useState([]);
     const [selected, setSelected] = useState('grid');
     const [showSidebar, setShowSidebar] = useState(false);
     const [filterPrice, setFilterPrice] = useState('low');
@@ -50,48 +56,135 @@ const GridProducts = ({filterCategory, setFilterCategory}) => {
         dispatch(fetchWishlistItems());
     }
 
-    const updateFilterCategory = (id) => {
-        setFilterBrand([]);
-        setFilterBrandText('');
-        setFilterCategory([id]);
-    }
-    
-    
-    const updateFilterPrice = (id) => {
 
-    }
-    // navigate
-    const navigate = useNavigate();
-    // dispatch
+
+
+
+
+
+
+    
+    // const updateFilterCategory = (id) => {
+    //     setFilterBrand([]);
+    //     setFilterBrandText('');
+    //     setFilterCategory([id]);
+    // }
+    
+    
+    // const updateFilterPrice = (id) => {
+
+    // }
+   
+    // // dispatch
+    // // useEffect(() => {
+    // //     if (currentCategory != -1) {
+    // //         updateFilterCategory(currentCategory);
+    // //     }
+    // // }, [currentCategory]);
     // useEffect(() => {
-    //     if (currentCategory != -1) {
-    //         updateFilterCategory(currentCategory);
-    //     }
-    // }, [currentCategory]);
+    //     // let uniqueBrands = [...new Set(filterBrand)];
+    //     setFilterBrandText('');
+    //     // setFilterCategoryText('');
+
+    //     filterBrand?.map((brand, i) => {
+    //         setFilterBrandText(`${filterBrandText}&brandInputs[${i}]=${brand}`);
+    //     });
+        
+    //     filterCategory?.map((categ, i) => {
+    //         setFilterCategoryText(`&categoryInputs[0]=${categ}`);
+    //     });
+
+        
+    //     // filterCategory?.map((category, i) => {
+    //     //     setFilterCategoryText(`${filterCategoryText}&categoryInputs[${i}]=${category}`);
+    //     // });
+        
+    // }, [filterBrand, filterCategory]);
+
+    // useEffect(() => {
+    //     console.log('filterText', `${filterText}?sortPrice=${filterPrice}${filterBrandText}${filterCategoryText}`)
+    //     dispatch(getShopPageProducts(`${filterText}?sortPrice=${filterPrice}${filterBrandText}${filterCategoryText}&page=${currentPage}`));
+    // }, [filterBrandText,filterCategoryText, currentPage, filterPrice, whislistItems]);
+
+
+
+
+
+
+
+
+
+    // const {category = 'all', query = 'all', price = 'all', rating = 'all', sort = 'default'} = searchParams;
+
+    const [state , setState] = useState({category : 'all', brand : 'all', query : 'all', price : 'all', rating : 'all', sort : 'default'});
+    const {category, query , price , rating , sort, brand} = state;
+
+    // console.log('search', searchParams.entries())
+    
     useEffect(() => {
-        // let uniqueBrands = [...new Set(filterBrand)];
-        setFilterBrandText('');
-        // setFilterCategoryText('');
-
-        filterBrand?.map((brand, i) => {
-            setFilterBrandText(`${filterBrandText}&brandInputs[${i}]=${brand}`);
-        });
         
-        filterCategory?.map((categ, i) => {
-            setFilterCategoryText(`&categoryInputs[0]=${categ}`);
-        });
 
-        
-        // filterCategory?.map((category, i) => {
-        //     setFilterCategoryText(`${filterCategoryText}&categoryInputs[${i}]=${category}`);
-        // });
-        
-    }, [filterBrand, filterCategory]);
+        const fetchData = async () => {
+            try {
+                let query1 = '/filter-product';
+                if (category !== 'all') {
+                    // state?.brand == 'all';
+                    setState({...state, brand: 'all',})
+                    query1 += `?categoryInputs[0]=${category}`
+                }
+                if (brand !== 'all') {
+                    query1 += `&brandInputs[0]=${brand}`
+                }
+                
+                // if (query !== 'all') {
+                //     query1 += `&& name match ${query}`
+                // }
 
-    useEffect(() => {
-        console.log('filterText', `${filterText}?sortPrice=${filterPrice}${filterBrandText}${filterCategoryText}`)
-        dispatch(getShopPageProducts(`${filterText}?sortPrice=${filterPrice}${filterBrandText}${filterCategoryText}&page=${currentPage}`));
-    }, [filterBrandText,filterCategoryText, currentPage, filterPrice, whislistItems]);
+                // if (price !== 'all') {
+                //     const minPrice = Number(price.split('-')[0]);
+                //     const maxPrice = Number(price.split('-')[1]);
+                //     query1 += `&& price >= ${minPrice} && price <= ${maxPrice}`;
+
+                // }
+
+                // if (rating !== 'all') {
+                //     query1 += `&& rating >= ${Number(rating)}`
+                // }
+
+
+                let order = '';
+                // if (sort !== 'default') {
+                //     query1 += `&&sortPrice=${sort}`
+                //     // if (sort == 'lowest') order = '| order(price asc)';
+                //     // if (sort == 'highest') order = '| order(price desc)';
+                //     // if (sort == 'toprated') order = '| order(rating desc)';
+                // }
+                // query1 += `] ${order}`;
+
+
+                
+                // setState({loading: true,});
+
+                const {data: {data: {data}}} = await api.getShopPageProducts(query1);
+                console.log('yyyyyyyyyyyyyyy', data)
+                setFilteredProducts(data);
+                dispatch(getShopPageProducts(query1));
+                // setState({loading: false, products});
+            } catch(err) {
+                // setState({error: err.message, loading: false,})
+            }
+        }
+
+        fetchData();
+    }, [category, price, query, rating, sort]);
+
+
+
+
+
+
+
+
 
     // useEffect(() => {
     //     dispatch(getShopPageBrand(`/filter-product`));
@@ -128,7 +221,7 @@ to here
                                 return (
                                     <div class="form-check">
                                         {/* <input class="form-check-input" id={`input${i}`} type="checkbox" value={} name="brandInput[]"   /> */}
-                                        <label className='cursor-pointer' for={`input${i}`} onClick={() => updateFilterCategory(b?.id)}>
+                                        <label className='cursor-pointer' for={`input${i}`} onClick={() => setState({...state, category: b?.id})}>
                                             {b?.name} ({b?.id})
                                         </label>
                                     </div>
@@ -182,7 +275,7 @@ to here
                         {brands?.map((b) => {
                             return (
                                 <div class="form-check">
-                                    <input className='mr-[.5rem]' checked={filterBrand.includes(`${b?.id}`) ? 'checked' : ''} type="checkbox" value={b?.id} name="brandInput[]" onChange={(e) => updateFilterBrand(e.target.value)} />
+                                    <input className='mr-[.5rem]' checked={filterBrand.includes(`${b?.id}`) ? 'checked' : ''} type="checkbox" value={b?.id} name="brandInput[]" onClick={(e) => setState({...state, brand: e?.target?.value})} />
                                     <label class="form-check-label" for="flexCheckDefault22">
                                         {b?.name} ({b?.id})
                                     </label>

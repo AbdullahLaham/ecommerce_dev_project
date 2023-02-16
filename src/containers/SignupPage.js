@@ -24,6 +24,7 @@ const SignupPage = () => {
       password: yup.string().required('password is required'),
       confirmPassword: yup.string().required('confirmPassword is required').oneOf([yup.ref("password"), null], "Passwords must match"),
     });
+    
     const onSubmit = async (values) => {
      try {
           const user = { 

@@ -649,9 +649,9 @@ progress {
     font-size: .875em;
     color: #6c757d
 }
-.product-grids::-webkit-scrollbar {
+/* .product-grids::-webkit-scrollbar {
     width: 0 !important;
-}
+} */
 .container,
 .container-fluid,
 .container-lg,

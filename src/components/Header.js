@@ -24,6 +24,7 @@ const Header = ({filterCategory, setFilterCategory}) => {
     // authData
     const {authData} = useSelector((state) => state.userReducer);
 
+    console.log('authData', authData)
     // categories data
     const {categories, whislistItems, cart} = useSelector((state) => state?.generalReducer);
     const [showMenu, setShowMenu] = useState(false);
