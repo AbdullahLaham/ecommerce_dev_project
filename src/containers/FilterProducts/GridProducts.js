@@ -110,7 +110,7 @@ const GridProducts = ({filterCategory, setFilterCategory}) => {
     // const {category = 'all', query = 'all', price = 'all', rating = 'all', sort = 'default'} = searchParams;
 
 
-    const [state , setState] = useState({category : 'all', brand : 'all', query : 'all', price : 'all', rating : 'all', sort : 'default'});
+    const [state , setState] = useState({category : 'all', brand : 'all', query : 'all', price : 'all', rating : 'all', sort : 'low'});
     const {category, query , price , rating , sort, brand} = state;
 
     // console.log('search', searchParams.entries())
@@ -129,7 +129,9 @@ const GridProducts = ({filterCategory, setFilterCategory}) => {
                 if (brand !== 'all') {
                     query1 += `&brandInputs[0]=${brand}`
                 }
-                
+                if (sort != 'low') {
+                    query1 += `&sortPrice=${sort}`
+                }
                 // if (query !== 'all') {
                 //     query1 += `&& name match ${query}`
                 // }
@@ -287,7 +289,7 @@ to here
                             <div class="col-lg-7 col-md-8 col-12">
                                 <div class="product-sorting">
                                     <label for="sorting">Sort by:</label>
-                                    <select class="form-control" id="sorting" onChange={(e) => setFilterPrice(e?.target?.value)}>
+                                    <select class="form-control" id="sorting" onChange={(e) => setState({...state, sort: e?.target?.value})}>
                                         <option value='low'>Low - High Price</option>
                                         <option value='high'>High - Low Price</option>
                                     </select>

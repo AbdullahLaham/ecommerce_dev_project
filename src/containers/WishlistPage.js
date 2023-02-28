@@ -22,8 +22,10 @@ const WishlistPage = () => {
   }
 
   const {whislistItems} = useSelector((state) => state?.generalReducer);
+  const {authData} = useSelector((state) => state?.userReducer);
 
    useEffect(() => {
+    
     dispatch(fetchWishlistItems());
   } ,[isdelete]);
   

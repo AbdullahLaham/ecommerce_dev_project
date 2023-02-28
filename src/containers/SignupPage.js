@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useFormik } from 'formik'
 import axios from 'axios'
 import * as yup from 'yup'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import {FaLongArrowAltLeft, FaLongArrowAltRight} from 'react-icons/fa';
 import { useField } from "formik";
@@ -11,6 +11,8 @@ import { useField } from "formik";
 import { countries } from '../data';
 import { signupUser } from '../actions/users';
 import { useMediaQuery } from '@mui/material';
+import Spinner from '../components/Spinner';
+import { useSnackbar } from 'notistack';
 
 const SignupPage = () => {
     const navigate = useNavigate();
@@ -18,7 +20,10 @@ const SignupPage = () => {
     const [selectedImage, setSelectedImage] = useState();
     const dispatch = useDispatch();
     const isMobile = useMediaQuery("(max-width: 800px)");
-
+    // isLoading global state.
+    const {isLoading} = useSelector((state) => state?.generalReducer);
+    // enqueueSnackbar
+    const { enqueueSnackbar } = useSnackbar();
     const PASSWORD_REGEX = '^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})';
     // .matches(PASSWORD_REGEX, 'please enter a strong password')
     const validationSchema = yup.object({
@@ -33,10 +38,10 @@ const SignupPage = () => {
             name: values.name, 
             email: values.email,
             password: values.password,
-            device_name: values.device_name,
+            device_name: 'values.device_name',
         };
         console.log(user);
-        dispatch(signupUser(user, navigate));
+        dispatch(signupUser(user, navigate, enqueueSnackbar));
       } catch (error) {
          console.log(error);
       }
@@ -49,7 +54,6 @@ const SignupPage = () => {
           email: '',
           password: '',
           confirmPassword: '',
-          device_name: "",
       },
       validateOnBlur: true,
       onSubmit,
@@ -67,8 +71,8 @@ const SignupPage = () => {
       }  
   return (
     
-    <div className='w-[80%] m-auto flex bg-gray-100 h-[100vh]  max-h-[100vh] overflow-y-hidden'>
-      {!isMobile && <div className='w-[37%] p-[3rem] flex justify-center items-start  bg-gradient-to-b from-orange-500 via-orange-600 to-orange-700 h-[100%]'>
+    <div className='w-[80%] m-auto flex bg-gray-100 h-[80vh] overflow-y-hidden max-h-[100vh]'>
+      {!isMobile && <div className='w-[37%] p-[3rem] flex justify-center items-start  bg-gradient-to-b from-orange-500 via-orange-600 to-orange-700 h-[80vh] '>
         <div className='flex flex-col justify-between  mt-[4.5rem] '>
             <img className='w-[12rem]' src='./images/login.png' />
             <p className='text-[#fff] font-bold text-2xl my-[1.5rem]'>Welcome Back!</p>
@@ -76,7 +80,7 @@ const SignupPage = () => {
             {/* <img src={login} /> */}
         </div>
       </div>}
-      <div className='w-[40%] h-[100vh] flex flex-col justify-center items-start p-[1rem] ml-[7rem] mt-[3rem]'>
+      <div className='w-[100%] h-[60vh] flex flex-col justify-center items-start p-[1rem] ml-[2rem] mt-[3.7rem]'>
         <p className='font-semibold text-2xl text-start title ml-[10px]'>SIGNUP </p>
         <form onSubmit={formik.handleSubmit} className='flex flex-col' >
                 <>
@@ -88,8 +92,7 @@ const SignupPage = () => {
                     {formik.touched.password && formik?.errors?.password}
                     <div className=' my-[.4rem] h-[4rem]'><input name="confirmPassword" type='password' placeholder='Confirm Password' onChange={formik.handleChange} value={formik.values.confirmPassword} className='p-[1rem] my-[.9rem] w-[28rem] border-none outline-none max-h-[100%] h-[100%] field block '  /></div>
                     {formik.touched.confirmPassword && formik?.errors?.confirmPassword}
-                    <div className=' my-[.4rem] h-[4rem]'><input name="device_name" type='text' placeholder='Your Full device name' onChange={formik.handleChange} value={formik.values.device_name} className='p-[1rem] my-[.9rem] w-[28rem] border-none outline-none max-h-[100%] h-[100%] field block '  /></div>
-                    <button type='submit' className='flex items-center mt-[2rem] '><p>Register</p> <p  className=' flex items-center  bg-orange-400 rounded-full text-white text-right justify-end p-[.1rem] ml-[.5rem] hover:ml-[.8rem] transition-all duration-150' ><FaLongArrowAltRight className='block  ' /></p></button>                    
+                    <button type='submit' className='flex items-center mt-[2rem] '><p>SIGNUP</p> {!isLoading ? <p  className=' flex items-center  bg-orange-400 rounded-full text-white text-right justify-end p-[.1rem] ml-[.5rem] hover:ml-[.8rem] transition-all duration-150' ><FaLongArrowAltRight className='block  ' /></p> : <Spinner />}</button>                    
                 </>
         </form>
         <p className='mt-[1rem]'>Dont have account ? <Link to='/login'>lOGIN</Link></p>

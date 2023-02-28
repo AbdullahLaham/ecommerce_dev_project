@@ -8,9 +8,11 @@ import {FaLongArrowAltRight} from 'react-icons/fa';
 import { useField } from "formik";
 // import logo from './images/logo.png'
 // import login from './images/login.png';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { loginUser } from '../actions/users';
 import { useMediaQuery } from '@mui/material';
+import Spinner from '../components/Spinner';
+import { useSnackbar } from 'notistack';
 
 // import {loginRequest, loginSuccess, loginFailed} from '../../redux/login/loginAction';
 
@@ -18,7 +20,9 @@ import { useMediaQuery } from '@mui/material';
 const LoginPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  
+  const {isLoading} = useSelector((state) => state?.generalReducer);
+   // enqueueSnackbar
+  const { enqueueSnackbar } = useSnackbar();
   // const PASSWORD_REGEX = '^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})';
   // .matches(PASSWORD_REGEX, 'please enter a strong password')
   
@@ -43,7 +47,7 @@ const LoginPage = () => {
       //   device_name: 'mah',
       // }
       
-      dispatch(loginUser(user, navigate));
+      dispatch(loginUser(user, navigate, enqueueSnackbar));
       
     }
      catch (error) {
@@ -80,7 +84,7 @@ const LoginPage = () => {
             {formik.touched.email && formik?.errors?.email}
             <div className=' my-[.5rem] h-[4rem]'><input name="password" type='password' placeholder='password' onChange={formik.handleChange} value={formik.values.password} className={`p-[1rem] my-[.9rem] ${isMobile ? 'w-[16rem]': 'w-[28rem]'} border-none outline-none max-h-[100%] h-[100%] field block `}  /></div>
             {formik.touched.password && formik?.errors?.password}
-            <button type='submit' className='flex items-center mt-[2rem] '><p>Login</p> <p  className=' flex items-center  bg-orange-400 rounded-full text-white text-right justify-end p-[.1rem] ml-[.5rem] hover:ml-[.8rem] transition-all duration-150' ><FaLongArrowAltRight className='block  ' /></p></button>
+            <button type='submit' className='flex items-center mt-[2rem] '><p>Login</p> {!isLoading ? <p  className=' flex items-center  bg-orange-400 rounded-full text-white text-right justify-end p-[.1rem] ml-[.5rem] hover:ml-[.8rem] transition-all duration-150' ><FaLongArrowAltRight className='block  ' /></p> : <Spinner />}</button>
         </form>
         <p className='mt-[8rem] w-[100%] '>Dont have account ? <Link to='/register'>Signup</Link></p>
       </div>

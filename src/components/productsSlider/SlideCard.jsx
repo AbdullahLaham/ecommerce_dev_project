@@ -24,7 +24,7 @@ const SlideCard = ({data}) => {
   return (
     <>
       <Slider {...settings}>
-        {data.map((value, index) => {
+        {data?.map((value, index) => {
           return (
             <>
               <div className='box d_flex top' key={index}>

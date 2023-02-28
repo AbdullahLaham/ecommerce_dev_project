@@ -6507,12 +6507,14 @@ blockquote span {
   }
 }
 
+
 .product-details-info .reviews .single-review .review-info {
   position: relative;
   border: 1px solid #eee;
   border-radius: 4px;
   padding: 25px;
 }
+
 
 @media (max-width: 767px) {
   .product-details-info .reviews .single-review .review-info {

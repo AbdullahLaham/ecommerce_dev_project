@@ -60,7 +60,11 @@ const Dashboard = () => {
     }
   
   ];
-
+  useEffect(() => {
+    if (!authData?.email) {
+      navigate('/login', {replace: true,})
+    }
+  }, [])
   return (
     <div className='min-w-[100%]  flex '>
         {!isMobile && (

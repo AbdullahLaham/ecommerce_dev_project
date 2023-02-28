@@ -138,12 +138,16 @@ const Header = ({filterCategory, setFilterCategory}) => {
                     <Typography sx={{ borderRight: '1px solid #B4AEAD', paddingX: '.5rem', height: '100%'}} >
                         059....
                     </Typography>
-                    <Typography sx={{borderRight: '1px solid #B4AEAD', paddingX: '.5rem', height: '100%' }} >
-                        Login
-                    </Typography>
-                    <Typography sx={{ paddingX: '.5rem' , height: '100%'}} >
-                        Register
-                    </Typography>
+                    <Link to='/login' className='border-r border-[#B4AEAD] text-[#B4AEAD]'>
+                        <Typography sx={{borderRight: '1px solid #B4AEAD', paddingX: '.5rem', height: '100%' }}>
+                            Login
+                        </Typography>
+                    </Link>
+                    <Link to='/register' className='border-r border-[#B4AEAD] text-[#B4AEAD]'>
+                        <Typography sx={{ paddingX: '.5rem' , height: '100%'}} >
+                            Register
+                        </Typography>
+                    </Link>
                 </Box>
             )}  
 
@@ -229,9 +233,11 @@ const Header = ({filterCategory, setFilterCategory}) => {
         </Box>
         <div className='flex items-center justify-center mt-[.5rem]'  >
             <Typography  sx={{marginRight: '1rem', fontWeight: `${selected == 'home' ? 'bold' : 'normal'}`}}><Link to='/'  marginRight='1rem'>Home</Link></Typography>
-            <Typography onClicick={() => { navigate('/grid'); }} sx={{fontWeight: `${selected == 'shop' ? 'bold' : 'normal'}`, fontWeight: 'bold'}}>
+
+            <Typography onClick={() => { navigate('/grid'); }} sx={{fontWeight: `${selected == 'shop' ? 'bold' : 'normal'}`, fontWeight: 'bold'}}>
                 <Link to='/grid'>Shop</Link>
-            </Typography>      
+            </Typography>
+        
         </div>
 
     </div> : 

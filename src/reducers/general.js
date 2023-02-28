@@ -1,12 +1,14 @@
+import Cookies from "js-cookie";
 import {  ADD_TO_CART, DELETE_FROM_CART, UPDATE_CART_ITEM, TRANSACTION, LATEST_PRODUCTS, CATEGORY_PRODUCTS, CURRENT_PRODUCT, CATEGORIES, ALL_PRODUCTS, GET_BRANDS, SLIDER_IMAGES, CURRENT_CATEGORY, WHISHLIST_ITEMS, START_LOADING, END_LOADING, PAGE_SELECTED, PRODUCT_REVIEWS } from "../constants";
 const reducer = (state = { 
-        cart: (localStorage.getItem('cart')!== "undefined" && localStorage.getItem('cart')) ? JSON.parse(localStorage.getItem('cart')) : [],
+        cart: (Cookies.get('cart')  && Cookies.get('cart')) ? JSON.parse(Cookies.get('cart')) : [],
         // transaction: null,
-        products: localStorage.getItem('products')!== "undefined" ? JSON.parse(localStorage.getItem('products')) : [],
-        filteredProducts: localStorage.getItem('filteredProducts')!== undefined ? JSON.parse(localStorage.getItem('filteredProducts')) : [],
+        products: Cookies.get('products') ? JSON.parse(Cookies.get('products')) : [],
+        filteredProducts: Cookies.get('filteredProducts')!== undefined ? JSON.parse(Cookies.get('filteredProducts')) : [],
         categories: [],
         categoryProducts: [],
-        product: localStorage.getItem('product')!== "undefined" ? JSON.parse(localStorage.getItem('product')) : {},
+        product: Cookies.get('product')? JSON.parse(Cookies.get('product')) : {},
+
         language: 'Arabic',
         isLoading: false,
         brands: localStorage.getItem('brands')!== "undefined" ? JSON.parse(localStorage.getItem('brands')) : [] ,
@@ -36,14 +38,14 @@ const reducer = (state = {
                 newCart = [...state?.cart, {...item, qty: 1}];
             }
             
-            localStorage.setItem('cart', JSON.stringify(newCart))
+            Cookies.set('cart', JSON.stringify(newCart))
             return {...state, cart: newCart}
         }
 
         case DELETE_FROM_CART: {
             let item = action.payload;
             const newCart = state.cart.filter((prod) => prod?.id !== item?.id);
-            localStorage.setItem('cart', JSON.stringify(newCart));
+            Cookies.set('cart', JSON.stringify(newCart));
             return {...state, cart: newCart}
         }
         
@@ -51,17 +53,17 @@ const reducer = (state = {
             let item = action.payload;
             const newCart = state.cart.map((prod) => prod.id == item.id ?  item : prod              
             );
-            localStorage.setItem('cart', JSON.stringify(newCart));
+            Cookies.set('cart', JSON.stringify(newCart));
             return {...state, cart: newCart}
         }
 
         case TRANSACTION: {
-            localStorage.setItem('cart', null);
+            Cookies.set('cart', null);
             return {...state, transaction: action?.payload};
         }
 
         case LATEST_PRODUCTS: {
-            localStorage.setItem('products', JSON.stringify(action?.payload));
+            Cookies.set('products', JSON.stringify(action?.payload));
             return {...state, products: action?.payload};
         }
         
@@ -70,7 +72,7 @@ const reducer = (state = {
         }
 
         case CURRENT_PRODUCT: {
-            localStorage.setItem('product', JSON.stringify(action?.payload))
+            Cookies.set('product', JSON.stringify(action?.payload))
             return {...state, product: action.payload}
         }
 
@@ -88,7 +90,6 @@ const reducer = (state = {
             return { ...state, isLoading: false }
         }
         case ALL_PRODUCTS: {
-            
             return {...state, filteredProducts: action?.payload?.data, numberOfPages: action?.payload?.last_page}
         }
 
