@@ -15,6 +15,7 @@ const CartComponent = ({product}) => {
   const deleteFromCart = () => {
     dispatch({ type: DELETE_FROM_CART, payload: product })
   }
+  
   useEffect(() => {
     setCounter(product?.qty)
   }, []);
@@ -34,7 +35,7 @@ const CartComponent = ({product}) => {
           <p className='p-[.3rem]  flex items-center- justify-center h-[2.5rem] w-[1.8rem]  cursor-pointer select-none ' onClick={() => {setCounter(counter+1 > product?.supply ? product?.supply : counter+1); updateQuantity()}}>+</p>
         </div>
       </div>
-      <div className='flex gap-6 flex-col-reverse lg, md:flex-row'>
+      <div className='flex gap-6 flex-col-reverse lg, mdz:flex-row'>
         <p className='text-green-600 text-xl h-[100%] '>{product?.selling_price} $</p>
         <button className='text-red-600 font-bold text-xl cursor-pointer h-[100%] ' style={{color: 'red', }} onClick={() => deleteFromCart(product)}>x</button>
       </div>
